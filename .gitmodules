@@ -1,0 +1,3 @@
+[submodule "vk"]
+	path = vk
+	url = git://github.com/gorthauer/vkkit.git
