@@ -2,7 +2,7 @@ CONFIG -= debug_and_release debug
 CONFIG += release
 
 # Add more folders to ship with the application, here
-folder_01.source = qml/nonameIM
+folder_01.source = qml/harmattan
 folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
 
@@ -33,7 +33,8 @@ CONFIG += qdeclarative-boostable
 # CONFIG += qt-components
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    clientimpl.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -55,3 +56,6 @@ else:unix: LIBS += -L$$OUT_PWD/../vk/src/api/ -lvk
 
 INCLUDEPATH += $$PWD/../vk/src/api
 DEPENDPATH += $$PWD/../vk/src/api
+
+HEADERS += \
+    clientimpl.h
