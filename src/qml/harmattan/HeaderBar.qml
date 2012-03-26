@@ -14,9 +14,10 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Rectangle{
+Rectangle {
     width: parent.width
     height: parent.width < parent.height ? 72 : 46
+    z: 100500
     anchors.top: parent.top
 
     gradient: Gradient {

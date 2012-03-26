@@ -8,10 +8,11 @@ PageStackWindow {
 
     Component.onCompleted: {
         pageStack.toolBar.style.inverted = true //HACK
-        appWindow.pageStack.push(loginPage)
+        client.connectToHost()
+        //appWindow.pageStack.push(loginPage)
     }
 
-    initialPage: newsPage
+    initialPage: rosterPage
 
     NewsPage {
         id: newsPage
@@ -25,8 +26,8 @@ PageStackWindow {
     AudioPage {
         id: audioPage
     }
-    FriendsPage {
-        id: friendsPage
+    RosterPage {
+        id: rosterPage
     }
 
     LoginPage {
@@ -43,8 +44,9 @@ PageStackWindow {
         id: client;
 
         onOnlineStateChanged: {
-            if (isOnline)
-                pageStack.push(newsPage);
+            //if (isOnline) {
+                //pageStack.push(newsPage);
+            //}
         }
     }
 
@@ -58,7 +60,7 @@ PageStackWindow {
             anchors.fill: commonTools
             anchors.leftMargin: 12
             anchors.rightMargin: 12
-            anchors.topMargin: 6
+            anchors.topMargin: 4
 
             spacing: 24
 
@@ -97,7 +99,7 @@ PageStackWindow {
             TileIcon {
                 id: friendsIcon
                 checkable: true
-                page: friendsPage
+                page: rosterPage
                 text: qsTr("Friends")
                 iconSource: checked ? "images/tile-friends-down.png" :
                                       "images/tile-friends-up.png"

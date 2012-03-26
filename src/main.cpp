@@ -12,6 +12,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setApplicationVersion("0.1");
 
     qmlRegisterType<Client>("com.vk.api", 0, 1, "Client");
+    qmlRegisterUncreatableType<vk::NewsModel>("com.vk.api", 0, 1, "NewsModel", QObject::tr("Use client.newsModel instead"));
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
