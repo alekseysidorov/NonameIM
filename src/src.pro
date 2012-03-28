@@ -1,5 +1,9 @@
+TARGET = nonameIM
+
 CONFIG -= debug_and_release debug
 CONFIG += release
+
+QT += network
 
 # Add more folders to ship with the application, here
 folder_01.source = qml/harmattan
