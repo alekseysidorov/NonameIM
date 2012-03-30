@@ -3,6 +3,9 @@
 #include <QtDeclarative>
 
 #include "clientimpl.h"
+#include <roster.h>
+#include <buddy.h>
+#include "contactsmodel.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -12,7 +15,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setApplicationVersion("0.1");
 
     qmlRegisterType<Client>("com.vk.api", 0, 1, "Client");
-    qmlRegisterUncreatableType<vk::NewsModel>("com.vk.api", 0, 1, "NewsModel", QObject::tr("Use client.newsModel instead"));
+    qmlRegisterType<ContactsModel>("com.vk.api", 0, 1, "ContactsModel");
+    qmlRegisterUncreatableType<vk::Roster>("com.vk.api", 0, 1, "Roster", QObject::tr("Use client.roster instead"));
+    qmlRegisterUncreatableType<vk::Contact>("com.vk.api", 0, 1, "Contact", QObject::tr("User Roster"));
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

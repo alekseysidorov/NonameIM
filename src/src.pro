@@ -38,7 +38,9 @@ CONFIG += qdeclarative-boostable
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    clientimpl.cpp
+    clientimpl.cpp \
+    contactsmodel.cpp \
+    newsfeedmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -62,4 +64,10 @@ INCLUDEPATH += $$PWD/../vk/src/api
 DEPENDPATH += $$PWD/../vk/src/api
 
 HEADERS += \
-    clientimpl.h
+    clientimpl.h \
+    contactsmodel.h \
+    newsfeedmodel.h
+
+unix {
+    QMAKE_CXXFLAGS += -std=c++0x
+}

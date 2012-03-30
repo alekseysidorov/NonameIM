@@ -54,6 +54,7 @@ Item {
 
             Keys.onReturnPressed: {
                 clearButton.forceActiveFocus();
+                search();
             }
         }
 
@@ -70,6 +71,7 @@ Item {
             text: qsTr("Cancel");
             onClicked: {
                 chatInputEdit.text = "";
+                cancel();
             }
         }
 

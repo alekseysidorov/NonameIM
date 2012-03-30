@@ -1,4 +1,4 @@
-TEMPLATE=subdirs
+TEMPLATE= subdirs
 
 CONFIG += ordered
 SUBDIRS += vk \

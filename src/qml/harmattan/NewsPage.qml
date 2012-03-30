@@ -14,8 +14,6 @@ Page {
         y: -newsList.visibleArea.yPosition * Math.max(newsList.contentHeight, newsList.height);
         anchors.left: parent.left;
         anchors.leftMargin: 35;
-
-        onTriggered: client.newsModel.update()
     }
 
     ListView {
@@ -23,7 +21,6 @@ Page {
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
         width: parent.width
-        model: client.newsModel
         delegate: NewsDelegate {}
     }
 

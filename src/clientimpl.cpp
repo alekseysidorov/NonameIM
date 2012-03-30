@@ -14,16 +14,6 @@ Client::Client(QObject *parent) :
     settings.endGroup();
 }
 
-vk::NewsModel *Client::newsModel()
-{
-    if (m_newsModel.isNull()) {
-        m_newsModel = new vk::NewsModel(this);
-        m_newsModel.data()->update(); //FIXME remove
-        emit newsModelChanged(m_newsModel.data());
-    }
-    return m_newsModel.data();
-}
-
 void Client::onOnlineStateChanged(bool isOnline)
 {
     if (isOnline) {
