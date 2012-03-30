@@ -31,9 +31,9 @@ Item {
             id: image;
             anchors.centerIn: parent;
             smooth: true;
-            source: photo;
             width: 64
             height: width
+            source: "images/logo.png"
         }
     }
 

@@ -6,6 +6,9 @@
 #include <roster.h>
 #include <buddy.h>
 #include "contactsmodel.h"
+#include "dialogsmodel.h"
+
+#define VK_API_NAMESPACE "com.vk.api"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -14,10 +17,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setOrganizationName("Noname");
     app->setApplicationVersion("0.1");
 
-    qmlRegisterType<Client>("com.vk.api", 0, 1, "Client");
-    qmlRegisterType<ContactsModel>("com.vk.api", 0, 1, "ContactsModel");
-    qmlRegisterUncreatableType<vk::Roster>("com.vk.api", 0, 1, "Roster", QObject::tr("Use client.roster instead"));
-    qmlRegisterUncreatableType<vk::Contact>("com.vk.api", 0, 1, "Contact", QObject::tr("User Roster"));
+    qmlRegisterType<Client>(VK_API_NAMESPACE, 0, 1, "Client");
+    qmlRegisterType<ContactsModel>(VK_API_NAMESPACE, 0, 1, "ContactsModel");
+    qmlRegisterType<DialogsModel>(VK_API_NAMESPACE, 0, 1, "DialogsModel");
+    qmlRegisterUncreatableType<vk::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
+    qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

@@ -40,7 +40,8 @@ CONFIG += qdeclarative-boostable
 SOURCES += main.cpp \
     clientimpl.cpp \
     contactsmodel.cpp \
-    newsfeedmodel.cpp
+    newsfeedmodel.cpp \
+    dialogsmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -66,7 +67,8 @@ DEPENDPATH += $$PWD/../vk/src/api
 HEADERS += \
     clientimpl.h \
     contactsmodel.h \
-    newsfeedmodel.h
+    newsfeedmodel.h \
+    dialogsmodel.h
 
 unix {
     QMAKE_CXXFLAGS += -std=c++0x
