@@ -1,5 +1,6 @@
 #include "dialogsmodel.h"
 #include <client.h>
+#include <longpoll.h>
 #include <QDebug>
 
 DialogsModel::DialogsModel(QObject *parent) :
@@ -9,7 +10,14 @@ DialogsModel::DialogsModel(QObject *parent) :
 
 void DialogsModel::setClient(QObject *client)
 {
+	if (m_client.data())
+		m_client.data()->longPoll()->disconnect(this);
+
     m_client = static_cast<decltype(m_client.data())>(client);
+
+	auto longPoll = m_client.data()->longPoll();
+	connect(longPoll, SIGNAL(messageAdded(const vk::Message)), SLOT(onAddMessage(vk::Message)));
+
     emit clientChanged(m_client.data());
 }
 
@@ -42,7 +50,6 @@ void DialogsModel::getLastDialogs(int count, int previewLength)
 
 void DialogsModel::onDialogsReceived(const QVariant &dialogs)
 {
-    qDebug() << dialogs;
     auto list = dialogs.toList();
     Q_ASSERT(!list.isEmpty());
     int count = list.takeFirst().toInt(); //TODO may be can usable
@@ -52,5 +59,17 @@ void DialogsModel::onDialogsReceived(const QVariant &dialogs)
         vk::Message message(item.toMap(), m_client.data());
         messageList.append(message);
     }
-    setMessages(messageList);
+	setMessages(messageList);
+}
+
+void DialogsModel::onAddMessage(const vk::Message &message)
+{
+	//FIXME use declarative style
+	for (int i = 0; i != count(); i++) {
+		if (message.contact() == at(i).contact()) {
+			replaceMessage(i, message);
+			return;
+		}
+	}
+	addMessage(message);
 }

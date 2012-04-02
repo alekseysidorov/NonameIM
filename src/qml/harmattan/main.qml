@@ -58,9 +58,8 @@ PageStackWindow {
             pageStack: appWindow.pageStack
 
             anchors.fill: commonTools
-            anchors.leftMargin: 12
+            anchors.leftMargin: 18
             anchors.rightMargin: 12
-            anchors.topMargin: 4
 
             spacing: 24
 

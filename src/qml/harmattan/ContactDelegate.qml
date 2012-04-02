@@ -4,7 +4,9 @@ import com.nokia.meego 1.0
 ItemDelegate {
     id: itemDelegate
     item: data
-    //imageSource: photo
+    imageSource: photo
+    imageSize: 80
+    height: 100
 
     Item {
         id: data
