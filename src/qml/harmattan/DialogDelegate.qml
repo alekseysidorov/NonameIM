@@ -1,9 +1,11 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.vk.api 0.1
+import "utils.js" as Utils
 
 ItemDelegate {
     id: itemDelegate
-    imageSource: contact.photoSource
+    imageSource: from.photoSource
     height: 120
     item: data
 
@@ -20,17 +22,18 @@ ItemDelegate {
 
             Label {
                 id: titleLabel
-                text: contact.name
+                text: from.name
                 width: parent.width
             }
             Label {
                 id: activityLabel
-                text: body
+                text: Utils.format(body)
                 width: parent.width
                 elide: Text.ElideRight
-                //wrapMode: Text.WordWrap
                 color: "#777";
                 font.pixelSize: titleLabel.font.pixelSize * 0.8
+
+                onLinkActivated: Qt.openUrlExternally(link)
             }
             Label {
                 id: dateLabel
@@ -39,5 +42,12 @@ ItemDelegate {
                 color: "#2b497a"
             }
         }
+    }
+
+    Rectangle{
+        y: 1;
+        anchors.fill: parent;
+        opacity: readState !== Message.Unread  ? 0.2 : 0;
+        color: "#999999";
     }
 }

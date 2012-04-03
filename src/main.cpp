@@ -7,6 +7,7 @@
 #include <buddy.h>
 #include "contactsmodel.h"
 #include "dialogsmodel.h"
+#include "chatmodel.h"
 
 #define VK_API_NAMESPACE "com.vk.api"
 
@@ -20,8 +21,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<Client>(VK_API_NAMESPACE, 0, 1, "Client");
     qmlRegisterType<ContactsModel>(VK_API_NAMESPACE, 0, 1, "ContactsModel");
     qmlRegisterType<DialogsModel>(VK_API_NAMESPACE, 0, 1, "DialogsModel");
+    qmlRegisterType<ChatModel>(VK_API_NAMESPACE, 0, 1, "ChatModel");
+
     qmlRegisterUncreatableType<vk::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
     qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
+    qmlRegisterUncreatableType<vk::Message>(VK_API_NAMESPACE, 0, 1, "Message", QObject::tr("Only flags"));
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

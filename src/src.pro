@@ -41,7 +41,8 @@ SOURCES += main.cpp \
     clientimpl.cpp \
     contactsmodel.cpp \
     newsfeedmodel.cpp \
-    dialogsmodel.cpp
+    dialogsmodel.cpp \
+    chatmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -68,7 +69,8 @@ HEADERS += \
     clientimpl.h \
     contactsmodel.h \
     newsfeedmodel.h \
-    dialogsmodel.h
+    dialogsmodel.h \
+    chatmodel.h
 
 unix {
     QMAKE_CXXFLAGS += -std=c++0x

@@ -29,6 +29,9 @@ PageStackWindow {
     RosterPage {
         id: rosterPage
     }
+    ChatPage {
+        id: chatPage
+    }
 
     LoginPage {
         id: loginPage

@@ -23,7 +23,13 @@ Page {
         anchors.bottom: parent.bottom;
         model: dialogsModel
         highlight: HighlightDelegate {}
-        delegate: DialogDelegate {}
+        delegate: DialogDelegate {
+            id: delegate
+            onClicked: {
+                chatPage.model.contact = from;
+                pageStack.push(chatPage)
+            }
+        }
         currentIndex: -1;
     }
 

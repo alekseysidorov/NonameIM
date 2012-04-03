@@ -66,10 +66,10 @@ void DialogsModel::onAddMessage(const vk::Message &message)
 {
 	//FIXME use declarative style
 	for (int i = 0; i != count(); i++) {
-		if (message.contact() == at(i).contact()) {
-			replaceMessage(i, message);
-			return;
+		if (message.from() == at(i).from()) {
+            removeMessage(at(i));
+            break;
 		}
 	}
-	addMessage(message);
+    insertMessage(0, message);
 }
