@@ -5,6 +5,7 @@
 ChatModel::ChatModel(QObject *parent) :
     vk::MessageListModel(parent)
 {
+    setSortOrder(Qt::AscendingOrder);
 }
 
 void ChatModel::setContact(vk::Contact *contact)
@@ -49,5 +50,12 @@ void ChatModel::getHistory(int count, int offset)
 
 void ChatModel::messageReadStateChanged(int id, bool set)
 {
+    int index = findMessage(id);
+    if (index == -1)
+        return;
 
+    auto message = at(index);
+    message.setReadState(set ? vk::Message::Read
+                             : vk::Message::Unread);
+    replaceMessage(index, message);
 }
