@@ -26,7 +26,7 @@ Page {
         delegate: DialogDelegate {
             id: delegate
             onClicked: {
-                chatPage.model.contact = from;
+                chatPage.model.contact = contact;
                 pageStack.push(chatPage)
             }
         }

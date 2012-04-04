@@ -10,13 +10,14 @@ DialogsModel::DialogsModel(QObject *parent) :
 
 void DialogsModel::setClient(QObject *client)
 {
-	if (m_client.data())
-		m_client.data()->longPoll()->disconnect(this);
+    if (m_client.data())
+        m_client.data()->longPoll()->disconnect(this);
 
     m_client = static_cast<decltype(m_client.data())>(client);
 
-	auto longPoll = m_client.data()->longPoll();
-	connect(longPoll, SIGNAL(messageAdded(const vk::Message)), SLOT(onAddMessage(vk::Message)));
+    auto longPoll = m_client.data()->longPoll();
+    connect(longPoll, SIGNAL(messageAdded(const vk::Message)), SLOT(onAddMessage(vk::Message)));
+    connect(longPoll, SIGNAL(messageFlagsReplaced(int, int, int)), SLOT(replaceMessageFlags(int, int, int)));
 
     emit clientChanged(m_client.data());
 }
@@ -59,17 +60,23 @@ void DialogsModel::onDialogsReceived(const QVariant &dialogs)
         vk::Message message(item.toMap(), m_client.data());
         messageList.append(message);
     }
-	setMessages(messageList);
+    setMessages(messageList);
+}
+
+static vk::Contact *getContact(const vk::Message &message)
+{
+    return message.direction() == vk::Message::Out ? message.to()
+                                                   : message.from();
 }
 
 void DialogsModel::onAddMessage(const vk::Message &message)
 {
-	//FIXME use declarative style
-	for (int i = 0; i != count(); i++) {
-		if (message.from() == at(i).from()) {
+    //FIXME use declarative style
+    for (int i = 0; i != count(); i++) {
+        if (getContact(message) == getContact(at(i))) {
             removeMessage(at(i));
             break;
-		}
-	}
+        }
+    }
     insertMessage(0, message);
 }

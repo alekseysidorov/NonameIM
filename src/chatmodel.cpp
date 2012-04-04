@@ -1,6 +1,8 @@
 #include "chatmodel.h"
 #include <chatsession.h>
 #include "buddy.h"
+#include "client.h"
+#include "longpoll.h"
 
 ChatModel::ChatModel(QObject *parent) :
     vk::MessageListModel(parent)
@@ -17,10 +19,13 @@ void ChatModel::setContact(vk::Contact *contact)
     if (!contact)
         return;
     auto session = new vk::ChatSession(contact);
+    auto longPoll = contact->client()->longPoll();
     connect(session, SIGNAL(messageAdded(vk::Message)), SLOT(addMessage(vk::Message)));
     connect(session, SIGNAL(messageDeleted(int)), SLOT(removeMessage(int)));
     connect(session, SIGNAL(messageReadStateChanged(int,bool)),
             this, SLOT(messageReadStateChanged(int,bool)));
+    connect(longPoll, SIGNAL(messageFlagsReplaced(int, int, int)),
+            this, SLOT(replaceMessageFlags(int, int, int)));
 
     m_session = session;
     emit titleChanged(session->title());

@@ -5,13 +5,19 @@ import "utils.js" as Utils
 
 ItemDelegate {
     id: itemDelegate
-    imageSource: from.photoSource
-    height: 120
-    item: data
+    property QtObject contact: getContact()
 
     function formatDate(date) {
         return Qt.formatDateTime(date, "dddd, hh:mm");
     }
+    function getContact() {
+        return direction === Message.In ? from
+                                        : to;
+    }
+
+    imageSource: contact.photoSource
+    height: 120
+    item: data
 
     Item {
         id: data
@@ -22,7 +28,7 @@ ItemDelegate {
 
             Label {
                 id: titleLabel
-                text: from.name
+                text: contact.name
                 width: parent.width
             }
             Label {
@@ -44,7 +50,7 @@ ItemDelegate {
         }
     }
 
-    Rectangle{
+    Rectangle {
         y: 1;
         anchors.fill: parent;
         opacity: readState !== Message.Unread  ? 0.2 : 0;
