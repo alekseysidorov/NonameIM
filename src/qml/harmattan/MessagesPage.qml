@@ -5,6 +5,7 @@ import com.vk.api 0.1
 Page {
     id: messagesPage
     property Client __client: client //workaround
+    property alias unreadCount: dialogsModel.unreadCount
 
     Header {
         id: header

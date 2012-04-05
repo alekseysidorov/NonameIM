@@ -20,6 +20,7 @@ public:
     QString title() const;
 public slots:
     void getHistory(int count = 16, int offset = 0);
+    void markAsRead(int mid, bool set = true);
 signals:
     void contactChanged(vk::Contact*);
     void titleChanged(const QString &title);

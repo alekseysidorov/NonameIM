@@ -11,8 +11,8 @@ ItemDelegate {
         return Qt.formatDateTime(date, "dddd, hh:mm");
     }
     function getContact() {
-        return direction === Message.In ? from
-                                        : to;
+        return incoming ? from
+                        : to;
     }
 
     imageSource: contact.photoSource
@@ -53,7 +53,7 @@ ItemDelegate {
     Rectangle {
         y: 1;
         anchors.fill: parent;
-        opacity: readState !== Message.Unread  ? 0.2 : 0;
+        opacity: unread  ? 0.2 : 0;
         color: "#999999";
     }
 }

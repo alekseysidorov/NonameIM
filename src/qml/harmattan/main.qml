@@ -89,6 +89,7 @@ PageStackWindow {
                 text: qsTr("Messages")
                 iconSource: checked ? "images/tile-messages-down.png" :
                                       "images/tile-messages-up.png"
+                badge: messagesPage.unreadCount > 0 ? messagesPage.unreadCount : ""
             }
             TileIcon {
                 id: audioIcon
@@ -107,6 +108,13 @@ PageStackWindow {
                                       "images/tile-friends-up.png"
             }
 
+        }
+    }
+
+    Connections {
+        target: client.longPoll ? client.longPoll : parent
+        onMessageAdded: {
+            messagesIcon.alert();
         }
     }
 }

@@ -47,7 +47,7 @@ ItemDelegate {
     Rectangle {
         y: 1;
         anchors.fill: parent;
-        opacity: readState !== Message.Unread  ? 0.2 : 0;
+        opacity: unread ? 0.2 : 0;
         color: "#999999";
     }
 }

@@ -9,6 +9,7 @@ class DialogsModel : public vk::MessageListModel
     Q_OBJECT
 
     Q_PROPERTY(QObject* client READ client WRITE setClient NOTIFY clientChanged)
+    Q_PROPERTY(int unreadCount READ unreadCount NOTIFY unreadCountChanged)
 public:
     explicit DialogsModel(QObject *parent = 0);
 
@@ -17,16 +18,22 @@ public:
     //void setClient(vk::Client *client);
     //vk::Client *client() const;
     QObject *client() const;
+
+    void setUnreadCount(int count);
+    int unreadCount() const;
 public slots:
     void getLastDialogs(int count = 16, int previewLength = -1);
 signals:
     //void clientChanged(vk::Client*);
     void clientChanged(QObject*); //HACK
+    void unreadCountChanged(int count);
 private slots:
     void onDialogsReceived(const QVariant &dialogs);
 	void onAddMessage(const vk::Message &message);
+    void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 private:
     QWeakPointer<vk::Client> m_client;
+    int m_unreadCount;
 };
 
 #endif // DIALOGSMODEL_H

@@ -75,3 +75,7 @@ HEADERS += \
 unix {
     QMAKE_CXXFLAGS += -std=c++0x
 }
+
+!isEmpty(MEEGO_VERSION_MAJOR) {
+    QMAKE_LFLAGS += -Wl,--rpath=/opt/nonameIM/lib
+}

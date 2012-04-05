@@ -8,6 +8,7 @@
 #include "contactsmodel.h"
 #include "dialogsmodel.h"
 #include "chatmodel.h"
+#include <longpoll.h>
 
 #define VK_API_NAMESPACE "com.vk.api"
 
@@ -26,6 +27,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterUncreatableType<vk::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
     qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
     qmlRegisterUncreatableType<vk::Message>(VK_API_NAMESPACE, 0, 1, "Message", QObject::tr("Only flags"));
+    qmlRegisterUncreatableType<vk::LongPoll>(VK_API_NAMESPACE, 0, 1, "LongPoll", QObject::tr("Use client.longPoll instead"));
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

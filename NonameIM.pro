@@ -1,6 +1,7 @@
 TEMPLATE= subdirs
 
 CONFIG += ordered
+
 SUBDIRS += vk \
         src
 

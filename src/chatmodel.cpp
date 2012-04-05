@@ -26,6 +26,8 @@ void ChatModel::setContact(vk::Contact *contact)
             this, SLOT(messageReadStateChanged(int,bool)));
     connect(longPoll, SIGNAL(messageFlagsReplaced(int, int, int)),
             this, SLOT(replaceMessageFlags(int, int, int)));
+    connect(longPoll, SIGNAL(messageFlagsReseted(int, int, int)),
+            this, SLOT(resetMessageFlags(int, int, int)));
 
     m_session = session;
     emit titleChanged(session->title());
@@ -53,6 +55,15 @@ void ChatModel::getHistory(int count, int offset)
         m_session.data()->getHistory(count, offset);
 }
 
+void ChatModel::markAsRead(int mid, bool set)
+{
+       if (!m_session.isNull()) {
+           vk::IdList ids;
+           ids.append(mid);
+           m_session.data()->markMessagesAsRead(ids, set);
+       }
+}
+
 void ChatModel::messageReadStateChanged(int id, bool set)
 {
     int index = findMessage(id);
@@ -60,7 +71,6 @@ void ChatModel::messageReadStateChanged(int id, bool set)
         return;
 
     auto message = at(index);
-    message.setReadState(set ? vk::Message::Read
-                             : vk::Message::Unread);
+    message.setUnread(!set);
     replaceMessage(index, message);
 }
