@@ -10,6 +10,7 @@ public:
     Client(QObject *parent = 0);
 private slots:
     void onOnlineStateChanged(bool state);
+    void setOnline(bool set);
 };
 
 #endif // CLIENT_H

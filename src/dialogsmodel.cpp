@@ -61,9 +61,7 @@ void DialogsModel::getLastDialogs(int count, int previewLength)
 void DialogsModel::onDialogsReceived(const QVariant &dialogs)
 {
     auto list = dialogs.toList();
-    Q_ASSERT(!list.isEmpty());
-    int count = list.takeFirst().toInt(); //TODO may be can usable
-    Q_UNUSED(count);
+    Q_UNUSED(list.takeFirst().toInt());
     vk::MessageList messageList;
     foreach (auto item, list) {
         vk::Message message(item.toMap(), m_client.data());
@@ -83,10 +81,9 @@ void DialogsModel::onAddMessage(const vk::Message &message)
     //FIXME use declarative style
     for (int i = 0; i != count(); i++) {
         if (getContact(message) == getContact(at(i))) {
-            auto message = at(i);
-            if (message.isUnread())
-
-            removeMessage(at(i));
+            auto old = at(i);
+            if (old.isUnread())
+                removeMessage(at(i));
             break;
         }
     }

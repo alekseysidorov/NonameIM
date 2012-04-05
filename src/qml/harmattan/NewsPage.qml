@@ -3,6 +3,12 @@ import com.nokia.meego 1.0
 
 Page {
     id: newsPage
+    tools: commonTools
+
+    onVisibleChanged: {
+        //if (visible)
+        //    client.newsModel.update()
+    }
 
     Header {
         id: header
@@ -11,9 +17,7 @@ Page {
 
     UpdateIcon {
         id: updateIcon
-        y: -newsList.visibleArea.yPosition * Math.max(newsList.contentHeight, newsList.height);
-        anchors.left: parent.left;
-        anchors.leftMargin: 35;
+        flickableItem: newsList
     }
 
     ListView {
@@ -26,12 +30,5 @@ Page {
 
     ScrollDecorator {
         flickableItem: newsList
-    }
-
-    tools: commonTools
-
-    onVisibleChanged: {
-        //if (visible)
-        //    client.newsModel.update()
     }
 }

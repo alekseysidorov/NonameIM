@@ -1,16 +1,27 @@
 import QtQuick 1.1
 
 Row {
-    id: update;
+    id: root;
     property bool on: false;
     property date lastUpdate: new Date()
+    property Flickable flickableItem
     signal triggered
 
     function formatDate(date) {
         return Qt.formatDateTime(date, "dd.MM.yyyy hh:mm");
     }
+    function __calculateY(flickableItem)
+    {
+        return -flickableItem.visibleArea.yPosition * Math.max(flickableItem.contentHeight, flickableItem.height)
+    }
+
+    onFlickableItemChanged: {
+        root.anchors.left = flickableItem.left;
+        root.anchors.leftMargin = 35;
+    }
 
     height: 70;
+    y: flickableItem ? __calculateY(flickableItem) : 0
 
     Image {
         id: iconUpdate;
@@ -42,20 +53,20 @@ Row {
         }
     }
 
-    //TODO rewrite with states
+    //TODO roote with states
     onYChanged: {
-        if(update.y > 110){
-            iconUpdate.rotation = 180;
-            on = true;
-            textUpdate.text = qsTr("Release to refresh...");
+        if(root.y > 110) {
+            iconUpdate.rotation = 180
+            on = true
+            textUpdate.text = qsTr("Release to refresh...")
         } else {
             if (on) {
-                lastUpdate = new Date();
-                triggered();
+                lastUpdate = new Date()
+                triggered()
             }
-            iconUpdate.rotation = 0;
-            on = false;
-            textUpdate.text = qsTr("Pull down to refresh...");
+            iconUpdate.rotation = 0
+            on = false
+            textUpdate.text = qsTr("Pull down to refresh...")
         }
     }
 }

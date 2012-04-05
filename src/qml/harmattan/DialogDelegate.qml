@@ -15,7 +15,7 @@ ItemDelegate {
                         : to;
     }
 
-    imageSource: contact.photoSource
+    imageSource: Utils.getContactPhotoSource(contact)
     height: 120
     item: data
 

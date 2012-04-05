@@ -6,30 +6,35 @@ Page {
     id: chatPage;
     property ChatModel model: chatModel
 
-    HeaderBar {
+    function __update() {
+        if (client.online)
+            chatModel.getHistory()
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            __update()
+    }
+
+    Header {
         id: header;
 
-        BackButton {
-            id: back
-            onClicked: pageStack.pop();
-        }
+        onBackButtonClicked: pageStack.pop()
 
-        Label {
-            anchors.left: back.right;
-            anchors.leftMargin: 5;
-            anchors.right: parent.right;
-            anchors.rightMargin: 5;
-            anchors.verticalCenter: parent.verticalCenter;
-            color: "white";
-            text: chatModel.title
-            horizontalAlignment: Text.AlignHCenter;
-            font.pixelSize: 27;
-            font.bold: true;
-        }
+        text: chatModel.title
+        backButton: true
     }
 
     ListView {
         id: chatView;
+
+        function __lastItemPos() {
+            return positionViewAtIndex(count - 1, ListView.End)
+        }
+
+        onCountChanged: __lastItemPos()
+        onHeightChanged: __lastItemPos()
+
         width: parent.width;
         anchors.top: header.bottom;
         anchors.bottom: chatInput.top;
@@ -37,7 +42,7 @@ Page {
         highlight: HighlightDelegate {}
         delegate: ChatDelegate {}
         currentIndex: -1
-        onCountChanged: positionViewAtIndex(count - 1, ListView.End);
+        cacheBuffer: 24
     }
 
     ChatModel {
@@ -48,10 +53,9 @@ Page {
         flickableItem: chatView;
     }
 
-    onVisibleChanged: {
-        if (visible && client.isOnline) {
-            chatModel.getHistory()
-        }
+    UpdateIcon {
+        flickableItem: chatView
+        onTriggered: __update()
     }
 
     Rectangle {

@@ -13,6 +13,27 @@ Item {
 
     width: parent ? parent.width : 600
     height: 90
+    scale: 10
+    opacity: 0
+
+    Component.onCompleted: {
+        scale = 1
+        opacity = 1
+    }
+
+    Behavior on scale {
+        NumberAnimation {
+            easing.type: Easing.InOutQuad;
+            duration: 600
+        }
+    }
+
+    Behavior on opacity {
+        NumberAnimation {
+            easing.type: Easing.InOutQuad;
+            duration: 600
+        }
+    }
 
     Rectangle {
         id: imageBorder;
@@ -22,6 +43,8 @@ Item {
         anchors.leftMargin: 12
         anchors.verticalCenter: parent.verticalCenter;
         color: image.sourceSize ? "black" : "transparent";
+        //scale: image.state === Image.Ready ? 1 : 0
+
         Behavior on scale {
             NumberAnimation {
                 easing.type: Easing.InOutQuad;

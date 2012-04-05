@@ -12,7 +12,7 @@ PageStackWindow {
         //appWindow.pageStack.push(loginPage)
     }
 
-    initialPage: rosterPage
+    initialPage: loginPage
 
     NewsPage {
         id: newsPage
@@ -20,8 +20,8 @@ PageStackWindow {
     WallPage {
         id: wallPage
     }
-    MessagesPage {
-        id: messagesPage
+    DialogsPage {
+        id: dialogsPage
     }
     AudioPage {
         id: audioPage
@@ -47,9 +47,9 @@ PageStackWindow {
         id: client;
 
         onOnlineStateChanged: {
-            //if (isOnline) {
-                //pageStack.push(newsPage);
-            //}
+            if (online) {
+                pageStack.push(newsPage);
+            }
         }
     }
 
@@ -85,11 +85,11 @@ PageStackWindow {
             TileIcon {
                 id: messagesIcon
                 checkable: true
-                page: messagesPage
+                page: dialogsPage
                 text: qsTr("Messages")
                 iconSource: checked ? "images/tile-messages-down.png" :
                                       "images/tile-messages-up.png"
-                badge: messagesPage.unreadCount > 0 ? messagesPage.unreadCount : ""
+                badge: dialogsPage.unreadCount > 0 ? dialogsPage.unreadCount : ""
             }
             TileIcon {
                 id: audioIcon

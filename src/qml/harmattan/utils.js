@@ -9,3 +9,7 @@ function format(str) {
     var tmp = replaceURLWithHTMLLinks(str);
     return tmp.replace("<br>"," ")
 }
+
+function getContactPhotoSource(contact) {
+    return contact.photoSource ? contact.photoSource : "images/logo.png"
+}

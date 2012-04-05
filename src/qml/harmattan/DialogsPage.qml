@@ -7,6 +7,24 @@ Page {
     property Client __client: client //workaround
     property alias unreadCount: dialogsModel.unreadCount
 
+    function __update() {
+        if (client.online)
+            dialogsModel.getLastDialogs()
+    }
+    function __clear() {
+        if (client.online)
+            dialogsModel.clear()
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            __update()
+        else if (status === PageStatus.Inactive)
+            __clear()
+    }
+
+    tools: commonTools
+
     Header {
         id: header
         text: qsTr("Messages")
@@ -32,24 +50,17 @@ Page {
             }
         }
         currentIndex: -1;
+        cacheBuffer: 12
     }
 
     ScrollDecorator {
         flickableItem: rosterView;
     }
 
-    Connections {
-        target: client
-        onIsOnlineChanged: {
-            if (client.isOnline)
-                client.roster.sync()
+    UpdateIcon {
+        flickableItem: rosterView
+        onTriggered: {
+            __update()
         }
-    }
-
-    tools: commonTools
-
-    onVisibleChanged: {
-        if (visible && client.isOnline)
-            dialogsModel.getLastDialogs()
     }
 }

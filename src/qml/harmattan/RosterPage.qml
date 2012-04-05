@@ -5,12 +5,22 @@ import com.vk.api 0.1
 Page {
     id: friendsPage
 
+    function __update() {
+        if (client.online)
+            client.roster.sync()
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            __update()
+    }
+
+    tools: commonTools
+
     Header {
         id: header
         text: qsTr("Friends")
     }
-
-    tools: commonTools
 
     ContactsModel {
         id: contactsModel
@@ -29,27 +39,22 @@ Page {
         header: SearchBar {
             id: searchBar
 
-            onSearch: contactsModel.filterByName = searchBar.searchingText;
+            onSearch: contactsModel.filterByName = searchBar.searchingText
             onCancel: contactsModel.filterByName = ""
         }
+        cacheBuffer: 12
     }
 
-
-
     ScrollDecorator {
-        flickableItem: rosterView;
+        flickableItem: rosterView
+    }
+
+    UpdateIcon {
+        flickableItem: rosterView
+        onTriggered: __update()
     }
 
     Connections {
         target: client
-        onIsOnlineChanged: {
-            if (client.isOnline)
-                client.roster.sync()
-        }
-    }
-
-    onVisibleChanged: {
-        if (visible && client.isOnline)
-            client.roster.sync()
     }
 }

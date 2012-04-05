@@ -20,7 +20,7 @@ BorderImage {
         font.pixelSize: 21;
         font.bold: true;
     }
-    MouseArea{
+    MouseArea {
         anchors.fill: parent;
         onClicked: root.clicked()
     }

@@ -5,8 +5,7 @@ import "utils.js" as Utils
 ItemDelegate {
     id: itemDelegate
     item: data
-    imageSource: photo
-    imageSize: 80
+    imageSource: Utils.getContactPhotoSource(contact)
     height: 100
 
     Item {

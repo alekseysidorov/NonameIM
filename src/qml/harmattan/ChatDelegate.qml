@@ -10,7 +10,7 @@ ItemDelegate {
         return Qt.formatDateTime(date, "dddd, hh:mm");
     }
 
-    imageSource: from.photoSource
+    imageSource: Utils.getContactPhotoSource(from)
     height: 120
     item: data
 
