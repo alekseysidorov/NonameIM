@@ -7,46 +7,38 @@ ItemDelegate {
     id: itemDelegate
     property QtObject contact: getContact()
 
-    function formatDate(date) {
-        return Qt.formatDateTime(date, "dddd, hh:mm");
-    }
     function getContact() {
         return incoming ? from
                         : to;
     }
 
     imageSource: Utils.getContactPhotoSource(contact)
-    height: 120
     item: data
 
-    Item {
+    Column {
         id: data
+        spacing: __spacing
 
-        Column {
-            anchors.verticalCenter: data.verticalCenter
+        Label {
+            id: titleLabel
+            text: contact.name
             width: parent.width
+        }
+        Label {
+            id: activityLabel
+            text: Utils.format(body)
+            width: parent.width
+            elide: Text.ElideRight
+            color: "#777";
+            font.pixelSize: titleLabel.font.pixelSize * 0.8
 
-            Label {
-                id: titleLabel
-                text: contact.name
-                width: parent.width
-            }
-            Label {
-                id: activityLabel
-                text: Utils.format(body)
-                width: parent.width
-                elide: Text.ElideRight
-                color: "#777";
-                font.pixelSize: titleLabel.font.pixelSize * 0.8
-
-                onLinkActivated: Qt.openUrlExternally(link)
-            }
-            Label {
-                id: dateLabel
-                text: formatDate(date)
-                font.pixelSize: activityLabel.font.pixelSize
-                color: "#2b497a"
-            }
+            onLinkActivated: Qt.openUrlExternally(link)
+        }
+        Label {
+            id: dateLabel
+            text: Utils.formatDate(date)
+            font.pixelSize: activityLabel.font.pixelSize
+            color: "#2b497a"
         }
     }
 

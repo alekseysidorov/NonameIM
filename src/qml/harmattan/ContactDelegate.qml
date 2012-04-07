@@ -6,13 +6,13 @@ ItemDelegate {
     id: itemDelegate
     item: data
     imageSource: Utils.getContactPhotoSource(contact)
-    height: 100
+    height: Math.max(100, getMinHeight())
 
     Item {
         id: data
+        height: childrenRect.height
 
         Column {
-            anchors.verticalCenter: data.verticalCenter
             width: parent.width
 
             Label {
@@ -27,6 +27,7 @@ ItemDelegate {
                 elide: Text.ElideRight
                 color: "#777";
                 font.pixelSize: name.font.pixelSize * 0.8
+                textFormat: Text.RichText
             }
         }
     }

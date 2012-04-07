@@ -1,16 +1,27 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.vk.api 0.1
 
 Page {
     id: newsPage
-    tools: commonTools
 
-    onVisibleChanged: {
-        //if (visible)
-        //    client.newsModel.update()
+    function __update() {
+        if (client.online)
+            newsFeedModel.getLatestNews()
+    }
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            __update()
     }
 
-    Header {
+    Component.onCompleted: {
+        newsFeedModel.client = client; //HACK
+    }
+
+    tools: commonTools
+    orientationLock: PageOrientation.LockPortrait
+
+    PageHeader {
         id: header
         text: qsTr("News")
     }
@@ -18,6 +29,11 @@ Page {
     UpdateIcon {
         id: updateIcon
         flickableItem: newsList
+        onTriggered: __update()
+    }
+
+    NewsFeedModel {
+        id: newsFeedModel
     }
 
     ListView {
@@ -25,7 +41,13 @@ Page {
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
         width: parent.width
-        delegate: NewsDelegate {}
+        delegate: NewsDelegate {
+            onClicked: {
+                profilePage.contact = source
+                pageStack.push(profilePage)
+            }
+        }
+        model: newsFeedModel
     }
 
     ScrollDecorator {

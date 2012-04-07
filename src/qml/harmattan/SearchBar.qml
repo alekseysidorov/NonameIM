@@ -10,21 +10,10 @@ Item {
 
     height: textEdit.height;
     width: parent ? parent.width : 600
-    Rectangle {
+    TitleBar {
         id: textEdit;
         height: chatInputEdit.height + 16;
         width: parent.width
-        color: "#C5C7CB";
-        gradient: Gradient {
-            GradientStop {
-                position: 0.00;
-                color: "#e0e0e0";
-            }
-            GradientStop {
-                position: 1.00;
-                color: "#c0c1c4";
-            }
-        }
 
         TextField {
             id: chatInputEdit;
@@ -40,7 +29,7 @@ Item {
                 actionKeyLabel: qsTr("Search");
             }
 
-            Image{
+            Image {
                 id: iconSearch;
                 anchors.right: parent.right;
                 anchors.rightMargin: 15;
@@ -73,13 +62,6 @@ Item {
                 chatInputEdit.text = "";
                 cancel();
             }
-        }
-
-        Rectangle{
-            width:  parent.width;
-            height: 1;
-            anchors.bottom: parent.bottom;
-            color: "#868686"
         }
     }
 }

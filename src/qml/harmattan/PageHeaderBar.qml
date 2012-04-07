@@ -16,7 +16,8 @@ import com.nokia.meego 1.0
 
 Rectangle {
     width: parent.width
-    height: parent.width < parent.height ? 72 : 46
+    //height: parent.width < parent.height ? 72 : 46
+    height: 72
     z: 100500
     anchors.top: parent.top
 

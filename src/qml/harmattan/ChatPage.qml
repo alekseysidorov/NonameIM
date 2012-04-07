@@ -4,7 +4,7 @@ import com.vk.api 0.1
 
 Page {
     id: chatPage;
-    property ChatModel model: chatModel
+    property QtObject contact
 
     function __update() {
         if (client.online)
@@ -16,7 +16,7 @@ Page {
             __update()
     }
 
-    Header {
+    PageHeader {
         id: header;
 
         onBackButtonClicked: pageStack.pop()
@@ -47,6 +47,7 @@ Page {
 
     ChatModel {
         id: chatModel
+        contact: chatPage.contact
     }
 
     ScrollDecorator {

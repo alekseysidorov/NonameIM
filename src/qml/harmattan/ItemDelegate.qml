@@ -3,17 +3,24 @@ import QtQuick 1.1
 
 Item {
     id: root
-    property alias imageSize: image.width
-    property alias imageSource: image.source
+    property alias imageSize: avatar.width
+    property alias imageSource: avatar.source
     property Item item: null
     property bool clickable: true
     property bool horizontalLine: true
+    property int __spacing: 6
+
+    function getMinHeight() {
+        var avatarHeight = avatar.y + avatar.height + __spacing;
+        var itemHeight = item ? item.y + item.height + __spacing : 0
+        return Math.max(avatarHeight, itemHeight)
+    }
 
     signal clicked
 
     width: parent ? parent.width : 600
-    height: 90
-    scale: 10
+    height: getMinHeight()
+    //scale: 10
     opacity: 0
 
     Component.onCompleted: {
@@ -35,29 +42,12 @@ Item {
         }
     }
 
-    Rectangle {
-        id: imageBorder;
-        width: image.width + 2
-        height: image.height + 2
+    Avatar {
+        id: avatar
         anchors.left: parent.left
         anchors.leftMargin: 12
-        anchors.verticalCenter: parent.verticalCenter;
-        color: image.sourceSize ? "black" : "transparent";
-        //scale: image.state === Image.Ready ? 1 : 0
-
-        Behavior on scale {
-            NumberAnimation {
-                easing.type: Easing.InOutQuad;
-            }
-        }
-        Image {
-            id: image;
-            anchors.centerIn: parent;
-            smooth: true;
-            width: 64
-            height: width
-            source: "images/logo.png"
-        }
+        anchors.top: item ? item.top : parent.top
+        anchors.topMargin: item ? __spacing/2 : 0
     }
 
     Image {
@@ -76,13 +66,11 @@ Item {
         onClicked: root.clicked();
     }
 
-
     Rectangle {
         id: hr
 
         visible: horizontalLine
         anchors.bottom: root.bottom
-        anchors.bottomMargin: 1
         width:  parent.width;
         height: 1;
         color: "#c0c0c0";
@@ -90,8 +78,9 @@ Item {
 
     onItemChanged: {
         item.anchors.top = root.top
-        item.anchors.bottom = hr.top
-        item.anchors.left = imageBorder.right
+        item.anchors.topMargin = 12
+        //item.anchors.bottom = hr.top
+        item.anchors.left = avatar.right
         item.anchors.leftMargin = 12
         item.anchors.right = arrow.left
     }

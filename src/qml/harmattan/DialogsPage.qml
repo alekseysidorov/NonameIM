@@ -24,8 +24,9 @@ Page {
     }
 
     tools: commonTools
+    orientationLock: PageOrientation.LockPortrait
 
-    Header {
+    PageHeader {
         id: header
         text: qsTr("Messages")
     }
@@ -45,7 +46,7 @@ Page {
         delegate: DialogDelegate {
             id: delegate
             onClicked: {
-                chatPage.model.contact = contact;
+                chatPage.contact = contact;
                 pageStack.push(chatPage)
             }
         }

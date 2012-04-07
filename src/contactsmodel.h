@@ -27,12 +27,14 @@ public:
     void setFilterByName(const QString &filter);
     QString filterByName();
     void clear();
+public slots:
+    int findContact(int id) const;
 signals:
     void rosterChanged(vk::Roster*);
     void filterByNameChanged(const QString &filter);
 private slots:
     void addContact(vk::Contact*);
-    void removeContact(vk::Contact*);
+    void removeContact(int id);
 protected:
     bool checkContact(vk::Contact*);
 private:

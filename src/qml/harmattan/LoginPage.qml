@@ -3,6 +3,7 @@ import com.nokia.meego 1.0
 
 Page {
     id: loginPage
+
     property alias login: login.text
     property alias password: pass.text
     signal requestLogin;

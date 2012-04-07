@@ -9,26 +9,34 @@ PageStackWindow {
     Component.onCompleted: {
         pageStack.toolBar.style.inverted = true //HACK
         client.connectToHost()
-        //appWindow.pageStack.push(loginPage)
     }
 
-    initialPage: loginPage
+    initialPage: newsPage
 
     NewsPage {
         id: newsPage
     }
+
     WallPage {
         id: wallPage
     }
+
+    ProfilePage {
+        id: profilePage
+    }
+
     DialogsPage {
         id: dialogsPage
     }
+
     AudioPage {
         id: audioPage
     }
+
     RosterPage {
         id: rosterPage
     }
+
     ChatPage {
         id: chatPage
     }
@@ -44,11 +52,13 @@ PageStackWindow {
     }
 
     Client {
-        id: client;
+        id: client
 
         onOnlineStateChanged: {
             if (online) {
-                pageStack.push(newsPage);
+                //pageStack.push(newsPage);
+            } else {
+                //pageStack.push(loginPage);
             }
         }
     }

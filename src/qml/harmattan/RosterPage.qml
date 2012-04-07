@@ -16,8 +16,9 @@ Page {
     }
 
     tools: commonTools
+    orientationLock: PageOrientation.LockPortrait
 
-    Header {
+    PageHeader {
         id: header
         text: qsTr("Friends")
     }
@@ -34,7 +35,13 @@ Page {
         anchors.bottom: parent.bottom;
         model: contactsModel
         highlight: HighlightDelegate {}
-        delegate: ContactDelegate {}
+        delegate: ContactDelegate {
+           id: contactDelegate
+           onClicked: {
+               profilePage.contact = contact;
+               pageStack.push(profilePage);
+           }
+        }
         currentIndex: -1;
         header: SearchBar {
             id: searchBar

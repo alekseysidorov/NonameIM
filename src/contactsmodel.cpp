@@ -21,8 +21,8 @@ void ContactsModel::setRoster(vk::Roster *roster)
         addContact(contact);
 
 
-    connect(roster, SIGNAL(contactAdded(vk::Contact*)), SLOT(addContact(vk::Contact*)));
-    connect(roster, SIGNAL(contactRemoved(vk::Contact*)), SLOT(removeContact(vk::Contact*)));
+    connect(roster, SIGNAL(buddyAdded(vk::Contact*)), SLOT(addContact(vk::Contact*)));
+    connect(roster, SIGNAL(contactRemoved(int)), SLOT(removeContact(int)));
 
     emit rosterChanged(roster);
 }
@@ -57,6 +57,8 @@ QVariant ContactsModel::data(const QModelIndex &index, int role) const
 
 int ContactsModel::rowCount(const QModelIndex &parent) const
 {
+    Q_ASSERT(parent == QModelIndex());
+    Q_UNUSED(parent);
     return count();
 }
 
@@ -82,6 +84,13 @@ void ContactsModel::clear()
     m_contactList.clear();
     endRemoveRows();
 }
+int ContactsModel::findContact(int id) const
+{
+    for (int i = 0; i != m_contactList.count(); i++)
+        if (m_contactList.at(i)->id() == id)
+            return i;
+    return -1;
+}
 
 void ContactsModel::addContact(vk::Contact *contact)
 {
@@ -93,9 +102,9 @@ void ContactsModel::addContact(vk::Contact *contact)
     endInsertRows();
 }
 
-void ContactsModel::removeContact(vk::Contact *contact)
+void ContactsModel::removeContact(int id)
 {
-    int index = m_contactList.indexOf(contact);
+    int index = findContact(id);
     if (index == -1)
         return;
     beginRemoveRows(QModelIndex(), index, index);

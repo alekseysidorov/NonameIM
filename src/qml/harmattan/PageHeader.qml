@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-HeaderBar {
+PageHeaderBar {
     id: root
     property alias text: label.text
     property bool backButton: false
@@ -17,6 +17,7 @@ HeaderBar {
         font.pixelSize: 27;
         font.bold: true;
         z: 2
+        elide: Text.ElideMiddle
     }
     Label {
         id: shadow
@@ -54,7 +55,7 @@ HeaderBar {
             }
             PropertyChanges {
                 target: label
-                anchors.leftMargin: 5;
+                anchors.leftMargin: 10;
                 anchors.rightMargin: 5;
             }
         },

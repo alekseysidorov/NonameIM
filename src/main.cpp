@@ -8,6 +8,8 @@
 #include "contactsmodel.h"
 #include "dialogsmodel.h"
 #include "chatmodel.h"
+#include "wallmodel.h"
+#include "newsfeedmodel.h"
 #include <longpoll.h>
 
 #define VK_API_NAMESPACE "com.vk.api"
@@ -23,6 +25,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<ContactsModel>(VK_API_NAMESPACE, 0, 1, "ContactsModel");
     qmlRegisterType<DialogsModel>(VK_API_NAMESPACE, 0, 1, "DialogsModel");
     qmlRegisterType<ChatModel>(VK_API_NAMESPACE, 0, 1, "ChatModel");
+    qmlRegisterType<WallModel>(VK_API_NAMESPACE, 0, 1, "WallModel");
+    qmlRegisterType<NewsFeedModel>(VK_API_NAMESPACE, 0, 1, "NewsFeedModel");
 
     qmlRegisterUncreatableType<vk::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
     qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
