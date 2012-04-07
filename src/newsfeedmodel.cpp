@@ -45,8 +45,10 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
     case IdRole:
         return news.value("post_id");
         break;
-    case SourceRole:
-        return qVariantFromValue(m_client.data()->roster()->contact(news.value("source_id").toInt()));
+    case SourceRole: {
+        int source = news.value("source_id").toInt();
+        return qVariantFromValue(m_client.data()->roster()->contact(source));
+    }
     case DateRole:
         return QDateTime::fromTime_t(news.value("date").toUInt());
     case BodyRole:

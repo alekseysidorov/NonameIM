@@ -2,7 +2,7 @@
 #define WALLMODEL_H
 
 #include <QAbstractListModel>
-#include <buddy.h>
+#include <contact.h>
 #include <wallsession.h>
 #include <QWeakPointer>
 

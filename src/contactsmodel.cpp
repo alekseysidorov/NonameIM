@@ -1,5 +1,6 @@
 #include "contactsmodel.h"
-#include <buddy.h>
+#include <contact.h>
+#include <QApplication>
 
 ContactsModel::ContactsModel(QObject *parent) :
     QAbstractListModel(parent),
@@ -18,11 +19,11 @@ void ContactsModel::setRoster(vk::Roster *roster)
     m_roster = roster;
 
     foreach (auto contact, roster->contacts())
-        addContact(contact);
+        addFriend(contact);
 
 
-    connect(roster, SIGNAL(buddyAdded(vk::Contact*)), SLOT(addContact(vk::Contact*)));
-    connect(roster, SIGNAL(contactRemoved(int)), SLOT(removeContact(int)));
+    connect(roster, SIGNAL(friendAdded(vk::Contact*)), SLOT(addFriend(vk::Contact*)));
+    connect(roster, SIGNAL(contactRemoved(int)), SLOT(removeFriend(int)));
 
     emit rosterChanged(roster);
 }
@@ -70,7 +71,7 @@ void ContactsModel::setFilterByName(const QString &filter)
     //TODO write more fast algorythm
     clear();
     foreach (auto contact, m_roster.data()->contacts())
-        addContact(contact);
+        addFriend(contact);
 }
 
 QString ContactsModel::filterByName()
@@ -92,7 +93,7 @@ int ContactsModel::findContact(int id) const
     return -1;
 }
 
-void ContactsModel::addContact(vk::Contact *contact)
+void ContactsModel::addFriend(vk::Contact *contact)
 {
     if (!checkContact(contact))
         return;
@@ -100,9 +101,10 @@ void ContactsModel::addContact(vk::Contact *contact)
     beginInsertRows(QModelIndex(), index, index);
     m_contactList.append(contact);
     endInsertRows();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }
 
-void ContactsModel::removeContact(int id)
+void ContactsModel::removeFriend(int id)
 {
     int index = findContact(id);
     if (index == -1)
@@ -114,7 +116,7 @@ void ContactsModel::removeContact(int id)
 
 bool ContactsModel::checkContact(vk::Contact *contact)
 {
-    if (vk::contact_cast<vk::Group*>(contact))
+    if (contact->type() != vk::Contact::FriendType)
         return false;
     if (!m_filterByName.isEmpty())
         return contact->name().contains(m_filterByName, Qt::CaseInsensitive);

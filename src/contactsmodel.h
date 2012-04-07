@@ -33,8 +33,8 @@ signals:
     void rosterChanged(vk::Roster*);
     void filterByNameChanged(const QString &filter);
 private slots:
-    void addContact(vk::Contact*);
-    void removeContact(int id);
+    void addFriend(vk::Contact*);
+    void removeFriend(int id);
 protected:
     bool checkContact(vk::Contact*);
 private:

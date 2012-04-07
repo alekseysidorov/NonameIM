@@ -1,6 +1,6 @@
 #include "chatmodel.h"
 #include <chatsession.h>
-#include "buddy.h"
+#include "contact.h"
 #include "client.h"
 #include "longpoll.h"
 

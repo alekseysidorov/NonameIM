@@ -21,16 +21,21 @@ PageHeaderBar {
     }
     Label {
         id: shadow
-        property int offset: 1
+        property int offset: 2
+
+        anchors.fill: label
+        anchors.topMargin: offset
+        anchors.left: offset
+        anchors.bottomMargin: -offset
+        anchors.right: -offset
 
         color: "black"
         text: label.text
         z: label.z - 1
-        x: label.x + offset
-        y: label.y + offset
         opacity: 0.7
         font.pixelSize: label.font.pixelSize
         font.bold: label.font.bold
+        elide: label.elide
     }
 
     BackButton {

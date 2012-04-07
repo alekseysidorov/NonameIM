@@ -4,7 +4,7 @@
 
 #include "clientimpl.h"
 #include <roster.h>
-#include <buddy.h>
+#include <contact.h>
 #include "contactsmodel.h"
 #include "dialogsmodel.h"
 #include "chatmodel.h"

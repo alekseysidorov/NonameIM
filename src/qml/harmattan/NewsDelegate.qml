@@ -17,6 +17,7 @@ ItemDelegate {
             text: source.name
             width: parent.width
             color: "#2b497a"
+            textFormat: Text.RichText
         }
         Label {
             id: activityLabel
