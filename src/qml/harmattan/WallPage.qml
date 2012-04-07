@@ -39,7 +39,6 @@ Page {
         highlight: HighlightDelegate {}
         delegate: WallDelegate {}
         currentIndex: -1
-        cacheBuffer: 24
     }
 
     WallModel {

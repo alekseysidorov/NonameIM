@@ -6,6 +6,23 @@ import "utils.js" as Utils
 ItemDelegate {
     id: itemDelegate
 
+    property QtObject __commentsPage
+
+    function loadCommentsPage() {
+        var component = Qt.createComponent("CommentsPage.qml");
+        console.log(component.errorString())
+        if (component.status === Component.Ready) {
+            var page = component.createObject(appWindow);
+            return page;
+        }
+    }
+
+    onClicked: {
+        if (!__commentsPage)
+            __commentsPage = loadCommentsPage()
+        pageStack.push(__commentsPage)
+    }
+
     imageSource: Utils.getContactPhotoSource(from)
     item: data
 
@@ -36,7 +53,20 @@ ItemDelegate {
                 font.pixelSize: activityLabel.font.pixelSize
                 color: "#777";
             }
+        }
+    }
 
+    Connections {
+        target: __commentsPage
+        onStatusChanged: {
+            if (__commentsPage.status === PageStatus.Active) {
+                console.log(model.postId)
+                __commentsPage.from = model.from
+                __commentsPage.postId = model.postId
+                __commentsPage.postBody = body
+                __commentsPage.update()
+            } else if (__commentsPage.status === PageStatus.Inactive)
+                __commentsPage.destroy()
         }
     }
 }

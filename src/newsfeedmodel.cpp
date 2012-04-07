@@ -95,5 +95,5 @@ void NewsFeedModel::onNewsAdded(const QVariantMap &data)
     beginInsertRows(QModelIndex(), last, last);
     m_newsList.append(data);
     endInsertRows();
-    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+    //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }

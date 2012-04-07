@@ -43,7 +43,8 @@ SOURCES += main.cpp \
     newsfeedmodel.cpp \
     dialogsmodel.cpp \
     chatmodel.cpp \
-    wallmodel.cpp
+    wallmodel.cpp \
+    commentsmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -72,7 +73,8 @@ HEADERS += \
     newsfeedmodel.h \
     dialogsmodel.h \
     chatmodel.h \
-    wallmodel.h
+    wallmodel.h \
+    commentsmodel.h
 
 unix {
     QMAKE_CXXFLAGS += -std=c++0x

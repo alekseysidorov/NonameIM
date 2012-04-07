@@ -6,8 +6,11 @@ function replaceURLWithHTMLLinks(text) {
                 : "";
 }
 
-function format(str) {
-    var tmp = replaceURLWithHTMLLinks(str);
+function format(str, maxCharCount) {
+    var tmp = clip(str)
+    tmp = replaceURLWithHTMLLinks(tmp);
+    //if (maxCharCount)
+    //    tmp = clip(tmp, maxCharCount)
     return tmp.replace("<br>"," ")
 }
 
@@ -19,4 +22,23 @@ function formatDate(date)
 {
     //TODO add year and mounth format for old and future dates!
     return Qt.formatDateTime(date, "dddd in hh:mm");
+}
+
+function clip(str, maxCharCount)
+{
+    if (!maxCharCount)
+        maxCharCount = 160 //standart sms format
+    if (str.length < maxCharCount)
+        return str
+    maxCharCount = maxCharCount - 3
+    var index = -1;
+    do {
+        index = str.indexOf(" ", index + 1)
+    } while (index < maxCharCount && index != -1)
+    if (index === -1)
+        str = str.substring(0, maxCharCount)
+    else
+        str = str.substring(0, index)
+    str = str.concat("...")
+    return str;
 }

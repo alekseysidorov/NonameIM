@@ -9,6 +9,7 @@ Rectangle {
     width: 64
     height: 64
     color: avatar.sourceSize ? "black" : "transparent";
+    visible: avatar.status === Image.Ready
 
     Image {
         id: avatar
@@ -16,8 +17,9 @@ Rectangle {
         source: "images/user.png"
         width: root.width - 2
         height: root.height -2
-        smooth: true
+        //smooth: true
         asynchronous: true
+        cache: true
     }
 
     MouseArea {

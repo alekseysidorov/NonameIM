@@ -21,7 +21,7 @@ Item {
     width: parent ? parent.width : 600
     height: getMinHeight()
     //scale: 10
-    opacity: 0
+    //opacity: 0
 
     Component.onCompleted: {
         scale = 1

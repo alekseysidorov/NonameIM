@@ -22,6 +22,7 @@ Row {
 
     height: 70;
     y: flickableItem ? __calculateY(flickableItem) : 0
+    spacing: 12
 
     Image {
         id: iconUpdate;

@@ -49,7 +49,6 @@ Page {
             onSearch: contactsModel.filterByName = searchBar.searchingText
             onCancel: contactsModel.filterByName = ""
         }
-        cacheBuffer: 12
     }
 
     ScrollDecorator {

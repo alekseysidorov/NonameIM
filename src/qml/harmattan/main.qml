@@ -21,10 +21,6 @@ PageStackWindow {
         id: wallPage
     }
 
-    ProfilePage {
-        id: profilePage
-    }
-
     DialogsPage {
         id: dialogsPage
     }

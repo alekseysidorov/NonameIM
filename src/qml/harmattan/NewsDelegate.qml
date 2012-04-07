@@ -24,7 +24,7 @@ ItemDelegate {
 
             onLinkActivated: Qt.openUrlExternally(link)
 
-            text: Utils.replaceURLWithHTMLLinks(body)
+            text: Utils.format(body)
             width: parent.width
             font.pixelSize: titleLabel.font.pixelSize * 0.8
             textFormat: Text.RichText

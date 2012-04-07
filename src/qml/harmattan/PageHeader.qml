@@ -25,9 +25,9 @@ PageHeaderBar {
 
         anchors.fill: label
         anchors.topMargin: offset
-        anchors.left: offset
+        anchors.leftMargin: offset
         anchors.bottomMargin: -offset
-        anchors.right: -offset
+        anchors.rightMargin: -offset
 
         color: "black"
         text: label.text

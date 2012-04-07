@@ -42,7 +42,6 @@ Page {
         highlight: HighlightDelegate {}
         delegate: ChatDelegate {}
         currentIndex: -1
-        cacheBuffer: 24
     }
 
     ChatModel {

@@ -14,7 +14,7 @@ WallModel::WallModel(QObject *parent) :
     roles[FromRole] = "from";
     roles[ToRole] = "to";
     roles[DateRole] = "date";
-    roles[IdRole] = "id";
+    roles[IdRole] = "postId";
     setRoleNames(roles);
 }
 
@@ -60,10 +60,8 @@ QVariant WallModel::data(const QModelIndex &index, int role) const
     return QVariant::Invalid;
 }
 
-int WallModel::rowCount(const QModelIndex &parent) const
+int WallModel::rowCount(const QModelIndex &) const
 {
-    Q_ASSERT(parent == QModelIndex());
-    Q_UNUSED(parent);
     return count();
 }
 
