@@ -27,7 +27,7 @@ Row {
     Image {
         id: iconUpdate;
         anchors.top: parent.top;
-        source: "images/ic_pull_arrow.png";
+        source: "../images/ic_pull_arrow.png";
 
         Behavior on rotation {
             NumberAnimation {

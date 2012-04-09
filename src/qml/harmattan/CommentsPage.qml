@@ -2,6 +2,8 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.vk.api 0.1
 import "utils.js" as Utils
+import "delegates"
+import "components"
 
 Page {
     id: page
@@ -10,6 +12,8 @@ Page {
     property alias postId : commentsModel.postId
     property string postBody : qsTr("Unknown post!")
     property date postDate
+    property int commentsCount
+    property bool canPost : false
 
     function update() {
         if (client.online)
@@ -49,8 +53,7 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width:  parent.width - 24;
-                text: postBody.concat("<br />")
-                textFormat: Text.RichText
+                text: Utils.format(postBody.concat("<br />"))
                 font.pixelSize: appWindow.smallFontSize
                 Rectangle {
                     width: parent.width

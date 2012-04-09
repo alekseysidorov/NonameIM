@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "utils.js" as Utils
+import "../utils.js" as Utils
 
 ItemDelegate {
     id: itemDelegate

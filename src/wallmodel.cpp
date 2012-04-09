@@ -97,13 +97,22 @@ int WallModel::findPost(int id)
     return -1;
 }
 
+
+static bool postLessThan(const vk::WallPost &a, const vk::WallPost &b)
+{
+    return a.id() < b.id();
+}
+
+
 void WallModel::addPost(const vk::WallPost &post)
 {
     if (findPost(post.id()) != -1)
         return;
 
-    beginInsertRows(QModelIndex(), 0, 0);
-    m_posts.append(post);
+    auto it = qLowerBound(m_posts.end(), m_posts.begin(), post , postLessThan);
+    auto last = it - m_posts.begin();
+    beginInsertRows(QModelIndex(), last, last);
+    m_posts.insert(it, post);
     endInsertRows();
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }

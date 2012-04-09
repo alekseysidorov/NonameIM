@@ -6,17 +6,30 @@ function replaceURLWithHTMLLinks(text) {
                 : "";
 }
 
-function format(str, maxCharCount) {
-    var tmp = clip(str)
+function convertSpecialChars(str)
+{
+    //TODO use normal function
+    str = str.replace(/&quot;/g,'"');
+    str = str.replace(/&amp;/g,"&");
+    str = str.replace(/&lt;/g,"<");
+    str =  str.replace(/&gt;/g,">");
+    str =  str.replace(/&#33;/g,"!");
+    return str
+}
+
+function format(str, maxCharCount) {   
+    var tmp = convertSpecialChars(str)
     tmp = replaceURLWithHTMLLinks(tmp);
-    //if (maxCharCount)
-    //    tmp = clip(tmp, maxCharCount)
-    return tmp.replace("<br>"," ")
+    if (maxCharCount) {
+        tmp = clip(tmp, maxCharCount)
+        tmp = tmp.replace("<br>"," ")
+    }
+    return tmp
 }
 
 function getContactPhotoSource(contact) {
     return (contact && contact.photoSource) ? contact.photoSource
-                                            : "images/user.png"
+                                            : "../images/user.png"
 }
 
 function formatDate(date)

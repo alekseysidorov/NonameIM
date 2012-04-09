@@ -1,21 +1,12 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "utils.js" as Utils
+import "../utils.js" as Utils
 
 ItemDelegate {
     id: itemDelegate
 
-    onClicked: {
-        var properties = {
-            "from" : from,
-            "postId" : postId,
-            "postBody" : body,
-            "postDate" : date
-        }
-        pageStack.push(appWindow.createPage("CommentsPage.qml"), properties)
-    }
-
+    clickable: false
     imageSource: Utils.getContactPhotoSource(from)
     item: data
 
@@ -27,6 +18,7 @@ ItemDelegate {
             text: from.name
             width: parent.width
             color: "#2b497a"
+
             font.pixelSize: appWindow.normalFontSize
         }
         Label {
@@ -44,7 +36,7 @@ ItemDelegate {
             Label {
                 id: dateLabel
                 text: Utils.formatDate(date)
-                font.pixelSize: appWindow.tinyFontSize
+                font.pixelSize: appWindow.smallFontSize
                 color: "#777";
             }
         }

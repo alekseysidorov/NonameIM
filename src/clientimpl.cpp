@@ -2,6 +2,7 @@
 #include <QSettings>
 #include <QNetworkConfigurationManager>
 #include <QThread>
+#include <QTextDocument>
 
 Client::Client(QObject *parent) :
     vk::Client(parent)
@@ -35,5 +36,4 @@ void Client::setOnline(bool set)
 {
     set ? connectToHost()
         : disconnectFromHost();
-
 }

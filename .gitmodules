@@ -1,6 +1,6 @@
 [submodule "vk"]
 	path = vk
 	url = git://github.com/gorthauer/vkkit.git
-[submodule "src/qml/harmattan/components"]
-	path = src/qml/harmattan/components
+[submodule "src/qml/harmattan/ios"]
+	path = src/qml/harmattan/ios
 	url = git@github.com:gorthauer/qml-components.git

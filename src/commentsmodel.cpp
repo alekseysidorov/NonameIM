@@ -8,11 +8,6 @@
 
 #include <QDebug>
 
-static bool commentLessThan(const QVariantMap &a, const QVariantMap &b)
-{
-    return a.value("cid").toInt() < b.value("cid").toInt();
-}
-
 CommentsModel::CommentsModel(QObject *parent) :
     QAbstractListModel(parent)
 {
@@ -118,16 +113,22 @@ void CommentsModel::deleteComment(int id)
     endRemoveRows();
 }
 
+
+static bool commentLessThan(const QVariantMap &a, const QVariantMap &b)
+{
+    return a.value("cid").toInt() < b.value("cid").toInt();
+}
+
 void CommentsModel::addComment(const QVariantMap &data)
 {
     int cid = data.value("cid").toInt();
     if (findComment(cid) != -1)
         return;
 
-    auto it = qLowerBound(m_comments.constBegin(), m_comments.constEnd(), data , commentLessThan);
-    auto last = it - m_comments.constBegin();
+    auto it = qLowerBound(m_comments.begin(), m_comments.end(), data , commentLessThan);
+    auto last = it - m_comments.begin();
     beginInsertRows(QModelIndex(), last, last);
-    m_comments.append(data);
+    m_comments.insert(it, data);
     endInsertRows();
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }

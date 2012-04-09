@@ -10,7 +10,7 @@ BorderImage {
     anchors.left: parent.left;
     anchors.leftMargin: 10;
     anchors.verticalCenter: parent.verticalCenter;
-    source: "images/btn_back.sci";
+    source: "../images/btn_back.sci";
 
     Text {
         id: label

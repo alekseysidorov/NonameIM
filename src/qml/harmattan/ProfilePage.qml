@@ -2,6 +2,8 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.vk.api 0.1
 import "utils.js" as Utils
+import "delegates"
+import "components"
 
 Page {
     id: profilePage
