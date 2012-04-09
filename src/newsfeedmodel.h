@@ -16,7 +16,7 @@ class NewsFeedModel : public QAbstractListModel
 public:
 
     enum Roles {
-        IdRole = Qt::UserRole,
+        PostIdRole = Qt::UserRole,
         SourceRole,
         DateRole,
         BodyRole

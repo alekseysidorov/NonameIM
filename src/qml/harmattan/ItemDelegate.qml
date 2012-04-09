@@ -20,27 +20,28 @@ Item {
 
     width: parent ? parent.width : 600
     height: getMinHeight()
-    //scale: 10
-    //opacity: 0
 
-    Component.onCompleted: {
-        scale = 1
-        opacity = 1
-    }
+    //    scale: 0
+    //    opacity: 0
 
-    Behavior on scale {
-        NumberAnimation {
-            easing.type: Easing.InOutQuad;
-            duration: 600
-        }
-    }
+    //    Component.onCompleted: {
+    //        scale = 1
+    //        opacity = 1
+    //    }
 
-    Behavior on opacity {
-        NumberAnimation {
-            easing.type: Easing.InOutQuad;
-            duration: 600
-        }
-    }
+    //    Behavior on scale {
+    //        NumberAnimation {
+    //            easing.type: Easing.InOutQuad;
+    //            duration: 600
+    //        }
+    //    }
+
+    //    Behavior on opacity {
+    //        NumberAnimation {
+    //            easing.type: Easing.InOutQuad;
+    //            duration: 600
+    //        }
+    //    }
 
     Avatar {
         id: avatar
@@ -79,7 +80,6 @@ Item {
     onItemChanged: {
         item.anchors.top = root.top
         item.anchors.topMargin = 12
-        //item.anchors.bottom = hr.top
         item.anchors.left = avatar.right
         item.anchors.leftMargin = 12
         item.anchors.right = arrow.left

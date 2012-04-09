@@ -9,6 +9,16 @@ ItemDelegate {
     imageSource: Utils.getContactPhotoSource(source)
     item: data
 
+    onClicked: {
+        var properties = {
+            "from" : source,
+            "postId" : postId,
+            "postBody" : body,
+            "postDate" : date
+        }
+        pageStack.push(appWindow.createPage("CommentsPage.qml"), properties)
+    }
+
     Column {
         id: data
 
@@ -18,6 +28,7 @@ ItemDelegate {
             width: parent.width
             color: "#2b497a"
             textFormat: Text.RichText
+            font.pixelSize: appWindow.normalFontSize
         }
         Label {
             id: activityLabel
@@ -26,15 +37,15 @@ ItemDelegate {
 
             text: Utils.format(body)
             width: parent.width
-            font.pixelSize: titleLabel.font.pixelSize * 0.8
-            textFormat: Text.RichText
+            font.pixelSize: appWindow.smallFontSize
+            //textFormat: Text.RichText
         }
         Row {
             width: parent.width
             Label {
                 id: dateLabel
                 text: Utils.formatDate(date)
-                font.pixelSize: activityLabel.font.pixelSize
+                font.pixelSize: appWindow.tinyFontSize
                 color: "#777";
             }
 

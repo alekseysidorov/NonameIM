@@ -9,7 +9,7 @@ NewsFeedModel::NewsFeedModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     auto roles = roleNames();
-    roles[IdRole] = "id";
+    roles[PostIdRole] = "postId";
     roles[SourceRole] = "source";
     roles[DateRole] = "date";
     roles[BodyRole] = "body";
@@ -42,7 +42,7 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
 
     auto news = m_newsList.at(row);
     switch (role) {
-    case IdRole:
+    case PostIdRole:
         return news.value("post_id");
         break;
     case SourceRole: {
@@ -80,7 +80,7 @@ void NewsFeedModel::getLatestNews(vk::NewsFeed::Filters filters, quint8 count)
 int NewsFeedModel::findNews(int id)
 {
     for (int i = 0 ; i != count(); i++) {
-        if (id == this->data(createIndex(i, 0), IdRole).toInt())
+        if (id == this->data(createIndex(i, 0), PostIdRole).toInt())
             return i;
     }
     return -1;
@@ -95,5 +95,5 @@ void NewsFeedModel::onNewsAdded(const QVariantMap &data)
     beginInsertRows(QModelIndex(), last, last);
     m_newsList.append(data);
     endInsertRows();
-    //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }

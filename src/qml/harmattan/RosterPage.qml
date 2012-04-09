@@ -5,14 +5,14 @@ import com.vk.api 0.1
 Page {
     id: friendsPage
 
-    function __update() {
+    function update() {
         if (client.online)
             client.roster.sync()
     }
 
     onStatusChanged: {
         if (status === PageStatus.Active)
-            __update()
+            update()
     }
 
     tools: commonTools
@@ -35,13 +35,7 @@ Page {
         anchors.bottom: parent.bottom;
         model: contactsModel
         highlight: HighlightDelegate {}
-        delegate: ContactDelegate {
-           id: contactDelegate
-           onClicked: {
-               profilePage.contact = contact;
-               pageStack.push(profilePage);
-           }
-        }
+        delegate: ContactDelegate {}
         currentIndex: -1;
         header: SearchBar {
             id: searchBar
@@ -57,7 +51,7 @@ Page {
 
     UpdateIcon {
         flickableItem: rosterView
-        onTriggered: __update()
+        onTriggered: update()
     }
 
     Connections {

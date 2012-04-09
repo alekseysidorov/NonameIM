@@ -25,6 +25,7 @@ vk::Contact *WallModel::contact() const
 
 void WallModel::setContact(vk::Contact *contact)
 {
+    qDebug() << contact;
     if (!m_session.isNull()) {
         clear();
         m_session.data()->deleteLater();
@@ -72,6 +73,10 @@ int WallModel::count() const
 
 void WallModel::getLastPosts(int count, vk::WallSession::Filter filter)
 {
+    if (m_session.isNull()) {
+        qWarning("WallModel: contact is null! Please set a contact!");
+        return;
+    }
     m_session.data()->getPosts(filter, count, 0, false);
 }
 

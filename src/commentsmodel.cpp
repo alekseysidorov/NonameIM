@@ -141,7 +141,6 @@ void CommentsModel::clear()
 
 void CommentsModel::getComments(int offset, int count)
 {
-    qDebug() << m_session.data() << m_postId;
     if (m_session.data() && m_postId) {
         auto reply = m_session.data()->getComments(offset, count);
         connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(commentsGetFinished()));

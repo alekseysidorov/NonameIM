@@ -101,7 +101,7 @@ void ContactsModel::addFriend(vk::Contact *contact)
     beginInsertRows(QModelIndex(), index, index);
     m_contactList.append(contact);
     endInsertRows();
-    //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+    qApp->processEvents();
 }
 
 void ContactsModel::removeFriend(int id)

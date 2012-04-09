@@ -41,12 +41,7 @@ Page {
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
         width: parent.width
-        delegate: NewsDelegate {
-            onClicked: {
-                profilePage.contact = source
-                pageStack.push(profilePage)
-            }
-        }
+        delegate: NewsDelegate {}
         model: newsFeedModel
     }
 

@@ -18,6 +18,7 @@ ItemDelegate {
             text: from.name
             width: parent.width
             color: "#2b497a"
+            font.pixelSize: appWindow.normalFontSize
         }
         Label {
             id: activityLabel
@@ -26,14 +27,14 @@ ItemDelegate {
 
             text: Utils.replaceURLWithHTMLLinks(body)
             width: parent.width
-            font.pixelSize: titleLabel.font.pixelSize * 0.8
-            textFormat: Text.RichText
+            //textFormat: Text.RichText
+            font.pixelSize: appWindow.smallFontSize
         }
         Label {
             id: dateLabel
             text: Utils.formatDate(date)
-            font.pixelSize: activityLabel.font.pixelSize * 0.9
-            color: "#777";
+            font.pixelSize: appWindow.tinyFontSize
+            color: "#777"
         }
     }
 

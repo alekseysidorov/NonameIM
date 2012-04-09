@@ -6,16 +6,7 @@ import "utils.js" as Utils
 ItemDelegate {
     id: itemDelegate
 
-    onClicked: {
-        var properties = {
-            "from" : from,
-            "postId" : postId,
-            "postBody" : body,
-            "postDate" : date
-        }
-        pageStack.push(appWindow.createPage("CommentsPage.qml"), properties)
-    }
-
+    clickable: false
     imageSource: Utils.getContactPhotoSource(from)
     item: data
 
@@ -27,6 +18,7 @@ ItemDelegate {
             text: from.name
             width: parent.width
             color: "#2b497a"
+            font.bold: true
             font.pixelSize: appWindow.normalFontSize
         }
         Label {
@@ -34,7 +26,7 @@ ItemDelegate {
 
             onLinkActivated: Qt.openUrlExternally(link)
 
-            text: Utils.format(body)
+            text: Utils.replaceURLWithHTMLLinks(body)
             width: parent.width
             font.pixelSize: appWindow.smallFontSize
             //textFormat: Text.RichText
@@ -44,7 +36,7 @@ ItemDelegate {
             Label {
                 id: dateLabel
                 text: Utils.formatDate(date)
-                font.pixelSize: appWindow.tinyFontSize
+                font.pixelSize: appWindow.smallFontSize
                 color: "#777";
             }
         }

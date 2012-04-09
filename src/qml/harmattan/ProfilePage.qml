@@ -7,20 +7,17 @@ Page {
     id: profilePage
     property QtObject contact
 
-    function __update() {
+    function update() {
         if (client.online) {
+            wallModel.contact = contact //hack
             wallModel.getLastPosts()
             contact.update();
         }
     }
-    onStatusChanged: {
-        if (status === PageStatus.Active)
-            __update()
-    }
 
     PageHeader {
         id: header
-        text: contact ? contact.name : qsTr("Unknown profile")
+        text: contact ? contact.name : qsTr("")
         backButton: true
         onBackButtonClicked: pageStack.pop()
     }
@@ -128,7 +125,7 @@ Page {
 
     WallModel {
         id: wallModel
-        contact: profilePage.contact
+        contact: contact
     }
 
     ListView {
@@ -158,6 +155,6 @@ Page {
 
     UpdateIcon {
         flickableItem: wallView
-        onTriggered: __update()
+        onTriggered: update()
     }
 }

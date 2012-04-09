@@ -15,7 +15,8 @@ function format(str, maxCharCount) {
 }
 
 function getContactPhotoSource(contact) {
-    return contact.photoSource ? contact.photoSource : "images/user.png"
+    return (contact && contact.photoSource) ? contact.photoSource
+                                            : "images/user.png"
 }
 
 function formatDate(date)
@@ -28,7 +29,7 @@ function clip(str, maxCharCount)
 {
     if (!maxCharCount)
         maxCharCount = 160 //standart sms format
-    if (str.length < maxCharCount)
+    if (!str || str.length < maxCharCount)
         return str
     maxCharCount = maxCharCount - 3
     var index = -1;

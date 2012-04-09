@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.vk.api 0.1
+import "utils.js" as Utils
 
 Page {
     id: page
@@ -8,13 +9,13 @@ Page {
     property QtObject from
     property alias postId : commentsModel.postId
     property string postBody : qsTr("Unknown post!")
+    property date postDate
 
     function update() {
         if (client.online)
             commentsModel.getComments()
     }
 
-    tools: commonTools
     orientationLock: PageOrientation.LockPortrait
 
     PageHeader {
@@ -39,12 +40,28 @@ Page {
         anchors.top: header.bottom;
         anchors.bottom: parent.bottom;
         model: commentsModel
-        header: Label {
+        header: Column {
             width: parent.width
-            text: postBody
+            ContactHeader {
+                contact: from
+                comment: Utils.formatDate(postDate)
+            }
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:  parent.width - 24;
+                text: postBody.concat("<br />")
+                textFormat: Text.RichText
+                font.pixelSize: appWindow.smallFontSize
+                Rectangle {
+                    width: parent.width
+                    anchors.bottom: parent.bottom
+                    height: 1;
+                    color: "#c0c0c0";
+                }
+            }
         }
         highlight: HighlightDelegate {}
-        delegate: WallDelegate {}
+        delegate: CommentsDelegate {}
         currentIndex: -1
     }
 

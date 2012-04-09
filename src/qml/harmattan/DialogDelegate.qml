@@ -23,22 +23,23 @@ ItemDelegate {
             id: titleLabel
             text: contact.name
             width: parent.width
+            font.pixelSize: appWindow.normalFontSize
+            color: "#2b497a"
         }
         Label {
             id: activityLabel
             text: Utils.format(body)
             width: parent.width
             elide: Text.ElideRight
-            color: "#777";
-            font.pixelSize: titleLabel.font.pixelSize * 0.8
+            font.pixelSize: appWindow.smallFontSize
 
             onLinkActivated: Qt.openUrlExternally(link)
         }
         Label {
             id: dateLabel
             text: Utils.formatDate(date)
-            font.pixelSize: activityLabel.font.pixelSize
-            color: "#2b497a"
+            font.pixelSize: appWindow.tinyFontSize
+            color: "#777"
         }
     }
 

@@ -6,6 +6,37 @@ import "components"
 PageStackWindow {
     id: appWindow
 
+    property int bigFontSize: 25
+    property int normalFontSize: 23
+    property int smallFontSize: 21
+    property int tinyFontSize: 19
+
+    function createPage(pageName, update) {
+        var component = Qt.createComponent(pageName);
+        var page = component.createObject(pageName);
+        if (!page) {
+            console.log(component.errorString())
+            return
+        }
+        var parentPage = pageStack.currentPage
+        var statusHandler = function() {
+            if (page.status === PageStatus.Active) {
+                if (update)
+                    update()
+                else if (page.update)
+                    page.update()
+            } else if (page.status === PageStatus.Inactive) {
+                if (pageStack.currentPage == parentPage) {
+                    page.destroy(1000)
+                    console.log("destroy page: " + page)
+                }
+            }
+        }
+
+        page.statusChanged.connect(statusHandler)
+        return page
+    }
+
     Component.onCompleted: {
         pageStack.toolBar.style.inverted = true //HACK
         client.connectToHost()

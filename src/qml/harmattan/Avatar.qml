@@ -9,16 +9,21 @@ Rectangle {
     width: 64
     height: 64
     color: avatar.sourceSize ? "black" : "transparent";
-    visible: avatar.status === Image.Ready
+    scale: avatar.status === Image.Ready
+
+    Behavior on scale {
+        NumberAnimation {
+            easing.type: Easing.InOutQuad;
+        }
+    }
 
     Image {
         id: avatar
         anchors.centerIn: parent
-        source: "images/user.png"
         width: root.width - 2
         height: root.height -2
         //smooth: true
-        asynchronous: true
+        //asynchronous: true
         cache: true
     }
 
