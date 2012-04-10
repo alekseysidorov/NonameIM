@@ -20,6 +20,11 @@ Client::Client(QObject *parent) :
     connect(manager, SIGNAL(onlineStateChanged(bool)), this, SLOT(setOnline(bool)));
 }
 
+QObject *Client::request(const QString &method, const QVariantMap &args)
+{
+    return vk::Client::request(method, args);
+}
+
 void Client::onOnlineStateChanged(bool isOnline)
 {
     if (isOnline) {

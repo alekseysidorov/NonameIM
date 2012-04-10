@@ -39,7 +39,7 @@ ItemDelegate {
                 elide: Text.ElideRight
                 color: "#777";
                 font.pixelSize: name.font.pixelSize * 0.8
-                //textFormat: Text.RichText
+
             }
         }
     }

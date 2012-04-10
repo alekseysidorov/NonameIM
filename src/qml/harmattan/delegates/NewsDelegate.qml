@@ -27,7 +27,7 @@ ItemDelegate {
             text: source.name
             width: parent.width
             color: "#2b497a"
-            textFormat: Text.RichText
+
             font.pixelSize: appWindow.normalFontSize
         }
         Label {
@@ -38,7 +38,7 @@ ItemDelegate {
             text: Utils.format(body, 160)
             width: parent.width
             font.pixelSize: appWindow.smallFontSize
-            //textFormat: Text.RichText
+
         }
         Row {
             width: parent.width

@@ -37,7 +37,7 @@ ItemDelegate {
             text: Utils.format(body, 160)
             width: parent.width
             font.pixelSize: appWindow.smallFontSize
-            //textFormat: Text.RichText
+
         }
         Row {
             width: parent.width
@@ -45,7 +45,7 @@ ItemDelegate {
                 id: dateLabel
                 text: Utils.formatDate(date)
                 font.pixelSize: appWindow.tinyFontSize
-                color: "#777";
+                color: "#777"
             }
         }
     }

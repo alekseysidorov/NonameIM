@@ -27,7 +27,7 @@ ItemDelegate {
 
             text: Utils.replaceURLWithHTMLLinks(body)
             width: parent.width
-            //textFormat: Text.RichText
+
             font.pixelSize: appWindow.smallFontSize
         }
         Label {

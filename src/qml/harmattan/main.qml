@@ -84,6 +84,12 @@ PageStackWindow {
 
         onOnlineStateChanged: {
             if (online) {
+
+                var reply = client.request("audio.get", {"count" : 10})
+                reply.resultReady.connect(function(response) {
+                    console.log("response received")
+                })
+
                 //pageStack.push(newsPage);
             } else {
                 //pageStack.push(loginPage);

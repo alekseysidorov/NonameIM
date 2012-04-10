@@ -29,7 +29,6 @@ ItemDelegate {
             text: Utils.format(body)
             width: parent.width
             font.pixelSize: appWindow.smallFontSize
-            //textFormat: Text.RichText
         }
         Row {
             width: parent.width

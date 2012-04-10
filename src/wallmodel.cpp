@@ -25,7 +25,6 @@ vk::Contact *WallModel::contact() const
 
 void WallModel::setContact(vk::Contact *contact)
 {
-    qDebug() << contact;
     if (!m_session.isNull()) {
         clear();
         m_session.data()->deleteLater();

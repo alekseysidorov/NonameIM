@@ -55,7 +55,6 @@ Page {
                     anchors.bottom: status.bottom
 
                     text: Utils.format(contact ? contact.activity : qsTr("Unknown"))
-                    textFormat: Text.RichText
                     elide: Text.ElideRight
                     color: "#666";
                 }

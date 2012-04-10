@@ -11,6 +11,7 @@
 #include "wallmodel.h"
 #include "commentsmodel.h"
 #include "newsfeedmodel.h"
+#include "audiomodel.h"
 #include <longpoll.h>
 
 #define VK_API_NAMESPACE "com.vk.api"
@@ -29,6 +30,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<WallModel>(VK_API_NAMESPACE, 0, 1, "WallModel");
     qmlRegisterType<NewsFeedModel>(VK_API_NAMESPACE, 0, 1, "NewsFeedModel");
     qmlRegisterType<CommentsModel>(VK_API_NAMESPACE, 0, 1, "CommentsModel");
+    qmlRegisterType<AudioModel>(VK_API_NAMESPACE, 0, 1, "AudioModel");
 
     qmlRegisterUncreatableType<vk::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
     qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));

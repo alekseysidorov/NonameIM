@@ -92,7 +92,6 @@ void DialogsModel::onAddMessage(const vk::Message &message)
 
 void DialogsModel::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
-    qDebug() << topLeft.row() << bottomRight.row();
     for (int i = topLeft.row(); i != bottomRight.row() + 1; i++) {
         auto message = at(i);
         if (message.isIncoming()) {
