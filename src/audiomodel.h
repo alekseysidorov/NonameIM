@@ -18,7 +18,7 @@ public:
     vk::Client* client() const;
     void setClient(vk::Client* client);
 public slots:
-    void get(vk::Contact *owner, int count = 100, int offset = 0);
+    void getContactAudio(vk::Contact *owner, int count = 100, int offset = 0);
 signals:
     void clientChanged(QObject*);
     void getAudioFinished();

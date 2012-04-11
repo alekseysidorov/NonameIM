@@ -6,8 +6,14 @@ import "../utils.js" as Utils
 Item {
     id: root
 
+    property bool playing: false
+    property real bufferProgress
+    property real position
+
     property int __verticalSpacing: 6
     property int __horizontalSpacing: 12
+
+    signal clicked
 
     width: parent ? parent.width : 600
     height: column.height + column.y + __verticalSpacing
@@ -19,7 +25,8 @@ Item {
         anchors.leftMargin: __horizontalSpacing
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "../images/ic_play_list_up.png" //: "images/ic_play_list_up.png";
+        source: playing ? "../images/ic_pause_list_up.png"
+                        : "../images/ic_play_list_up.png"
     }
 
     Column {
@@ -57,9 +64,13 @@ Item {
             id: progressBar
 
             width: parent.width
-            visible: false
-        }
+            visible: playing
 
+            minimumValue: 0
+            maximumValue: duration
+            indeterminate: position < 0
+            value: position
+        }
     }
 
     Label {
@@ -81,4 +92,9 @@ Item {
         color: "#c0c0c0"
     }
 
+    MouseArea {
+        id: area
+        anchors.fill: parent
+        onClicked: root.clicked()
+    }
 }

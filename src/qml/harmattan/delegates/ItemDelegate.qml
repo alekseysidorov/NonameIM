@@ -22,27 +22,27 @@ Item {
     width: parent ? parent.width : 600
     height: getMinHeight()
 
-    //    scale: 0
-    //    opacity: 0
+    //scale: 10
+    //opacity: 0
 
-    //    Component.onCompleted: {
-    //        scale = 1
-    //        opacity = 1
-    //    }
+    //Component.onCompleted: {
+    //    scale = 1
+    //    opacity = 1
+    //}
 
-    //    Behavior on scale {
-    //        NumberAnimation {
-    //            easing.type: Easing.InOutQuad;
-    //            duration: 600
-    //        }
+    //Behavior on scale {
+    //    NumberAnimation {
+    //        easing.type: Easing.InOutQuad;
+    //        duration: 1500
     //    }
+    //}
 
-    //    Behavior on opacity {
-    //        NumberAnimation {
-    //            easing.type: Easing.InOutQuad;
-    //            duration: 600
-    //        }
+    //Behavior on opacity {
+    //    NumberAnimation {
+    //        easing.type: Easing.InOutQuad;
+    //        duration: 1500
     //    }
+    //}
 
     Avatar {
         id: avatar

@@ -1,17 +1,28 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.vk.api 0.1
+import QtMultimediaKit 1.1
 import "delegates"
 import "components"
 
 Page {
     id: audioPage
     property QtObject owner: client.me
+    property int playingIndex: -1
+
     property QtObject __client: client //workaround
+    property Item __playingItem
+    property bool __intermidate: true
 
     function update() {
         if (client.online)
-            audioModel.get(client.me)
+            audioModel.getContactAudio(client.me)
+    }
+
+    onPlayingIndexChanged: {
+        player.stop()
+        player.source = audioModel.get(playingIndex, "url")
+        player.play()
     }
 
     tools: commonTools
@@ -33,8 +44,17 @@ Page {
 
         }
         model: audioModel
-        delegate: AudioDelegate {}
+        delegate: AudioDelegate {
+            id: audioDelegate
+
+            onClicked: {
+                playingIndex = playing ? -1 : index
+            }
+            playing: playingIndex === index
+            position: playing ? player.position / 1000 : -1
+        }
         currentIndex: -1
+        cacheBuffer: 100
     }
 
     ScrollDecorator {
@@ -49,5 +69,27 @@ Page {
     AudioModel {
         id: audioModel
         client: __client
+    }
+
+    Audio {
+        id: player
+
+        autoLoad: true
+
+        onStatusChanged: {
+            switch (status) {
+            case Audio.Stalled:
+                __intermidate = true
+                break
+            case Audio.Buffered:
+                __intermidate = false
+                break
+            case Audio.EndOfMedia:
+                if (playingIndex === audioModel.count - 1)
+                    playingIndex = 0
+                else
+                    playingIndex = playingIndex + 1
+            }
+        }
     }
 }

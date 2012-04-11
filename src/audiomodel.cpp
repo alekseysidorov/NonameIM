@@ -29,10 +29,10 @@ void AudioModel::setClient(vk::Client *client)
     emit clientChanged(client);
 }
 
-void AudioModel::get(vk::Contact *owner, int count, int offset)
+void AudioModel::getContactAudio(vk::Contact *owner, int count, int offset)
 {
     if (m_provider.data()) {
-        auto reply = m_provider.data()->get(owner->id(), count, offset);
+        auto reply = m_provider.data()->getContactAudio(owner->id(), count, offset);
         connect(reply, SIGNAL(resultReady(QVariant)),
                 this, SIGNAL(getAudioFinished()));
     }
