@@ -19,30 +19,19 @@ Item {
 
     signal clicked
 
+    ListView.onRemove: SequentialAnimation {
+        PropertyAction { target: root; property: "ListView.delayRemove"; value: true }
+        NumberAnimation { target: root; property: "scale"; to: 0; duration: 300; easing.type: Easing.InOutQuad }
+        PropertyAction { target: root; property: "ListView.delayRemove"; value: false }
+    }
+
+    ListView.onAdd: ParallelAnimation {
+        NumberAnimation { target: root; property: "opacity"; from: 0; to: 1; duration: 600; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: root; property: "scale"; from: 0; to: 1; duration: 600; easing.type: Easing.InOutQuad }
+    }
+
     width: parent ? parent.width : 600
     height: getMinHeight()
-
-    //scale: 10
-    //opacity: 0
-
-    //Component.onCompleted: {
-    //    scale = 1
-    //    opacity = 1
-    //}
-
-    //Behavior on scale {
-    //    NumberAnimation {
-    //        easing.type: Easing.InOutQuad;
-    //        duration: 1500
-    //    }
-    //}
-
-    //Behavior on opacity {
-    //    NumberAnimation {
-    //        easing.type: Easing.InOutQuad;
-    //        duration: 1500
-    //    }
-    //}
 
     Avatar {
         id: avatar

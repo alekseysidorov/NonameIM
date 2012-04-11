@@ -13,17 +13,28 @@ Page {
     property QtObject __client: client //workaround
     property Item __playingItem
     property bool __intermidate: true
+    property string query
 
     function update() {
-        if (client.online)
-            audioModel.getContactAudio(client.me)
+        if (client.online) {
+            if (query === "")
+                audioModel.getContactAudio(client.me)
+            else
+                audioModel.searchAudio(query)
+        }
     }
 
     onPlayingIndexChanged: {
-        player.stop()
-        player.source = audioModel.get(playingIndex, "url")
-        player.play()
+        if (playingIndex === -1)
+            player.pause()
+        else {
+            player.stop()
+            player.source = audioModel.get(playingIndex, "url")
+            player.play()
+        }
     }
+
+    onQueryChanged: update()
 
     tools: commonTools
     orientationLock: PageOrientation.LockPortrait
@@ -41,7 +52,10 @@ Page {
         highlight: HighlightDelegate{}
         highlightMoveSpeed: -1
         header: SearchBar {
+            id: searchBar
 
+            onSearch: query = searchingText
+            onCancel: query = ""
         }
         model: audioModel
         delegate: AudioDelegate {
@@ -50,11 +64,23 @@ Page {
             onClicked: {
                 playingIndex = playing ? -1 : index
             }
+
+            onPlayingChanged: {
+                if (playing) {
+                    position = function() { return player.position/1000 }
+                    bufferProgress = function() { return player.bufferProgress }
+                    indeterminate = function() { return __intermidate }
+                } else {
+                    position = 0
+                    bufferProgress = 0
+                    indeterminate = true
+                }
+            }
+
             playing: playingIndex === index
-            position: playing ? player.position / 1000 : -1
+
         }
         currentIndex: -1
-        cacheBuffer: 100
     }
 
     ScrollDecorator {

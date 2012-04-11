@@ -9,6 +9,7 @@ Item {
     property bool playing: false
     property real bufferProgress
     property real position
+    property bool indeterminate: false
 
     property int __verticalSpacing: 6
     property int __horizontalSpacing: 12
@@ -60,16 +61,11 @@ Item {
             elide: Text.ElideRight
         }
 
-        ProgressBar {
-            id: progressBar
+        Loader {
+            id: progressLoader
 
+            sourceComponent: playing ? progress : null
             width: parent.width
-            visible: playing
-
-            minimumValue: 0
-            maximumValue: duration
-            indeterminate: position < 0
-            value: position
         }
     }
 
@@ -96,5 +92,31 @@ Item {
         id: area
         anchors.fill: parent
         onClicked: root.clicked()
+    }
+
+    Component {
+        id: progress
+
+        ProgressBar {
+            id: positionBar
+
+            visible: playing
+
+            minimumValue: 0
+            maximumValue: duration
+            indeterminate: indeterminate
+            value: position
+
+            ProgressBar {
+                id: bufferBar
+
+                z: positionBar.z + 1
+                anchors.fill: parent
+                opacity: 0.4
+                minimumValue: 0
+                maximumValue: 1
+                value: bufferProgress
+            }
+        }
     }
 }

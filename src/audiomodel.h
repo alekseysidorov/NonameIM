@@ -19,9 +19,10 @@ public:
     void setClient(vk::Client* client);
 public slots:
     void getContactAudio(vk::Contact *owner, int count = 100, int offset = 0);
+    void searchAudio(const QString &query, int count = 50, int offset = 0);
 signals:
     void clientChanged(QObject*);
-    void getAudioFinished();
+    void requestFinished();
 private:
     QObject* clientObj() const;
     void setClient(QObject* client);

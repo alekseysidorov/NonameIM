@@ -92,7 +92,7 @@ PageStackWindow {
 
                 //pageStack.push(newsPage);
             } else {
-                //pageStack.push(loginPage);
+                pageStack.push(loginPage);
             }
         }
     }

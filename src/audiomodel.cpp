@@ -32,12 +32,22 @@ void AudioModel::setClient(vk::Client *client)
 void AudioModel::getContactAudio(vk::Contact *owner, int count, int offset)
 {
     if (m_provider.data()) {
+        clear();
         auto reply = m_provider.data()->getContactAudio(owner->id(), count, offset);
         connect(reply, SIGNAL(resultReady(QVariant)),
-                this, SIGNAL(getAudioFinished()));
+                this, SIGNAL(requestFinished()));
     }
 }
 
+void AudioModel::searchAudio(const QString &query, int count, int offset)
+{
+    if (m_provider.data()) {
+        clear();
+        auto reply = m_provider.data()->searchAudio(query, count, offset);
+        connect(reply, SIGNAL(resultReady(QVariant)),
+                this, SIGNAL(requestFinished()));
+    }
+}
 
 QObject *AudioModel::clientObj() const
 {
