@@ -5,10 +5,6 @@
 #include <newsfeed.h>
 #include <QWeakPointer>
 
-namespace vk {
-typedef QList<QVariantMap> NewsList;
-} //namespace vk
-
 class NewsFeedModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -16,7 +12,8 @@ class NewsFeedModel : public QAbstractListModel
 public:
 
     enum Roles {
-        PostIdRole = Qt::UserRole,
+        TypeRole = Qt::UserRole,
+        PostIdRole,
         SourceRole,
         DateRole,
         BodyRole
@@ -34,12 +31,15 @@ public slots:
     int findNews(int id);
 signals:
     void clientChanged(QObject* client);
+protected:
+    void insertNews(int index, const vk::NewsItem &data);
 private slots:
-    void onNewsAdded(const QVariantMap &data);
+    void onNewsAdded(const vk::NewsItem &data);
 private:
     QWeakPointer<vk::Client> m_client;
     QWeakPointer<vk::NewsFeed> m_newsFeed;
-    vk::NewsList m_newsList;
+    vk::NewsItemList m_newsList;
+    Qt::SortOrder m_sortOrder;
 };
 
 #endif // NEWSFEEDMODEL_H

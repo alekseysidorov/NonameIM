@@ -1,14 +1,17 @@
 #include "newsfeedmodel.h"
 #include <QApplication>
-#include "roster.h"
-#include "client.h"
+#include <roster.h>
+#include <client.h>
+#include <utils.h>
 #include <QDateTime>
 #include <QDebug>
 
 NewsFeedModel::NewsFeedModel(QObject *parent) :
-    QAbstractListModel(parent)
+    QAbstractListModel(parent),
+    m_sortOrder(Qt::DescendingOrder)
 {
     auto roles = roleNames();
+    roles[TypeRole] = "type";
     roles[PostIdRole] = "postId";
     roles[SourceRole] = "source";
     roles[DateRole] = "date";
@@ -31,7 +34,7 @@ void NewsFeedModel::setClient(QObject *obj)
         return;
 
     auto newsFeed = new vk::NewsFeed(client);
-    connect(newsFeed, SIGNAL(newsAdded(QVariantMap)), SLOT(onNewsAdded(QVariantMap)));
+    connect(newsFeed, SIGNAL(newsAdded(vk::NewsItem)), SLOT(onNewsAdded(vk::NewsItem)));
 
     m_newsFeed = newsFeed;
 }
@@ -42,17 +45,19 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
 
     auto news = m_newsList.at(row);
     switch (role) {
+    case TypeRole:
+        return news.type();
     case PostIdRole:
-        return news.value("post_id");
+        return news.postId();
         break;
     case SourceRole: {
-        int source = news.value("source_id").toInt();
+        int source = news.sourceId();
         return qVariantFromValue(m_client.data()->roster()->contact(source));
     }
     case DateRole:
-        return QDateTime::fromTime_t(news.value("date").toUInt());
+        return news.date();
     case BodyRole:
-        return news.value("text");
+        return news.body();
     default:
         break;
     }
@@ -86,14 +91,25 @@ int NewsFeedModel::findNews(int id)
     return -1;
 }
 
-void NewsFeedModel::onNewsAdded(const QVariantMap &data)
+static bool newsItemLessThan(const vk::NewsItem &a, const vk::NewsItem &b)
 {
-    if (findNews(data.value("post_id").toInt()) != -1)
+    return a.date() < b.date();
+}
+
+void NewsFeedModel::onNewsAdded(const vk::NewsItem &item)
+{
+    if (findNews(item.postId()) != -1)
         return;
 
-    auto last = m_newsList.count();
-    beginInsertRows(QModelIndex(), last, last);
-    m_newsList.append(data);
+    auto index = vk::bound(m_newsList, m_sortOrder, item, newsItemLessThan);
+    insertNews(index, item);
+}
+
+
+void NewsFeedModel::insertNews(int index, const vk::NewsItem &item)
+{
+    beginInsertRows(QModelIndex(), index, index);
+    m_newsList.insert(index, item);
     endInsertRows();
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }
