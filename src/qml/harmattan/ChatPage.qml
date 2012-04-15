@@ -9,8 +9,10 @@ Page {
     property QtObject contact
 
     function __update() {
-        if (client.online)
+        if (client.online) {
             chatModel.getHistory()
+            appWindow.addTask(qsTr("Getting chat history..."), chatModel.requestFinished)
+        }
     }
 
     onStatusChanged: {

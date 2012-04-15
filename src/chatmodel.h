@@ -24,6 +24,7 @@ public slots:
 signals:
     void contactChanged(vk::Contact*);
     void titleChanged(const QString &title);
+    void requestFinished();
 private slots:
     void messageReadStateChanged(int id, bool set);
 private:

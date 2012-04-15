@@ -9,6 +9,7 @@ Page {
     id: audioPage
     property QtObject owner: client.me
     property int playingIndex: -1
+    property alias playing: player.playing
 
     property QtObject __client: client //workaround
     property Item __playingItem
@@ -21,6 +22,7 @@ Page {
                 audioModel.getContactAudio(client.me)
             else
                 audioModel.searchAudio(query)
+            appWindow.addTask(qsTr("Getting audio..."), audioModel.requestFinished)
         }
     }
 
@@ -95,6 +97,8 @@ Page {
     AudioModel {
         id: audioModel
         client: __client
+
+        onRequestFinished: appWindow.busy = false
     }
 
     Audio {

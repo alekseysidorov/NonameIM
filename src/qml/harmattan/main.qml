@@ -1,7 +1,8 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.nokia.extras 1.1
 import com.vk.api 0.1
-import "ios"
+import "ios" as Ios
 import "components"
 
 PageStackWindow {
@@ -11,6 +12,7 @@ PageStackWindow {
     property int normalFontSize: 23
     property int smallFontSize: 21
     property int tinyFontSize: 19
+    property bool busy: false
 
     function createPage(pageName, update) {
         var component = Qt.createComponent(pageName);
@@ -36,6 +38,11 @@ PageStackWindow {
 
         page.statusChanged.connect(statusHandler)
         return page
+    }
+
+    function addTask(str, finish) {
+        finish.connect(balloon.finished)
+        busy = true
     }
 
     Component.onCompleted: {
@@ -79,23 +86,42 @@ PageStackWindow {
         }
     }
 
+    Balloon {
+        id: balloon
+
+        signal finished
+        onFinished: busy = false
+
+        opacity: busy
+        anchors.centerIn: parent
+
+        Ios.BusyIndicator {
+            id: busyIndicator
+            anchors.centerIn: parent
+            running: busy
+
+            Component.onCompleted: {
+                platformStyle.inverted = true
+                platformStyle.size = "large"
+            }
+        }
+    }
+
+
     Client {
         id: client
 
-        property QtObject __lastPage: newsPage
-
         onOnlineStateChanged: {
             if (online) {
+                if (pageStack.currentPage != newsPage)
+                    pageStack.push(newsPage);
 
                 var reply = client.request("audio.get", {"count" : 10})
                 reply.resultReady.connect(function(response) {
                     console.log("response received")
                 })
-
-                pageStack.replace(__lastPage);
             } else {
-                __lastPage = pageStack.currentPage
-                pageStack.push(loginPage);
+                pageStack.replace(loginPage);
             }
         }
     }
@@ -103,7 +129,7 @@ PageStackWindow {
     ToolBarLayout {
         id: commonTools
 
-        TileRow {
+        Ios.TileRow {
             id: tileRow
             pageStack: appWindow.pageStack
 
@@ -113,7 +139,7 @@ PageStackWindow {
 
             spacing: 24
 
-            TileIcon {
+            Ios.TileIcon {
                 id: newsIcon
                 checkable: true
                 page: newsPage
@@ -121,7 +147,7 @@ PageStackWindow {
                 iconSource: checked ? "images/tile-news-down.png" :
                                       "images/tile-news-up.png"
             }
-            TileIcon {
+            Ios.TileIcon {
                 id: wallIcon
                 checkable: true
                 page: wallPage
@@ -129,7 +155,7 @@ PageStackWindow {
                 iconSource: checked ? "images/tile-wall-down.png" :
                                       "images/tile-wall-up.png"
             }
-            TileIcon {
+            Ios.TileIcon {
                 id: messagesIcon
                 checkable: true
                 page: dialogsPage
@@ -138,15 +164,16 @@ PageStackWindow {
                                       "images/tile-messages-up.png"
                 badge: dialogsPage.unreadCount > 0 ? dialogsPage.unreadCount : ""
             }
-            TileIcon {
+            Ios.TileIcon {
                 id: audioIcon
                 checkable: true
                 page: audioPage
                 text: qsTr("Audio")
                 iconSource: checked ? "images/tile-audio-down.png" :
                                       "images/tile-audio-up.png"
+                badge: audioPage.playing ? "*" : ""
             }
-            TileIcon {
+            Ios.TileIcon {
                 id: friendsIcon
                 checkable: true
                 page: rosterPage

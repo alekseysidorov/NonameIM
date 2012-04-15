@@ -51,8 +51,10 @@ QString ChatModel::title() const
 
 void ChatModel::getHistory(int count, int offset)
 {
-    if (!m_session.isNull())
-        m_session.data()->getHistory(count, offset);
+    if (!m_session.isNull()) {
+        auto reply = m_session.data()->getHistory(count, offset);
+        connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
+    }
 }
 
 void ChatModel::markAsRead(int mid, bool set)

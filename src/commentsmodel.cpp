@@ -56,7 +56,7 @@ QVariant CommentsModel::data(const QModelIndex &index, int role) const
         return comment.value("cid");
         break;
     case FromRole: {
-        int source = comment.value("cid").toInt();
+        int source = comment.value("uid").toInt();
         return qVariantFromValue(roster->contact(source));
     }
     case DateRole:
@@ -144,6 +144,6 @@ void CommentsModel::getComments(int offset, int count)
 {
     if (m_session.data() && m_postId) {
         auto reply = m_session.data()->getComments(offset, count);
-        connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(commentsGetFinished()));
+        connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
     }
 }

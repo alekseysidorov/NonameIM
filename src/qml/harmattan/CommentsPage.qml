@@ -16,8 +16,10 @@ Page {
     property bool canPost : false
 
     function update() {
-        if (client.online)
+        if (client.online) {
             commentsModel.getComments()
+            appWindow.addTask(qsTr("Getting comments..."), commentsModel.requestFinished)
+        }
     }
 
     orientationLock: PageOrientation.LockPortrait

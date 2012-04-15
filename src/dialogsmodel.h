@@ -27,6 +27,7 @@ signals:
     //void clientChanged(vk::Client*);
     void clientChanged(QObject*); //HACK
     void unreadCountChanged(int count);
+    void requestFinished();
 private slots:
     void onDialogsReceived(const QVariant &dialogs);
 	void onAddMessage(const vk::Message &message);

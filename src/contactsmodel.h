@@ -32,6 +32,7 @@ public slots:
 signals:
     void rosterChanged(vk::Roster*);
     void filterByNameChanged(const QString &filter);
+    void requestFinished();
 private slots:
     void addFriend(vk::Contact*);
     void removeFriend(int id);

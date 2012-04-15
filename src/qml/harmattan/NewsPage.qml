@@ -7,11 +7,10 @@ import "ios" as Ios
 
 Page {
     id: newsPage
-    property bool busy: false
 
     function __update() {
         if (client.online) {
-            busy = true
+            appWindow.addTask(qsTr("Getting news..."), newsFeedModel.requestFinished)
             newsFeedModel.getLatestNews()
         }
     }
@@ -38,17 +37,8 @@ Page {
         onTriggered: __update()
     }
 
-    Ios.BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: busy
-        running: busy
-    }
-
     NewsFeedModel {
         id: newsFeedModel
-
-        onGetFinished: busy = false
     }
 
     ListView {

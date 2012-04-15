@@ -8,8 +8,10 @@ Page {
     id: friendsPage
 
     function update() {
-        if (client.online)
+        if (client.online) {
             client.roster.sync()
+            appWindow.addTask(qsTr("Roster syncing..."), client.roster.syncFinished)
+        }
     }
 
     onStatusChanged: {

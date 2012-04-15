@@ -10,8 +10,10 @@ Page {
     property alias unreadCount: dialogsModel.unreadCount
 
     function __update() {
-        if (client.online)
+        if (client.online) {
             dialogsModel.getLastDialogs()
+            appWindow.addTask(qsTr("Getting dialogs..."), dialogsModel.requestFinished)
+        }
     }
     function __clear() {
         if (client.online)

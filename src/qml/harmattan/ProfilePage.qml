@@ -14,6 +14,7 @@ Page {
             wallModel.contact = contact //hack
             wallModel.getLastPosts()
             contact.update();
+            appWindow.addTask(qsTr("Getting profile..."), wallModel.requestFinished)
         }
     }
 

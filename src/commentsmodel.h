@@ -31,7 +31,7 @@ public:
     void setPostId(int arg);
 signals:
     void contactChanged(vk::Contact*);
-    void commentsGetFinished();
+    void requestFinished();
     void postChangedId(int);
 
 public slots:

@@ -34,6 +34,7 @@ public slots:
     int findPost(int id);
 signals:
     void contactChanged(vk::Contact* arg);
+    void requestFinished();
 private slots:
     void addPost(const vk::WallPost &post);
 private:

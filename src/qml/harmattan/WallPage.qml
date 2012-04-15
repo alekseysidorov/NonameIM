@@ -8,8 +8,10 @@ Page {
     id: wallPage
 
     function __update() {
-        if (client.online)
+        if (client.online) {
             wallModel.getLastPosts()
+            appWindow.addTask(qsTr("Getting wall posts..."), wallModel.requestFinished)
+        }
     }
     onStatusChanged: {
         if (status === PageStatus.Active)

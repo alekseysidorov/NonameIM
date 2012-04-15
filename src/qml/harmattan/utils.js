@@ -18,12 +18,12 @@ function convertSpecialChars(str)
 }
 
 function format(str, maxCharCount) {   
-    var tmp = convertSpecialChars(str)
-    tmp = replaceURLWithHTMLLinks(tmp);
+    var tmp = convertSpecialChars(str)    
     if (maxCharCount) {
         tmp = clip(tmp, maxCharCount)
         tmp = tmp.replace("<br>"," ")
-    }
+    } else
+        tmp = replaceURLWithHTMLLinks(tmp)
     return tmp
 }
 

@@ -31,7 +31,7 @@ public slots:
     int findNews(int id);
 signals:
     void clientChanged(QObject* client);
-    void getFinished();
+    void requestFinished();
 protected:
     void insertNews(int index, const vk::NewsItem &data);
 private slots:

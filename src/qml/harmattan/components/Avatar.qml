@@ -9,13 +9,6 @@ Rectangle {
     width: 64
     height: 64
     color: avatar.sourceSize ? "black" : "transparent";
-    scale: avatar.status === Image.Ready
-
-    Behavior on scale {
-        NumberAnimation {
-            easing.type: Easing.InOutQuad;
-        }
-    }
 
     Image {
         id: avatar
@@ -25,6 +18,13 @@ Rectangle {
         //smooth: true
         //asynchronous: true
         cache: true
+        opacity: avatar.status === Image.Ready
+
+        Behavior on opacity {
+            NumberAnimation {
+                easing.type: Easing.InOutQuad;
+            }
+        }
     }
 
     MouseArea {

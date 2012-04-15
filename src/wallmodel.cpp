@@ -76,7 +76,8 @@ void WallModel::getLastPosts(int count, vk::WallSession::Filter filter)
         qWarning("WallModel: contact is null! Please set a contact!");
         return;
     }
-    m_session.data()->getPosts(filter, count, 0, false);
+    auto reply = m_session.data()->getPosts(filter, count, 0, false);
+    connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
 }
 
 void WallModel::clear()

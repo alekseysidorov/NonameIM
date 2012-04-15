@@ -80,7 +80,7 @@ void NewsFeedModel::getLatestNews(vk::NewsFeed::Filters filters, quint8 count)
         return;
 
     auto reply = m_newsFeed.data()->getLatestNews(filters, count);
-    connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(getFinished()));
+    connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
 }
 
 int NewsFeedModel::findNews(int id)
@@ -102,8 +102,7 @@ void NewsFeedModel::onNewsAdded(const vk::NewsItem &item)
     if (findNews(item.postId()) != -1)
         return;
 
-    //auto index = vk::bound(m_newsList, m_sortOrder, item, newsItemLessThan);
-    int index = 0;
+    auto index = vk::bound(m_newsList, m_sortOrder, item, newsItemLessThan);
     insertNews(index, item);
 }
 

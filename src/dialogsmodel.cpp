@@ -55,6 +55,7 @@ void DialogsModel::getLastDialogs(int count, int previewLength)
     }
     auto reply = m_client.data()->getLastDialogs(count, previewLength);
     connect(reply, SIGNAL(resultReady(QVariant)), SLOT(onDialogsReceived(QVariant)));
+    connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
 }
 
 
