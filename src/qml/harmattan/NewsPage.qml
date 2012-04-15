@@ -3,13 +3,17 @@ import com.nokia.meego 1.0
 import com.vk.api 0.1
 import "delegates"
 import "components"
+import "ios" as Ios
 
 Page {
     id: newsPage
+    property bool busy: false
 
     function __update() {
-        if (client.online)
+        if (client.online) {
+            busy = true
             newsFeedModel.getLatestNews()
+        }
     }
     onStatusChanged: {
         if (status === PageStatus.Active)
@@ -34,8 +38,17 @@ Page {
         onTriggered: __update()
     }
 
+    Ios.BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: busy
+        running: busy
+    }
+
     NewsFeedModel {
         id: newsFeedModel
+
+        onGetFinished: busy = false
     }
 
     ListView {

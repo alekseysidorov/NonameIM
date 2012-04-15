@@ -82,6 +82,8 @@ PageStackWindow {
     Client {
         id: client
 
+        property QtObject __lastPage: newsPage
+
         onOnlineStateChanged: {
             if (online) {
 
@@ -90,8 +92,9 @@ PageStackWindow {
                     console.log("response received")
                 })
 
-                //pageStack.push(newsPage);
+                pageStack.replace(__lastPage);
             } else {
+                __lastPage = pageStack.currentPage
                 pageStack.push(loginPage);
             }
         }
