@@ -10,17 +10,26 @@ Column {
     Repeater {
         id: repeater
 
-        Row {
-            z: 100
+        Item {
+            id: delegate
+
             width: parent.width
-            spacing: 6
+            height: childrenRect.height
 
             Image {
+                id : image
+                anchors.left: parent.left
+                anchors.leftMargin: 6
                 source: "../images/ic_retweet_up.png"
             }
 
             Label {
                 id: urlLabel
+
+                anchors.left: image.right
+                anchors.leftMargin: 6
+                anchors.right: parent.right
+                anchors.rightMargin: 6
 
                 text: modelData.title
                 font.pixelSize: appWindow.smallFontSize

@@ -13,7 +13,7 @@ GridView {
     delegate: Image {
         id: image
 
-        height: 100
+        width: grid.cellWidth; height: grid.cellHeight
         source: modelData.src
     }
 }

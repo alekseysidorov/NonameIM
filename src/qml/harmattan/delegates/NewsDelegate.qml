@@ -25,13 +25,9 @@ ItemDelegate {
     }
 
     Component.onCompleted: {
+        console.log(">> item - " + source.name)
         console.log(">> photos: " + photos.length)
         console.log(">> links: " + links.length)
-        for (var i = 0; i !== attachments.length; i++) {
-            var attachment = attachments[i]
-            console.log(attachment.type)
-        }
-
     }
 
     Column {
@@ -86,10 +82,13 @@ ItemDelegate {
 
         Loader {
             onLoaded: {
+                console.log(">> src ") + photos[0].src_big
                 item.model = photos
+                item.height = 200
             }
 
             sourceComponent: photos.length ? photoViewer : null
+            width: parent.width
         }
 
         Loader {
@@ -98,6 +97,7 @@ ItemDelegate {
             }
 
             sourceComponent: links.length ? linksViewer : null
+            width: parent.width
         }
     }
 
