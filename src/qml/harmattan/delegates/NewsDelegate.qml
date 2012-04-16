@@ -2,6 +2,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../utils.js" as Utils
+import "../attachments"
 
 ItemDelegate {
     id: itemDelegate
@@ -24,7 +25,8 @@ ItemDelegate {
     }
 
     Component.onCompleted: {
-        console.log(attachments.length)
+        console.log(">> photos: " + photos.length)
+        console.log(">> links: " + links.length)
         for (var i = 0; i !== attachments.length; i++) {
             var attachment = attachments[i]
             console.log(attachment.type)
@@ -43,6 +45,7 @@ ItemDelegate {
 
             font.pixelSize: appWindow.normalFontSize
         }
+
         Label {
             id: activityLabel
 
@@ -51,39 +54,50 @@ ItemDelegate {
             font.pixelSize: appWindow.smallFontSize
 
         }
-        Column {
+
+        Row {
             width: parent.width
-            Row {
-                spacing: 9
+            spacing: 9
 
-                Label {
-                    id: dateLabel
-                    text: Utils.formatDate(date)
-                    font.pixelSize: appWindow.tinyFontSize
-                    color: "#777"
-                }
-
-                Loader {
-                    id: likesLoader
-
-                    onLoaded: {
-                        item.imageSource = "../images/ic_like_up.png"
-                        item.text = likes.count
-                    }
-
-                    sourceComponent: likes ? countComponent : null
-                }
-                Loader {
-                    id: commentsLoader
-
-                    onLoaded: {
-                        item.imageSource = "../images/ic_comment_up.png"
-                        item.text = comments.count
-                    }
-
-                    sourceComponent: comments ? countComponent : null
-                }
+            Label {
+                id: dateLabel
+                text: Utils.formatDate(date)
+                font.pixelSize: appWindow.tinyFontSize
+                color: "#777"
             }
+
+            Loader {
+                onLoaded: {
+                    item.imageSource = "../images/ic_like_up.png"
+                    item.text = likes.count
+                }
+
+                sourceComponent: likes ? countComponent : null
+            }
+            Loader {
+                onLoaded: {
+                    item.imageSource = "../images/ic_comment_up.png"
+                    item.text = comments.count
+                }
+
+                sourceComponent: comments ? countComponent : null
+            }
+        }
+
+        Loader {
+            onLoaded: {
+                item.model = photos
+            }
+
+            sourceComponent: photos.length ? photoViewer : null
+        }
+
+        Loader {
+            onLoaded: {
+                item.model = links
+            }
+
+            sourceComponent: links.length ? linksViewer : null
         }
     }
 
@@ -104,6 +118,21 @@ ItemDelegate {
                 font.pixelSize: appWindow.tinyFontSize
                 color: "#777"
             }
+        }
+    }
+
+    Component {
+        id: photoViewer
+
+        PhotoViewer {
+
+        }
+    }
+    Component {
+        id: linksViewer
+
+        Links {
+
         }
     }
 }

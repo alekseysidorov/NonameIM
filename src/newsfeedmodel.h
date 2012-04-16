@@ -20,7 +20,9 @@ public:
         AttachmentsRole,
         LikesRole,
         RepostsRole,
-        CommentsRole
+        CommentsRole,
+        PhotosRole,
+        LinksRole
     };
 
     explicit NewsFeedModel(QObject *parent = 0);
