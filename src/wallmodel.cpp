@@ -10,11 +10,15 @@ WallModel::WallModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     auto roles = roleNames();
+    roles[IdRole] = "postId";
     roles[BodyRole] = "body";
     roles[FromRole] = "from";
     roles[ToRole] = "to";
     roles[DateRole] = "date";
-    roles[IdRole] = "postId";
+    roles[AttachmentsRole] = "attachments";
+    roles[LikesRole] = "likes";
+    roles[RepostsRole] = "reposts";
+    roles[CommentsRole] = "comments";
     setRoleNames(roles);
 }
 
@@ -54,6 +58,14 @@ QVariant WallModel::data(const QModelIndex &index, int role) const
         return post.body();
     case DateRole:
         return post.date();
+    case AttachmentsRole:
+        return vk::Attachment::toVariantList(post.attachments());
+    case LikesRole:
+        return post.property("likes");
+    case RepostsRole:
+        return post.property("reposts");
+    case CommentsRole:
+        return post.property("comments");
     default:
         break;
     }

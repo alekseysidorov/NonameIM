@@ -19,7 +19,8 @@ public:
         BodyRole,
         CommentsRole,
         LikesRole,
-        RepostsRole
+        RepostsRole,
+        AttachmentsRole
     };
 
     explicit WallModel(QObject *parent = 0);

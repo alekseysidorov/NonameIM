@@ -48,6 +48,7 @@ Page {
         width: parent.width
         delegate: NewsDelegate {}
         model: newsFeedModel
+        cacheBuffer: parent.height
     }
 
     ScrollDecorator {

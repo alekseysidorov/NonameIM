@@ -47,7 +47,10 @@ PageStackWindow {
 
     Component.onCompleted: {
         pageStack.toolBar.style.inverted = true //HACK
-        client.connectToHost()
+        if (client.login && client.password)
+            client.connectToHost()
+        else
+            initialPage = loginPage
     }
 
     initialPage: newsPage

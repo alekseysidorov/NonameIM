@@ -43,8 +43,8 @@ Page {
         onHeightChanged: __firstItemPos()
 
         width: parent.width;
-        anchors.top: header.bottom;
-        anchors.bottom: parent.bottom;
+        anchors.top: header.bottom
+        anchors.bottom: parent.bottom
         model: commentsModel
         header: Column {
             width: parent.width
@@ -62,8 +62,8 @@ Page {
                 Rectangle {
                     width: parent.width
                     anchors.bottom: parent.bottom
-                    height: 1;
-                    color: "#c0c0c0";
+                    height: 1
+                    color: "#c0c0c0"
                 }
             }
         }

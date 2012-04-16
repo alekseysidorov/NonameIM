@@ -65,7 +65,7 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
     case BodyRole:
         return news.body();
     case AttachmentsRole:
-        return vk::Attachment::toList(news.attachments());
+        return vk::Attachment::toVariantList(news.attachments());
     case LikesRole:
         return news.property("likes");
     case RepostsRole:
@@ -73,9 +73,9 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
     case CommentsRole:
         return news.property("comments");
     case PhotosRole:
-        return vk::Attachment::toList(news.attachments(vk::Attachment::Photo));
+        return vk::Attachment::toVariantList(news.attachments(vk::Attachment::Photo));
     case LinksRole:
-        return vk::Attachment::toList(news.attachments(vk::Attachment::Link));
+        return vk::Attachment::toVariantList(news.attachments(vk::Attachment::Link));
     default:
         break;
     }

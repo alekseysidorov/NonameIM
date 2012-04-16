@@ -3,6 +3,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../utils.js" as Utils
 import "../attachments"
+import "../components"
 
 ItemDelegate {
     id: itemDelegate
@@ -22,12 +23,6 @@ ItemDelegate {
             }
             pageStack.push(appWindow.createPage("CommentsPage.qml"), properties)
         }
-    }
-
-    Component.onCompleted: {
-        console.log(">> item - " + source.name)
-        console.log(">> photos: " + photos.length)
-        console.log(">> links: " + links.length)
     }
 
     Column {
@@ -51,88 +46,18 @@ ItemDelegate {
 
         }
 
-        Row {
-            width: parent.width
-            spacing: 9
-
-            Label {
-                id: dateLabel
-                text: Utils.formatDate(date)
-                font.pixelSize: appWindow.tinyFontSize
-                color: "#777"
-            }
-
-            Loader {
-                onLoaded: {
-                    item.imageSource = "../images/ic_like_up.png"
-                    item.text = likes.count
-                }
-
-                sourceComponent: likes ? countComponent : null
-            }
-            Loader {
-                onLoaded: {
-                    item.imageSource = "../images/ic_comment_up.png"
-                    item.text = comments.count
-                }
-
-                sourceComponent: comments ? countComponent : null
-            }
-        }
-
-        Loader {
-            onLoaded: {
-                console.log(">> src ") + photos[0].src_big
-                item.model = photos
-                item.height = 200
-            }
-
-            sourceComponent: photos.length ? photoViewer : null
-            width: parent.width
-        }
-
-        Loader {
-            onLoaded: {
-                item.model = links
-            }
-
-            sourceComponent: links.length ? linksViewer : null
-            width: parent.width
-        }
-    }
-
-    Component {
-        id: countComponent
-
-        Row {
-            property alias imageSource : likeImg.source
-            property alias text : label.text
-
-            spacing: 3
-
-            Image {
-                id: likeImg
-            }
-            Label {
-                id: label
-                font.pixelSize: appWindow.tinyFontSize
-                color: "#777"
-            }
-        }
-    }
-
-    Component {
-        id: photoViewer
-
         PhotoViewer {
-
+            model: photos
         }
-    }
-    Component {
-        id: linksViewer
 
         Links {
+            model: links
+        }
 
+        PostInfo {
+            likes: model.likes
+            comments: model.comments
+            date: model.date
         }
     }
 }

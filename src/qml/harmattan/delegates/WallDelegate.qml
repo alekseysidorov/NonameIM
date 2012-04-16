@@ -2,6 +2,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../utils.js" as Utils
+import "../components"
 
 ItemDelegate {
     id: itemDelegate
@@ -29,6 +30,7 @@ ItemDelegate {
             color: "#2b497a"
             font.pixelSize: appWindow.normalFontSize
         }
+
         Label {
             id: activityLabel
 
@@ -39,14 +41,11 @@ ItemDelegate {
             font.pixelSize: appWindow.smallFontSize
 
         }
-        Row {
-            width: parent.width
-            Label {
-                id: dateLabel
-                text: Utils.formatDate(date)
-                font.pixelSize: appWindow.tinyFontSize
-                color: "#777"
-            }
+
+        PostInfo {
+            date: model.date
+            comments: model.comments
+            likes: model.likes
         }
     }
 }

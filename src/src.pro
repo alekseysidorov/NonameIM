@@ -79,7 +79,7 @@ HEADERS += \
     audiomodel.h
 
 unix {
-    QMAKE_CXXFLAGS += -std=c++0x
+    QMAKE_CXXFLAGS += -std=c++0x -fvisibility=hidden -Wall -Wextra
 }
 
 !isEmpty(MEEGO_VERSION_MAJOR) {
