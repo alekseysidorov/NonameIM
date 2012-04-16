@@ -16,6 +16,10 @@ NewsFeedModel::NewsFeedModel(QObject *parent) :
     roles[SourceRole] = "source";
     roles[DateRole] = "date";
     roles[BodyRole] = "body";
+    roles[AttachmentsRole] = "attachments";
+    roles[LikesRole] = "likes";
+    roles[RepostsRole] = "reposts";
+    roles[CommentsRole] = "comments";
     setRoleNames(roles);
 }
 
@@ -58,6 +62,14 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
         return news.date();
     case BodyRole:
         return news.body();
+    case AttachmentsRole:
+        return vk::Attachment::toList(news.attachments());
+    case LikesRole:
+        return news.property("likes");
+    case RepostsRole:
+        return news.property("reposts");
+    case CommentsRole:
+        return news.property("comments");
     default:
         break;
     }

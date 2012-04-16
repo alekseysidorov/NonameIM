@@ -57,6 +57,8 @@ Page {
                 width:  parent.width - 24;
                 text: Utils.format(postBody.concat("<br />"))
                 font.pixelSize: appWindow.smallFontSize
+                onLinkActivated: Qt.openUrlExternally(link)
+
                 Rectangle {
                     width: parent.width
                     anchors.bottom: parent.bottom

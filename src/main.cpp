@@ -13,6 +13,8 @@
 #include "newsfeedmodel.h"
 #include "audiomodel.h"
 #include <longpoll.h>
+#include <attachment.h>
+#include <newsfeed.h>
 
 #define VK_API_NAMESPACE "com.vk.api"
 
@@ -36,6 +38,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
     qmlRegisterUncreatableType<vk::Message>(VK_API_NAMESPACE, 0, 1, "Message", QObject::tr("Only flags"));
     qmlRegisterUncreatableType<vk::LongPoll>(VK_API_NAMESPACE, 0, 1, "LongPoll", QObject::tr("Use client.longPoll instead"));
+    qmlRegisterUncreatableType<vk::Attachment>(VK_API_NAMESPACE, 0, 1, "Attachment", QObject::tr("Attachment enums"));
+    qmlRegisterUncreatableType<vk::NewsItem>(VK_API_NAMESPACE, 0, 1, "NewsItem", QObject::tr("NewsItem enums"));
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

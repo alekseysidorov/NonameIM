@@ -16,7 +16,11 @@ public:
         PostIdRole,
         SourceRole,
         DateRole,
-        BodyRole
+        BodyRole,
+        AttachmentsRole,
+        LikesRole,
+        RepostsRole,
+        CommentsRole
     };
 
     explicit NewsFeedModel(QObject *parent = 0);
