@@ -21,6 +21,7 @@ import QtQuick 1.1
 Grid {
     id: grid
     property alias model: repeater.model
+    property int imageWidth: 75
 
     width: parent ? parent.width : 600
     clip: true
@@ -37,13 +38,26 @@ Grid {
             source: modelData.src
             fillMode: Image.PreserveAspectCrop
             clip: true
-            width: 75
+            width: imageWidth
             height: width
 
             Behavior on opacity {
                 NumberAnimation {
                     easing.type: Easing.InOutQuad;
                 }
+            }
+
+            MouseArea {
+
+                onClicked: {
+                    var properties = {
+                        "model" : repeater.model,
+                        "currentIndex" : index
+                    }
+                    appWindow.pageStack.push(appWindow.createPage("subpages/PhotoPage.qml"), properties)
+                }
+
+                anchors.fill: parent
             }
         }
     }

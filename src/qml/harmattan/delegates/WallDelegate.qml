@@ -1,8 +1,10 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.vk.api 0.1
 import "../utils.js" as Utils
 import "../components"
+import "../attachments"
 
 ItemDelegate {
     id: itemDelegate
@@ -12,7 +14,8 @@ ItemDelegate {
             "from" : from,
             "postId" : postId,
             "postBody" : body,
-            "postDate" : date
+            "postDate" : date,
+            "attachments" : attachments
         }
         pageStack.push(appWindow.createPage("CommentsPage.qml"), properties)
     }
@@ -40,6 +43,14 @@ ItemDelegate {
             width: parent.width
             font.pixelSize: appWindow.smallFontSize
 
+        }
+
+        PhotoViewer {
+            model: attachments[Attachment.Photo]
+        }
+
+        Links {
+            model: attachments[Attachment.Link]
         }
 
         PostInfo {

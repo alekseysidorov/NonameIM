@@ -86,6 +86,7 @@ PageStackWindow {
 
         onRequestLogin: {
             client.connectToHost(login, password)
+            addTask(qsTr("Connecting to vk..."), client.onlineStateChanged)
         }
     }
 
@@ -124,7 +125,8 @@ PageStackWindow {
                     console.log("response received")
                 })
             } else {
-                pageStack.replace(loginPage);
+                pageStack.replace(loginPage)
+                busy = false
             }
         }
     }

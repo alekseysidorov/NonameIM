@@ -59,7 +59,7 @@ QVariant WallModel::data(const QModelIndex &index, int role) const
     case DateRole:
         return post.date();
     case AttachmentsRole:
-        return vk::Attachment::toVariantList(post.attachments());
+        return vk::Attachment::toVariantMap(post.attachments());
     case LikesRole:
         return post.property("likes");
     case RepostsRole:

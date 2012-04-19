@@ -20,8 +20,6 @@ NewsFeedModel::NewsFeedModel(QObject *parent) :
     roles[LikesRole] = "likes";
     roles[RepostsRole] = "reposts";
     roles[CommentsRole] = "comments";
-    roles[PhotosRole] = "photos";
-    roles[LinksRole] = "links";
     setRoleNames(roles);
 }
 
@@ -65,17 +63,13 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
     case BodyRole:
         return news.body();
     case AttachmentsRole:
-        return vk::Attachment::toVariantList(news.attachments());
+        return vk::Attachment::toVariantMap(news.attachments());
     case LikesRole:
         return news.property("likes");
     case RepostsRole:
         return news.property("reposts");
     case CommentsRole:
         return news.property("comments");
-    case PhotosRole:
-        return vk::Attachment::toVariantList(news.attachments(vk::Attachment::Photo));
-    case LinksRole:
-        return vk::Attachment::toVariantList(news.attachments(vk::Attachment::Link));
     default:
         break;
     }

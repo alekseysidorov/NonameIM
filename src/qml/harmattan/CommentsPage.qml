@@ -14,6 +14,7 @@ Page {
     property date postDate
     property int commentsCount
     property bool canPost : false
+    property variant attachments
 
     function update() {
         if (client.online) {
@@ -48,23 +49,34 @@ Page {
         model: commentsModel
         header: Column {
             width: parent.width
+            spacing: 6
+
             ContactHeader {
                 contact: from
                 comment: Utils.formatDate(postDate)
             }
+
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                width:  parent.width - 24;
-                text: Utils.format(postBody.concat("<br />"))
+                width:  parent.width - 24
+                text: postBody
+                //text: Utils.format(postBody.concat("<br />"))
                 font.pixelSize: appWindow.smallFontSize
                 onLinkActivated: Qt.openUrlExternally(link)
+            }
 
-                Rectangle {
-                    width: parent.width
-                    anchors.bottom: parent.bottom
-                    height: 1
-                    color: "#c0c0c0"
-                }
+            AttachmentsView {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:  parent.width - 24
+
+                photos: attachments[Attachment.Photo]
+                links: attachments[Attachment.Link]
+            }
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                color: "#c0c0c0"
             }
         }
         highlight: HighlightDelegate {}
