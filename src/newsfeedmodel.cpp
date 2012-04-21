@@ -20,6 +20,7 @@ NewsFeedModel::NewsFeedModel(QObject *parent) :
     roles[LikesRole] = "likes";
     roles[RepostsRole] = "reposts";
     roles[CommentsRole] = "comments";
+    roles[OwnerNameRole] = "ownerName";
     setRoleNames(roles);
 }
 
@@ -70,6 +71,14 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
         return news.property("reposts");
     case CommentsRole:
         return news.property("comments");
+    case OwnerNameRole: {
+        int ownerId = news.property("copy_owner_id").toInt();
+        if (ownerId) {
+            auto contact = m_client.data()->roster()->contact(ownerId);
+            return contact->name();
+        }
+        return QVariant();
+    }
     default:
         break;
     }

@@ -29,6 +29,7 @@ ItemDelegate {
 
     Column {
         id: data
+        spacing: 6
 
         Label {
             id: titleLabel
@@ -37,6 +38,36 @@ ItemDelegate {
             color: "#2b497a"
 
             font.pixelSize: appWindow.normalFontSize
+        }
+
+        Item {
+            id: retweet
+
+            visible: typeof(ownerName) !== "undefined"
+            width: parent.width
+            height: childrenRect.height
+
+            Image {
+                id : retweetImg
+                anchors.left: parent.left
+                anchors.leftMargin: 6
+                source: "../images/ic_retweet_up.png"
+            }
+
+            Label {
+                id: retweetLabel
+
+                anchors.left: retweetImg.right
+                anchors.leftMargin: 6
+                anchors.right: parent.right
+                anchors.rightMargin: 6
+                anchors.verticalCenter: retweetImg.verticalCenter
+
+                text: ownerName ? ownerName : ""
+                font.pixelSize: appWindow.smallFontSize
+                elide: Text.ElideRight
+                color: "#2b497a"
+            }
         }
 
         Label {

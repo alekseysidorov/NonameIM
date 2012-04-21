@@ -9,7 +9,7 @@ Page {
     id: audioPage
     property QtObject owner: client.me
     property int playingIndex: -1
-    property alias playing: player.playing
+    property bool playing: player.playing && !player.paused
 
     property QtObject __client: client //workaround
     property Item __playingItem
@@ -34,6 +34,10 @@ Page {
             player.source = audioModel.get(playingIndex, "url")
             player.play()
         }
+    }
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            update()
     }
 
     onQueryChanged: update()

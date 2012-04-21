@@ -20,7 +20,8 @@ public:
         AttachmentsRole,
         LikesRole,
         RepostsRole,
-        CommentsRole
+        CommentsRole,
+        OwnerNameRole
     };
 
     explicit NewsFeedModel(QObject *parent = 0);

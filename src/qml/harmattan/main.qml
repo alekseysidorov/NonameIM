@@ -45,12 +45,17 @@ PageStackWindow {
         busy = true
     }
 
+    function connectToHost() {
+            addTask(qsTr("Connecting to vk..."), client.onlineStateChanged)
+            client.connectToHost()
+    }
+
     Component.onCompleted: {
         pageStack.toolBar.style.inverted = true //HACK
         if (client.login && client.password)
-            client.connectToHost()
+            connectToHost()
         else
-            initialPage = loginPage
+            pageStack.push(loginPage)
     }
 
     initialPage: newsPage
@@ -85,8 +90,9 @@ PageStackWindow {
         login: client.login
 
         onRequestLogin: {
-            client.connectToHost(login, password)
-            addTask(qsTr("Connecting to vk..."), client.onlineStateChanged)
+            client.login = login
+            client.password = password
+            connectToHost()
         }
     }
 
@@ -117,15 +123,11 @@ PageStackWindow {
 
         onOnlineStateChanged: {
             if (online) {
-                if (pageStack.currentPage != newsPage)
-                    pageStack.push(newsPage);
-
-                var reply = client.request("audio.get", {"count" : 10})
-                reply.resultReady.connect(function(response) {
-                    console.log("response received")
-                })
+                pageStack.pop(loginPage)
+                //if (pageStack.currentPage.update())
+                //    pageStack.currentPage.update()
             } else {
-                pageStack.replace(loginPage)
+                pageStack.push(loginPage)
                 busy = false
             }
         }

@@ -8,7 +8,7 @@ import "ios" as Ios
 Page {
     id: newsPage
 
-    function __update() {
+    function update() {
         if (client.online) {
             appWindow.addTask(qsTr("Getting news..."), newsFeedModel.requestFinished)
             newsFeedModel.getLatestNews()
@@ -16,7 +16,7 @@ Page {
     }
     onStatusChanged: {
         if (status === PageStatus.Active)
-            __update()
+            update()
     }
 
     Component.onCompleted: {
@@ -34,7 +34,7 @@ Page {
     UpdateIcon {
         id: updateIcon
         flickableItem: newsList
-        onTriggered: __update()
+        onTriggered: update()()
     }
 
     NewsFeedModel {

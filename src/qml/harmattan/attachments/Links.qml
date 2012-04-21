@@ -20,7 +20,7 @@ Column {
                 id : image
                 anchors.left: parent.left
                 anchors.leftMargin: 6
-                source: "../images/ic_retweet_up.png"
+                source: "../images/ic_link_up.png"
             }
 
             Label {
