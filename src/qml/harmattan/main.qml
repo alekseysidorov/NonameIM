@@ -124,8 +124,9 @@ PageStackWindow {
         onOnlineStateChanged: {
             if (online) {
                 pageStack.pop(loginPage)
-                //if (pageStack.currentPage.update())
-                //    pageStack.currentPage.update()
+                var page = pageStack.currentPage
+                if (page.status === PageStatus.Active && page.update())
+                    pageStack.currentPage.update()
             } else {
                 pageStack.push(loginPage)
                 busy = false
