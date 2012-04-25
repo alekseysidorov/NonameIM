@@ -4,6 +4,7 @@ import com.vk.api 0.1
 import "utils.js" as Utils
 import "delegates"
 import "components"
+import "draft"
 
 Page {
     id: profilePage
@@ -13,8 +14,9 @@ Page {
         if (client.online) {
             wallModel.contact = contact //hack
             wallModel.getLastPosts()
-            contact.update();
+            contact.update()
             appWindow.addTask(qsTr("Getting profile..."), wallModel.requestFinished)
+            photoModel.getAll(contact.id)
         }
     }
 
@@ -100,11 +102,52 @@ Page {
                     }
                 }
             }
+
             TitleBar {
                 id: photoBar
-                height: 0
-                visible: false
+                property QtObject model : photoModel
+
+                visible: model.count
+                height: photoRow.height + 12
+
+                Row {
+                    id: photoRow
+                    height: 80
+
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+
+                    spacing: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    Repeater {
+                        id: repeater
+                        model: Math.min(photoBar.model.count, 4)
+
+                        Image {
+                            fillMode: Image.PreserveAspectCrop
+                            clip: true
+                            width: 75
+                            height: 75
+                            source: photoBar.model.get(index).src
+                        }
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var properties = {
+                            "model" : photoBar.model,
+                            "title" : qsTr("Album")
+                        }
+                        appWindow.pageStack.push(appWindow.createPage("subpages/PhotoAlbumPage.qml"), properties)
+                    }
+                }
             }
+
             TitleBar {
                 id: headerBar
                 height: label.height + 6
@@ -128,6 +171,10 @@ Page {
     WallModel {
         id: wallModel
         contact: contact
+    }
+
+    PhotoModel {
+        id: photoModel
     }
 
     ListView {

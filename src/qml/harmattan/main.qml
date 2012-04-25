@@ -72,9 +72,9 @@ PageStackWindow {
         id: dialogsPage
     }
 
-    AudioPage {
-        id: audioPage
-    }
+    //AudioPage {
+    //    id: audioPage
+    //}
 
     RosterPage {
         id: rosterPage

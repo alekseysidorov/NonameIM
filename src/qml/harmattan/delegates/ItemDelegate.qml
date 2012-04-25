@@ -19,11 +19,11 @@ Item {
 
     signal clicked
 
-    ListView.onRemove: SequentialAnimation {
-        PropertyAction { target: root; property: "ListView.delayRemove"; value: true }
-        NumberAnimation { target: root; property: "scale"; to: 0; duration: 300; easing.type: Easing.InOutQuad }
-        PropertyAction { target: root; property: "ListView.delayRemove"; value: false }
-    }
+    //ListView.onRemove: SequentialAnimation {
+    //    PropertyAction { target: root; property: "ListView.delayRemove"; value: true }
+    //    NumberAnimation { target: root; property: "scale"; to: 0; duration: 300; easing.type: Easing.InOutQuad }
+    //    PropertyAction { target: root; property: "ListView.delayRemove"; value: false }
+    //}
 
     //ListView.onAdd: ParallelAnimation {
     //    NumberAnimation { target: root; property: "opacity"; from: 0; to: 1; duration: 600; easing.type: Easing.InOutQuad }

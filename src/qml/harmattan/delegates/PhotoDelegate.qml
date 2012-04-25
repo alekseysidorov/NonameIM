@@ -5,6 +5,10 @@ import "../ios" as Ios
 Item {
     id: root
 
+    Component.onCompleted: {
+        console.log(modelData)
+    }
+
     width: ListView.view.width
     height: ListView.view.height
 

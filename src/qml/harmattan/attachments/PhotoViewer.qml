@@ -35,7 +35,7 @@ Grid {
             id: image
 
             opacity: status === Image.Ready ? 1 : 0.1 //hack for constant size
-            source: modelData.src
+            source: modelData.src_small ? modelData.src_small : modelData.src
             fillMode: Image.PreserveAspectCrop
             clip: true
             width: imageWidth
