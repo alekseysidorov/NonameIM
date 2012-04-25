@@ -3,19 +3,21 @@ import com.nokia.meego 1.0
 import com.vk.api 0.1
 import "delegates"
 import "components"
+import "draft"
 
 Page {
     id: wallPage
 
-    function __update() {
+    function update() {
         if (client.online) {
             wallModel.getLastPosts()
             appWindow.addTask(qsTr("Getting wall posts..."), wallModel.requestFinished)
+            photoModel.getAll(client.me.id)
         }
     }
     onStatusChanged: {
         if (status === PageStatus.Active)
-            __update()
+            update()
     }
 
     tools: commonTools
@@ -40,6 +42,15 @@ Page {
         anchors.top: header.bottom;
         anchors.bottom: parent.bottom;
         model: wallModel
+
+        header: Column {
+            width: parent ? parent.width : 600
+
+            PhotoBar {
+                model: photoModel
+            }
+        }
+
         highlight: HighlightDelegate {}
         delegate: WallDelegate {}
         currentIndex: -1
@@ -50,12 +61,16 @@ Page {
         contact: client.me
     }
 
+    PhotoModel {
+        id: photoModel
+    }
+
     ScrollDecorator {
         flickableItem: wallView;
     }
 
     UpdateIcon {
         flickableItem: wallView
-        onTriggered: __update()
+        onTriggered: update()
     }
 }
