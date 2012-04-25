@@ -4,7 +4,7 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=nonameIM
-Exec=/usr/bin/invoker --splash-portrait=/opt/nonameIM/share/splash/portrait.png --splash-landscape=/opt/nonameIM/share/splash/landscape.png --single-instance --type=e /opt/nonameIM/bin/nonameIM
+Exec=/usr/bin/invoker --splash=/opt/nonameIM/share/splash/portrait.png --splash-landscape=/opt/nonameIM/share/splash/landscape.png --single-instance --type=e /opt/nonameIM/bin/nonameIM
 Icon=/usr/share/icons/hicolor/80x80/apps/nonameIM80.png
 X-Window-Icon=
 X-HildonDesk-ShowInToolbar=true
