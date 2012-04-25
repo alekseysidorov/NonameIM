@@ -58,4 +58,8 @@ Page {
             }
         }
     }
+
+    ScrollDecorator {
+        flickableItem: photoView
+    }
 }
