@@ -5,7 +5,7 @@ TitleBar {
     id: photoBar
     property QtObject model : photoModel
 
-    visible: model.count
+    //visible: model.count
     height: photoRow.height + 12    
 
     Row {
