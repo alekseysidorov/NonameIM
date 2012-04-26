@@ -22,7 +22,7 @@ Page {
 
     PageHeader {
         id: header
-        text: contact ? contact.name : qsTr("")
+        text: contact ? contact.name  : qsTr("")
         backButton: true
         onBackButtonClicked: pageStack.pop()
     }
@@ -37,67 +37,56 @@ Page {
                 height: chatButton.y + chatButton.height + 6
 
                 Avatar {
-                    id: avatar;
+                    id: avatar
+
+                    onClicked: {
+                        if (contact)
+                            appWindow.showPhoto(contact.photoSourceBig)
+                    }
+
                     width: 100
                     height: 100
 
-                    anchors.top: parent.top;
-                    anchors.topMargin: 10;
-                    anchors.left: parent.left;
-                    anchors.leftMargin: 10;
-                    source: contact ? contact.photoSource : "images/user.png";
+                    anchors.top: parent.top
+                    anchors.topMargin: 10
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    source: contact ? contact.photoSource : "images/user.png"
+                }
+
+                Image {
+                    id: statusImage
+                    anchors.horizontalCenter: avatar.horizontalCenter
+                    anchors.top: avatar.bottom
+                    visible: contact ? contact.status !== Contact.Offline : false
+                    source: "images/ic_online_up.png"
                 }
 
                 Label {
                     id: activity
 
-                    anchors.top: avatar.top;
-                    anchors.left: avatar.right;
-                    anchors.leftMargin: 10;
+                    anchors.top: avatar.top
+                    anchors.left: avatar.right
+                    anchors.leftMargin: 10
                     anchors.right: parent.right
-                    anchors.bottom: status.bottom
 
-                    text: Utils.format(contact ? contact.activity : qsTr("Unknown"))
-                    elide: Text.ElideRight
-                    color: "#666";
-                }
-
-                Label {
-                    id: status
-
-                    anchors.top: avatar.bottom
-                    anchors.horizontalCenter: avatar.horizontalCenter
-
-                    function __statusStr(status) {
-                        switch (status) {
-                        case Contact.Online:
-                            return qsTr("Online")
-                        case Contact.Offline:
-                            return qsTr("Offline")
-                        case Contact.Away:
-                            return qsTr("away")
-                        default:
-                            return qsTr("Unknown")
-                        }
-                    }
-
-                    text: __statusStr(contact ? contact.status : -1)
-                    font.pixelSize: 0.8 * activity.font.pixelSize
-                    color: "#2b497a"
+                    text: Utils.format(contact ? contact.activity : qsTr("Unknown"), 160)
+                    //elide: Text.ElideRight
+                    color: "#666"
                 }
 
                 Button {
                     id: chatButton
                     text: qsTr("Open chat")
 
-                    anchors.left: parent.left;
-                    anchors.leftMargin: 12;
-                    anchors.right: parent.right;
-                    anchors.rightMargin: 12;
-                    anchors.top: status.bottom;
+                    y: avatar.y + Math.max(activity.height, 12 + avatar.height) + appWindow.defaultMargin
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
 
                     onClicked: {
-                        chatPage.contact = contact;
+                        chatPage.contact = contact
                         pageStack.push(chatPage)
                     }
                 }
@@ -113,14 +102,14 @@ Page {
 
                 Label {
                     id: label
-                    anchors.left: parent.left;
-                    anchors.leftMargin: 12;
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width
-                    color: "#505050";
-                    font.pixelSize: 15;
-                    font.bold: true;
-                    text: qsTr("Wall");
+                    color: "#505050"
+                    font.pixelSize: 15
+                    font.bold: true
+                    text: qsTr("Wall")
                 }
             }
 

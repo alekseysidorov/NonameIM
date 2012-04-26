@@ -7,7 +7,7 @@ import "../components"
 ItemDelegate {
     id: itemDelegate
 
-    clickable: false
+    clickable: true
     imageSource: Utils.getContactPhotoSource(from)
     item: data
 
@@ -37,4 +37,6 @@ ItemDelegate {
             likes: model.likes
         }
     }
+
+    onClicked: appWindow.showProfile(from)
 }

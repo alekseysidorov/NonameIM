@@ -8,6 +8,7 @@ ItemDelegate {
     clickable: false
 
     imageSource: Utils.getContactPhotoSource(from)
+    imageUrl: from.photoSourceBig
     item: data
 
     Column {

@@ -12,7 +12,8 @@ PageStackWindow {
     property int normalFontSize: 23
     property int smallFontSize: 21
     property int tinyFontSize: 19
-    property bool busy: false
+    property int defaultMargin: 12
+    property int defaultSpacing: 6
 
     function createPage(pageName, update) {
         var component = Qt.createComponent(pageName);
@@ -40,14 +41,28 @@ PageStackWindow {
         return page
     }
 
-    function addTask(str, finish) {
+    function addTask(str, finish) {        
+        balloon.deep = 1
         finish.connect(balloon.finished)
-        busy = true
     }
 
     function connectToHost() {
-            addTask(qsTr("Connecting to vk..."), client.onlineStateChanged)
-            client.connectToHost()
+        addTask(qsTr("Connecting to vk..."), client.onlineStateChanged)
+        client.connectToHost()
+    }
+
+    function showProfile(contact) {
+        var properties = {
+            "contact" : contact
+        }
+        pageStack.push(appWindow.createPage("ProfilePage.qml"), properties)
+    }
+
+    function showPhoto(source) {
+        var properties = {
+            "source" : source
+        }
+        pageStack.push(appWindow.createPage("subpages/SinglePhotoPage.qml"), properties)
     }
 
     Component.onCompleted: {
@@ -99,16 +114,18 @@ PageStackWindow {
     Balloon {
         id: balloon
 
+        property int deep: 0
         signal finished
-        onFinished: busy = false
 
-        opacity: busy
+        onFinished: deep = 0
+
+        opacity: deep > 0
         anchors.centerIn: parent
 
         Ios.BusyIndicator {
             id: busyIndicator
             anchors.centerIn: parent
-            running: busy
+            running: balloon.deep > 0
 
             Component.onCompleted: {
                 platformStyle.inverted = true
@@ -129,7 +146,7 @@ PageStackWindow {
                     pageStack.currentPage.update()
             } else {
                 pageStack.push(loginPage)
-                busy = false
+                balloon.deep = 0
             }
         }
     }

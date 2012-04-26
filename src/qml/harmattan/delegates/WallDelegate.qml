@@ -21,6 +21,7 @@ ItemDelegate {
     }
 
     imageSource: Utils.getContactPhotoSource(from)
+    imageUrl: from.photoSourceBig
     item: data
 
     Column {

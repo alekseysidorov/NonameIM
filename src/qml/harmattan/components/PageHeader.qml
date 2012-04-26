@@ -12,13 +12,14 @@ PageHeaderBar {
     Label {
         id: label
 
-        color: "white";
-        text: qsTr("Header");
-        font.pixelSize: 27;
-        font.bold: true;
+        color: "white"
+        text: qsTr("Header")
+        font.pixelSize: 27
+        font.bold: true
         z: 2
         elide: Text.ElideMiddle
     }
+
     Label {
         id: shadow
         property int offset: 2

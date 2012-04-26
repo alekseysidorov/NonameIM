@@ -34,7 +34,7 @@ Page {
     UpdateIcon {
         id: updateIcon
         flickableItem: newsList
-        onTriggered: update()()
+        onTriggered: update()
     }
 
     NewsFeedModel {

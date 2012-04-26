@@ -1,11 +1,12 @@
 import QtQuick 1.1
+import com.nokia.meego 1.0
 
 TitleBar {
     id: photoBar
     property QtObject model : photoModel
 
     visible: model.count
-    height: photoRow.height + 12
+    height: photoRow.height + 12    
 
     Row {
         id: photoRow
@@ -25,9 +26,11 @@ TitleBar {
 
             Image {
                 fillMode: Image.PreserveAspectCrop
+
                 clip: true
                 width: 75
                 height: 75
+                anchors.verticalCenter: repeater.verticalCenter
                 source: photoBar.model.get(index).src
             }
         }

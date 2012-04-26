@@ -49,7 +49,7 @@ QVariant ContactsModel::data(const QModelIndex &index, int role) const
     }
     case PhotoRole: {
         auto contact = m_contactList.at(row);
-        return contact->photoSource(vk::Contact::PhotoSizeBig);
+        return contact->photoSource(vk::Contact::PhotoSizeMediumRec);
     } default:
         break;
     }

@@ -26,7 +26,7 @@ Rectangle {
          GradientStop { position: 1.0; color: "#466392" }
     }
 
-    Rectangle{
+    Rectangle {
         width: parent.width
         height: 1
         anchors.bottom: parent.bottom

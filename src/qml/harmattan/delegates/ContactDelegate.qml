@@ -9,12 +9,7 @@ ItemDelegate {
     {        
         return
     }
-    onClicked: {
-        var properties = {
-            "contact" : model.contact
-        };
-        pageStack.push(appWindow.createPage("ProfilePage.qml"), properties)
-    }
+    onClicked: appWindow.showProfile(model.contact)
 
     item: data
     imageSource: Utils.getContactPhotoSource(contact)

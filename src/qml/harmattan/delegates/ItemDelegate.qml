@@ -6,6 +6,7 @@ Item {
     id: root
     property alias imageSize: avatar.width
     property alias imageSource: avatar.source
+    property url imageUrl
     property Item item: null
     property bool clickable: true
     property bool horizontalLine: true
@@ -35,6 +36,12 @@ Item {
 
     Avatar {
         id: avatar
+
+        onClicked: {
+            if (imageUrl)
+                appWindow.showPhoto(imageUrl)
+        }
+
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.top: item ? item.top : parent.top
@@ -44,11 +51,11 @@ Item {
     Image {
         id: arrow;
         visible: clickable
-        opacity: 0.5;
+        opacity: 0.5
         source: "image://theme/icon-m-common-drilldown-arrow" + (theme.inverted ? "-inverse" : "")
-        anchors.right: parent.right;
-        anchors.rightMargin: visible ? 12 : 0;
-        anchors.verticalCenter: parent.verticalCenter;
+        anchors.right: parent.right
+        anchors.rightMargin: visible ? 12 : 0
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     MouseArea {
