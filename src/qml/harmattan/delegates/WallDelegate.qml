@@ -56,8 +56,8 @@ ItemDelegate {
 
         PostInfo {
             date: model.date
-            comments: model.comments
-            likes: model.likes
+            comments: model.comments ? model.comments.count : 0
+            likes: model.likes ? model.likes.count : 0
         }
     }
 }

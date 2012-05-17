@@ -9,7 +9,7 @@ ItemDelegate {
 
     function getContact() {
         return incoming ? from
-                        : to;
+                        : to
     }
 
     imageSource: Utils.getContactPhotoSource(contact)
@@ -28,12 +28,9 @@ ItemDelegate {
         }
         Label {
             id: activityLabel
-            text: Utils.format(body)
+            text: Utils.format(body, 320)
             width: parent.width
-            elide: Text.ElideRight
             font.pixelSize: appWindow.smallFontSize
-
-            onLinkActivated: Qt.openUrlExternally(link)
         }
         Label {
             id: dateLabel
@@ -44,9 +41,9 @@ ItemDelegate {
     }
 
     Rectangle {
-        y: 1;
-        anchors.fill: parent;
-        opacity: unread  ? 0.2 : 0;
-        color: "#999999";
+        y: 1
+        anchors.fill: parent
+        opacity: unread  ? 0.2 : 0
+        color: "#999999"
     }
 }

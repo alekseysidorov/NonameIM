@@ -20,7 +20,7 @@ Item {
     height: column.height + column.y + __verticalSpacing
 
     Image {
-        id: playButton;
+        id: playButton
 
         anchors.left: parent.left
         anchors.leftMargin: __horizontalSpacing
@@ -47,7 +47,7 @@ Item {
             width: parent.width
             text: Utils.convertSpecialChars(title)
             font.pixelSize: appWindow.normalFontSize
-            elide: Text.ElideRight
+            //elide: Text.ElideRight
             font.bold: true
         }
 
@@ -58,7 +58,7 @@ Item {
             text: Utils.convertSpecialChars(artist)
             font.pixelSize: appWindow.smallFontSize
             color: "#505050"
-            elide: Text.ElideRight
+            //elide: Text.ElideRight
         }
 
         Loader {

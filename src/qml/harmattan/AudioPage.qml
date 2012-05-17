@@ -40,7 +40,10 @@ Page {
             update()
     }
 
-    onQueryChanged: update()
+    onQueryChanged: {
+        audioModel.clear()
+        update()
+    }
 
     tools: commonTools
     orientationLock: PageOrientation.LockPortrait
@@ -51,8 +54,8 @@ Page {
     }
 
     ListView {
-        id: audioView;
-        width: parent.width;
+        id: audioView
+        width: parent.width
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
         highlight: HighlightDelegate{}

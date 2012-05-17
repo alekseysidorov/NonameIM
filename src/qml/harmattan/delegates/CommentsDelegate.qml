@@ -34,7 +34,7 @@ ItemDelegate {
 
         PostInfo {
             date: model.date
-            likes: model.likes
+            likes: model.likes ? model.likes.count : 0
         }
     }
 

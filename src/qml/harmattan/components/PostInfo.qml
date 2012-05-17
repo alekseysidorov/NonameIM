@@ -5,22 +5,23 @@ import "../utils.js" as Utils
 Row {
     id: infoRole
 
-    property variant likes
-    property variant comments
+    property alias likes: likeLabel.text
+    property alias comments: commentsLabel.text
     property date date
 
     width: parent ? parent.width : 300
+    height: 24
     spacing: 9
 
     Label {
         id: dateLabel
-        text: Utils.formatDate(date)
+        text: Utils.formatDate(model.date)
         font.pixelSize: appWindow.tinyFontSize
         color: "#777"
     }
 
     Row {
-        visible: typeof(likes) !== "undefined"
+        visible: likes
         spacing: 3
 
         Image {
@@ -31,12 +32,11 @@ Row {
             id: likeLabel
             font.pixelSize: appWindow.tinyFontSize
             color: "#777"
-            text: likes ? likes.count : 0
         }
     }
 
     Row {
-        visible: typeof(comments) !== "undefined"
+        visible: comments
         spacing: 3
 
         Image {
@@ -47,7 +47,6 @@ Row {
             id: commentsLabel
             font.pixelSize: appWindow.tinyFontSize
             color: "#777"
-            text: comments ? comments.count : 0
         }
     }
 }

@@ -40,9 +40,9 @@ ItemDelegate {
     }
 
     Rectangle {
-        y: 1;
-        anchors.fill: parent;
-        opacity: unread ? 0.2 : 0;
-        color: "#999999";
+        y: 1
+        anchors.fill: parent
+        opacity: unread ? 0.2 : 0
+        color: "#999999"
     }
 }

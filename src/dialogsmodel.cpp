@@ -2,11 +2,13 @@
 #include <client.h>
 #include <longpoll.h>
 #include <QDebug>
+#include <QApplication>
 
 DialogsModel::DialogsModel(QObject *parent) :
     vk::MessageListModel(parent),
     m_unreadCount(0)
 {
+    setSortOrder(Qt::DescendingOrder);
 }
 
 void DialogsModel::setClient(QObject *client)
@@ -68,7 +70,11 @@ void DialogsModel::onDialogsReceived(const QVariant &dialogs)
         vk::Message message(item.toMap(), m_client.data());
         messageList.append(message);
     }
-    setMessages(messageList);
+
+    foreach (auto message, messageList) {
+        onAddMessage(message);
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+    }
 }
 
 static vk::Contact *getContact(const vk::Message &message)
@@ -81,14 +87,14 @@ void DialogsModel::onAddMessage(const vk::Message &message)
 {
     //FIXME use declarative style
     for (int i = 0; i != count(); i++) {
-        if (getContact(message) == getContact(at(i))) {
-            auto old = at(i);
-            if (old.isUnread())
+        auto old = at(i);
+        if (getContact(message) == getContact(old)) {
+            if (old.isUnread() && old.id() != message.id())
                 removeMessage(at(i));
             break;
         }
     }
-    insertMessage(0, message);
+    addMessage(message);
 }
 
 void DialogsModel::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)

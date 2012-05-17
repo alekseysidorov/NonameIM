@@ -13,29 +13,23 @@ ItemDelegate {
 
     item: data
     imageSource: Utils.getContactPhotoSource(contact)
-    height: Math.max(100, getMinHeight())
 
-    Item {
+    Column {
         id: data
-        height: childrenRect.height
 
-        Column {
+        Label {
+            id: name
+            text: contact.name
             width: parent.width
+        }
+        Label {
+            id: activity
+            text: contact.activity
+            width: parent.width
+            elide: Text.ElideRight
+            color: "#777"
+            font.pixelSize: name.font.pixelSize * 0.8
 
-            Label {
-                id: name
-                text: contact.name
-                width: parent.width
-            }
-            Label {
-                id: activity
-                text: contact.activity
-                width: parent.width
-                elide: Text.ElideRight
-                color: "#777";
-                font.pixelSize: name.font.pixelSize * 0.8
-
-            }
         }
     }
 }

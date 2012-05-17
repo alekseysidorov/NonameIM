@@ -30,7 +30,6 @@ TitleBar {
                 clip: true
                 width: 75
                 height: 75
-                anchors.verticalCenter: repeater.verticalCenter
                 source: photoBar.model.get(index).src
             }
         }

@@ -13,9 +13,8 @@ Item {
     property int __spacing: 6
 
     function getMinHeight() {
-        var avatarHeight = avatar.y + avatar.height + __spacing;
         var itemHeight = item ? item.y + item.height + __spacing : 0
-        return Math.max(avatarHeight, itemHeight)
+        return Math.max(itemHeight, 100)
     }
 
     signal clicked
@@ -26,10 +25,10 @@ Item {
     //    PropertyAction { target: root; property: "ListView.delayRemove"; value: false }
     //}
 
-    //ListView.onAdd: ParallelAnimation {
-    //    NumberAnimation { target: root; property: "opacity"; from: 0; to: 1; duration: 600; easing.type: Easing.InOutQuad }
-    //    NumberAnimation { target: root; property: "scale"; from: 0; to: 1; duration: 600; easing.type: Easing.InOutQuad }
-    //}
+    ListView.onAdd: ParallelAnimation {
+        NumberAnimation { target: root; property: "opacity"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: root; property: "scale"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
+    }
 
     width: parent ? parent.width : 600
     height: getMinHeight()
@@ -69,9 +68,9 @@ Item {
 
         visible: horizontalLine
         anchors.bottom: root.bottom
-        width:  parent.width;
-        height: 1;
-        color: "#c0c0c0";
+        width:  parent.width
+        height: 1
+        color: "#c0c0c0"
     }
 
     onItemChanged: {
