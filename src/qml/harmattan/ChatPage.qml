@@ -21,7 +21,7 @@ Page {
     }
 
     PageHeader {
-        id: header;
+        id: header
 
         onBackButtonClicked: pageStack.pop()
 
@@ -30,7 +30,7 @@ Page {
     }
 
     ListView {
-        id: chatView;
+        id: chatView
 
         function __lastItemPos() {
             return positionViewAtIndex(count - 1, ListView.End)
@@ -39,9 +39,9 @@ Page {
         onCountChanged: __lastItemPos()
         onHeightChanged: __lastItemPos()
 
-        width: parent.width;
-        anchors.top: header.bottom;
-        anchors.bottom: chatInput.top;
+        width: parent.width
+        anchors.top: header.bottom
+        anchors.bottom: chatInput.top
         model: chatModel
         highlight: HighlightDelegate {}
         delegate: ChatDelegate {}
@@ -63,36 +63,36 @@ Page {
     }
 
     Rectangle {
-        id: chatInput;
-        height: input.height + 16;
-        width: parent.width;
-        anchors.bottom: parent.bottom;
-        color: "#C3C5C9";
+        id: chatInput
+        height: input.height + 16
+        width: parent.width
+        anchors.bottom: parent.bottom
+        color: "#C3C5C9"
 
         TextArea {
             id: input;
-            height: Math.max (50, Math.min(implicitHeight, 340));
-            anchors.verticalCenter: parent.verticalCenter;
-            anchors.left: parent.left;
-            anchors.leftMargin: 5;
-            anchors.right: sendButton.left;
-            anchors.rightMargin: 4;
-            wrapMode: TextEdit.Wrap;
-            clip: true;
-            placeholderText: qsTr("Type your text here...");
-            errorHighlight: text.length > 4096;
+            height: Math.max (50, Math.min(implicitHeight, 340))
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.right: sendButton.left
+            anchors.rightMargin: 4
+            wrapMode: TextEdit.Wrap
+            clip: true
+            placeholderText: qsTr("Type your text here...")
+            errorHighlight: text.length > 4096
         }
 
         Button {
-            id: sendButton;
-            width: 100;
-            anchors.bottom: input.bottom;
-            anchors.right: parent.right;
-            anchors.rightMargin: 6;
-            text: qsTr("Send");
+            id: sendButton
+            width: 100
+            anchors.bottom: input.bottom
+            anchors.right: parent.right
+            anchors.rightMargin: 6
+            text: qsTr("Send")
             onClicked: {
-                chatModel.contact.sendMessage(input.text);
-                input.text = "";
+                chatModel.contact.sendMessage(input.text)
+                input.text = ""
             }
         }
     }

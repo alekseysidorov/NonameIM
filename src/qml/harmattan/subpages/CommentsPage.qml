@@ -1,9 +1,10 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.vk.api 0.1
-import "utils.js" as Utils
-import "delegates"
-import "components"
+import "../utils.js" as Utils
+import "../delegates"
+import "../components"
+import "../tools"
 
 Page {
     id: page
@@ -25,16 +26,19 @@ Page {
 
     orientationLock: PageOrientation.LockPortrait
 
+    tools: Comments {
+        id: commentsTools
+    }
+
     PageHeader {
         id: header
         text: qsTr("Comments")
         backButton: true
         onBackButtonClicked: pageStack.pop()
-
     }
 
     ListView {
-        id: commentsView;
+        id: commentsView
 
         function __firstItemPos() {
             return positionViewAtIndex(0, ListView.End)

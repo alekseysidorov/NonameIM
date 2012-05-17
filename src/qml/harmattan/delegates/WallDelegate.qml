@@ -17,7 +17,7 @@ ItemDelegate {
             "postDate" : date,
             "attachments" : attachments
         }
-        pageStack.push(appWindow.createPage("CommentsPage.qml"), properties)
+        pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
     }
 
     imageSource: Utils.getContactPhotoSource(from)
