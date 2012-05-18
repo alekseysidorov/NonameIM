@@ -85,6 +85,7 @@ static vk::Contact *getContact(const vk::Message &message)
 
 void DialogsModel::onAddMessage(const vk::Message &message)
 {
+    qDebug() << "--" << Q_FUNC_INFO << message.id();
     //FIXME use declarative style
     for (int i = 0; i != count(); i++) {
         auto old = at(i);

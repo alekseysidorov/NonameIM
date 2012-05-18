@@ -118,12 +118,17 @@ static bool newsItemLessThan(const vk::NewsItem &a, const vk::NewsItem &b)
     return a.date() < b.date();
 }
 
+static bool newsItemMoreThan(const vk::NewsItem &a, const vk::NewsItem &b)
+{
+    return a.date() > b.date();
+}
+
 void NewsFeedModel::onNewsAdded(const vk::NewsItem &item)
 {
     if (findNews(item.postId()) != -1)
         return;
 
-    auto index = vk::bound(m_newsList, m_sortOrder, item, newsItemLessThan);
+    auto index = vk::lowerBound(m_newsList, item, newsItemMoreThan);
     insertNews(index, item);
 }
 

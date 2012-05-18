@@ -25,10 +25,10 @@ Item {
     //    PropertyAction { target: root; property: "ListView.delayRemove"; value: false }
     //}
 
-    ListView.onAdd: ParallelAnimation {
-        NumberAnimation { target: root; property: "opacity"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: root; property: "scale"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
-    }
+    //ListView.onAdd: ParallelAnimation {
+    //    NumberAnimation { target: root; property: "opacity"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
+    //    NumberAnimation { target: root; property: "scale"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
+    //}
 
     width: parent ? parent.width : 600
     height: getMinHeight()
