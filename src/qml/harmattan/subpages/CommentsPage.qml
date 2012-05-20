@@ -94,7 +94,7 @@ Page {
     }
 
     ScrollDecorator {
-        flickableItem: commentsView;
+        flickableItem: commentsView
     }
 
     UpdateIcon {

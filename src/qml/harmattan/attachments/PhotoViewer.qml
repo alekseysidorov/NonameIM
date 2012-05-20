@@ -38,14 +38,15 @@ Grid {
             source: modelData.src_small ? modelData.src_small : modelData.src
             fillMode: Image.PreserveAspectCrop
             clip: true
+            //width: status === Image.Ready ? imageWidth : 0
             width: imageWidth
             height: width
 
-            Behavior on opacity {
-                NumberAnimation {
-                    easing.type: Easing.InOutQuad;
-                }
-            }
+            //Behavior on opacity {
+            //    NumberAnimation {
+            //        easing.type: Easing.InOutQuad
+            //    }
+            //}
 
             MouseArea {
 

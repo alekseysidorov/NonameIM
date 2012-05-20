@@ -9,8 +9,10 @@ import "../components"
 ItemDelegate {
     id: itemDelegate
 
-    imageSource: Utils.getContactPhotoSource(source)
+    //imageSource: Utils.getContactPhotoSource(source)
+    imageSource: source.photoSource
     item: data
+    __minHeight: 120
 
     onClicked: {
         if (postId) {
@@ -83,13 +85,51 @@ ItemDelegate {
             model: attachments[Attachment.Photo]
         }
 
-        Links {
-            model: attachments[Attachment.Link]
-        }
+        //Links {
+        //    model: attachments[Attachment.Link]
+        //}
+
+
+        //Row {
+        //    id: infoRole
+
+        //    width: parent ? parent.width : 300
+        //    height: 24
+        //    spacing: 9
+
+        //    Label {
+        //        id: dateLabel
+        //        text: Utils.formatDate(model.date)
+        //        font.pixelSize: appWindow.tinyFontSize
+        //        color: "#777"
+        //    }
+
+        //    Image {
+        //        id: likeImg
+        //        source: "../images/ic_like_up.png"
+        //    }
+        //    Label {
+        //        id: likeLabel
+        //        font.pixelSize: appWindow.tinyFontSize
+        //        color: "#777"
+        //        text: typeof(model.likes.count !== "undefined") ? model.likes.count : 0
+        //    }
+
+        //    Image {
+        //        id: commentsImg
+        //        source: "../images/ic_comment_up.png"
+        //    }
+        //    Label {
+        //        id: commentsLabel
+        //        font.pixelSize: appWindow.tinyFontSize
+        //        color: "#777"
+        //        text: typeof(model.comments.count !== "undefined") ? model.comments.count : 0
+        //    }
+        //}
 
         PostInfo {
-            likes: model.likes ? model.likes.count : 0
-            comments: model.comments ? model.comments.count : 0
+            likes: typeof(model.likes.count !== "undefined") ? model.likes.count : 0
+            comments: typeof(model.comments.count !== "undefined") ? model.comments.count : 0
             date: model.date
         }
     }

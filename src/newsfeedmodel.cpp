@@ -95,12 +95,13 @@ int NewsFeedModel::count() const
     return m_newsList.count();
 }
 
-void NewsFeedModel::getLatestNews(vk::NewsFeed::Filters filters, quint8 count)
+void NewsFeedModel::getNews(int filters, quint8 count, int offset)
 {
     if (m_newsFeed.isNull())
         return;
 
-    auto reply = m_newsFeed.data()->getLatestNews(filters, count);
+    qDebug() << Q_FUNC_INFO << filters << count << offset;
+    auto reply = m_newsFeed.data()->getNews(static_cast<vk::NewsFeed::Filters>(filters), count, offset);
     connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
 }
 
@@ -113,9 +114,21 @@ int NewsFeedModel::findNews(int id)
     return -1;
 }
 
-static bool newsItemLessThan(const vk::NewsItem &a, const vk::NewsItem &b)
+void NewsFeedModel::clear()
 {
-    return a.date() < b.date();
+    beginRemoveRows(QModelIndex(), 0, m_newsList.count());
+    m_newsList.clear();
+    endRemoveRows();
+}
+
+void NewsFeedModel::truncate(int count)
+{
+    if (count > m_newsList.count())
+        count = m_newsList.count();
+
+    beginRemoveRows(QModelIndex(), 0, count);
+    m_newsList.erase(m_newsList.begin() + count - 1, m_newsList.end());
+    endRemoveRows();
 }
 
 static bool newsItemMoreThan(const vk::NewsItem &a, const vk::NewsItem &b)

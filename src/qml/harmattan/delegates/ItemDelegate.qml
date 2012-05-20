@@ -11,10 +11,11 @@ Item {
     property bool clickable: true
     property bool horizontalLine: true
     property int __spacing: 6
+    property int __minHeight: 100
 
     function getMinHeight() {
         var itemHeight = item ? item.y + item.height + __spacing : 0
-        return Math.max(itemHeight, 100)
+        return Math.max(itemHeight, __minHeight)
     }
 
     signal clicked

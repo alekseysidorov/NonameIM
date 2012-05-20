@@ -31,9 +31,11 @@ public:
     virtual int rowCount(const QModelIndex &) const;
     int count() const;
 public slots:
-    void getLatestNews(vk::NewsFeed::Filters filters = vk::NewsFeed::FilterPost | vk::NewsFeed::FilterPhoto,
-                       quint8 count = 50);
+    void getNews(int filters = vk::NewsFeed::FilterPost | vk::NewsFeed::FilterPhoto,
+                       quint8 count = 10, int offset = 0);
     int findNews(int id);
+    void clear();
+    void truncate(int count);
 signals:
     void clientChanged(QObject* client);
     void requestFinished();

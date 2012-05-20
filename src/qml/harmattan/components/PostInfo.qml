@@ -15,7 +15,7 @@ Row {
 
     Label {
         id: dateLabel
-        text: Utils.formatDate(model.date)
+        text: Utils.formatDate(date)
         font.pixelSize: appWindow.tinyFontSize
         color: "#777"
     }

@@ -40,6 +40,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterUncreatableType<vk::LongPoll>(VK_API_NAMESPACE, 0, 1, "LongPoll", QObject::tr("Use client.longPoll instead"));
     qmlRegisterUncreatableType<vk::Attachment>(VK_API_NAMESPACE, 0, 1, "Attachment", QObject::tr("Attachment enums"));
     qmlRegisterUncreatableType<vk::NewsItem>(VK_API_NAMESPACE, 0, 1, "NewsItem", QObject::tr("NewsItem enums"));
+    qmlRegisterUncreatableType<vk::NewsFeed>(VK_API_NAMESPACE, 0, 1, "NewsFeed", QObject::tr("NewsFeed enums"));
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
