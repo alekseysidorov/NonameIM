@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import com.nokia.extras 1.1
 import com.vk.api 0.1
 import "ios" as Ios
 import "components"
@@ -44,6 +43,10 @@ PageStackWindow {
     function addTask(str, finish) {        
         balloon.deep = 1
         finish.connect(balloon.finished)
+    }
+
+    function sendNotify(text, iconSource, callback) {
+        infoBanner.push(text, iconSource, callback)
     }
 
     function connectToHost() {
@@ -134,6 +137,12 @@ PageStackWindow {
         }
     }
 
+    StackedInfoBanner {
+        id: infoBanner
+
+        topMargin: 120
+        leftMargin: 7
+    }
 
     Client {
         id: client
@@ -147,6 +156,7 @@ PageStackWindow {
             } else {
                 pageStack.push(loginPage)
                 balloon.deep = 0
+                sendNotify(qsTr("Disconnected from host"))
             }
         }
     }
@@ -213,7 +223,8 @@ PageStackWindow {
     Connections {
         target: client.longPoll ? client.longPoll : parent
         onMessageAdded: {
-            messagesIcon.alert();
+            messagesIcon.alert()
+            sendNotify(qsTr("New message recieved"), "")
         }
     }
 }

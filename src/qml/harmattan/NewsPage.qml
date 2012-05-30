@@ -9,8 +9,9 @@ Page {
     id: newsPage
 
     property int __offset: 0
-    property int __count: 10
+    property int __count: 30
     property bool __isNextLoading: false
+    property int __truncateCount: 100
 
     function update() {
         if (client.online) {
@@ -63,7 +64,7 @@ Page {
 
         onRequestFinished: {
             if (!__offset)
-                truncate(__count)
+                truncate(__truncateCount)
             __isNextLoading = false
         }
     }

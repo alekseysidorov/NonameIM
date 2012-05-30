@@ -21,6 +21,8 @@ NewsFeedModel::NewsFeedModel(QObject *parent) :
     roles[RepostsRole] = "reposts";
     roles[CommentsRole] = "comments";
     roles[OwnerNameRole] = "ownerName";
+    roles[SourcePhotoRole] = "sourcePhoto";
+    roles[SourceNameRole] = "sourceName";
     setRoleNames(roles);
 }
 
@@ -57,7 +59,7 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
         break;
     case SourceRole: {
         int source = news.sourceId();
-        return qVariantFromValue(m_client.data()->roster()->contact(source));
+        return qVariantFromValue(findContact(source));
     }
     case DateRole:
         return news.date();
@@ -78,6 +80,16 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
             return contact->name();
         }
         return QVariant();
+    }
+    case SourcePhotoRole: {
+        if (auto contact = findContact(news.sourceId()))
+            return contact->photoSource();
+        break;
+    }
+    case SourceNameRole: {
+        if (auto contact = findContact(news.sourceId()))
+            return contact->name();
+        break;
     }
     default:
         break;
@@ -123,10 +135,10 @@ void NewsFeedModel::clear()
 
 void NewsFeedModel::truncate(int count)
 {
-    if (count > m_newsList.count())
-        count = m_newsList.count();
+    if (count >= m_newsList.count())
+        count = m_newsList.count() - 1;
 
-    beginRemoveRows(QModelIndex(), 0, count);
+    beginRemoveRows(QModelIndex(), count, m_newsList.count() - 1);
     m_newsList.erase(m_newsList.begin() + count - 1, m_newsList.end());
     endRemoveRows();
 }
@@ -152,4 +164,9 @@ void NewsFeedModel::insertNews(int index, const vk::NewsItem &item)
     m_newsList.insert(index, item);
     endInsertRows();
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+}
+
+vk::Contact *NewsFeedModel::findContact(int id) const
+{
+    return m_client.data()->roster()->contact(id);
 }

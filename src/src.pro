@@ -62,7 +62,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/copyright \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog
+    qtc_packaging/debian_harmattan/changelog \
+    qml/harmattan/components/NotifyStack.js
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../vk/src/api/release/ -lvk
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../vk/src/api/debug/ -lvk

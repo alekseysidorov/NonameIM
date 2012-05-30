@@ -5,6 +5,10 @@
 #include <newsfeed.h>
 #include <QWeakPointer>
 
+namespace vk {
+class Contact;
+} //namespace vk
+
 class NewsFeedModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -21,7 +25,9 @@ public:
         LikesRole,
         RepostsRole,
         CommentsRole,
-        OwnerNameRole
+        OwnerNameRole,
+        SourcePhotoRole,
+        SourceNameRole
     };
 
     explicit NewsFeedModel(QObject *parent = 0);
@@ -41,6 +47,7 @@ signals:
     void requestFinished();
 protected:
     void insertNews(int index, const vk::NewsItem &data);
+    vk::Contact *findContact(int id) const;
 private slots:
     void onNewsAdded(const vk::NewsItem &data);
 private:

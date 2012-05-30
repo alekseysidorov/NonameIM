@@ -9,8 +9,7 @@ import "../components"
 ItemDelegate {
     id: itemDelegate
 
-    //imageSource: Utils.getContactPhotoSource(source)
-    imageSource: source.photoSource
+    imageSource: sourcePhoto
     item: data
     __minHeight: 120
 
@@ -35,7 +34,7 @@ ItemDelegate {
 
         Label {
             id: titleLabel
-            text: source.name
+            text: sourceName
             width: parent.width
             color: "#2b497a"
 
@@ -128,8 +127,8 @@ ItemDelegate {
         //}
 
         PostInfo {
-            likes: typeof(model.likes.count !== "undefined") ? model.likes.count : 0
-            comments: typeof(model.comments.count !== "undefined") ? model.comments.count : 0
+            likes: typeof(model.likes !== "undefined") ? model.likes.count : 0
+            comments: typeof(model.comments !== "undefined") ? model.comments.count : 0
             date: model.date
         }
     }
