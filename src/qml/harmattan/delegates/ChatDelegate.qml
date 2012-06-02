@@ -5,8 +5,13 @@ import "../utils.js" as Utils
 
 ItemDelegate {
     id: itemDelegate
-    clickable: false
 
+    Component.onCompleted: {
+        if (unread)
+            chatModel.markAsRead(mid)
+    }
+
+    clickable: false
     imageSource: Utils.getContactPhotoSource(from)
     imageUrl: from.photoSourceBig
     item: data

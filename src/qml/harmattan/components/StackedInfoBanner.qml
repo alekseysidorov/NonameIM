@@ -5,28 +5,18 @@ import "NotifyStack.js" as NotifyStack
 
 InfoBanner {
     id: banner
+    visible: scale !== 0 //hack
 
-    function push(text, iconSource, callback) {
-        var item = {
-            "iconSource" : iconSource,
-            "text" : text,
-            "callback" : callback
-        }
-        __setInfo(item)
+    function push(item) {
         NotifyStack.push(item)
+        __setInfo(item)
         banner.show()
     }
 
     function pop() {
-        var item = NotifyStack.pop()
+        var item = __popItem()
         if (item.callback)
             item.callback()
-        item = NotifyStack.top()
-        console.log(NotifyStack.deep())
-        if (item)
-            __setInfo(item)
-        else
-            banner.hide()
     }
 
     function __setInfo(item)
@@ -35,7 +25,21 @@ InfoBanner {
         banner.iconSource = item.iconSource ? item.iconSource : ""
     }
 
-    timerEnabled: false
+    function __popItem()
+    {
+        var item = NotifyStack.pop()
+        var top = NotifyStack.top()
+        if (top)
+            __setInfo(top)
+        else
+            banner.hide()
+        return item
+    }
+
+    onVisibleChanged: {
+        if (!visible)
+            NotifyStack.clear()
+    }
 
     MouseArea {
         anchors.fill: parent

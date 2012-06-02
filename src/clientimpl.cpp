@@ -3,6 +3,9 @@
 #include <QNetworkConfigurationManager>
 #include <QThread>
 #include <QTextDocument>
+#include <message.h>
+#include <roster.h>
+#include <longpoll.h>
 
 Client::Client(QObject *parent) :
     vk::Client(parent)
@@ -18,6 +21,8 @@ Client::Client(QObject *parent) :
 
     auto manager = new QNetworkConfigurationManager(this);
     connect(manager, SIGNAL(onlineStateChanged(bool)), this, SLOT(setOnline(bool)));
+
+    connect(longPoll(), SIGNAL(messageAdded(vk::Message)), SLOT(onMessageAdded(vk::Message)));
 }
 
 QObject *Client::request(const QString &method, const QVariantMap &args)
@@ -41,4 +46,10 @@ void Client::setOnline(bool set)
 {
     set ? connectToHost()
         : disconnectFromHost();
+}
+
+void Client::onMessageAdded(const vk::Message &msg)
+{
+    if (msg.isIncoming() && msg.isUnread())
+        emit messageReceived(msg.from());
 }

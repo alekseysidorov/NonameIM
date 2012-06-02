@@ -19,3 +19,8 @@ function deep()
 {
     return notifyStack.length
 }
+
+function clear()
+{
+    notifyStack = []
+}

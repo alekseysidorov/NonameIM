@@ -74,5 +74,5 @@ void ChatModel::messageReadStateChanged(int id, bool set)
 
     auto message = at(index);
     message.setUnread(!set);
-    replaceMessage(index, message);
+    doReplaceMessage(index, message);
 }

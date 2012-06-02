@@ -9,8 +9,6 @@ DialogsModel::DialogsModel(QObject *parent) :
     m_unreadCount(0)
 {
     setSortOrder(Qt::DescendingOrder);
-    connect(this, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            SLOT(onDataChanged(QModelIndex,QModelIndex)));
 }
 
 void DialogsModel::setClient(QObject *client)
@@ -23,9 +21,7 @@ void DialogsModel::setClient(QObject *client)
     auto longPoll = m_client.data()->longPoll();
     connect(longPoll, SIGNAL(messageAdded(const vk::Message)), SLOT(onAddMessage(vk::Message)));
     connect(longPoll, SIGNAL(messageFlagsReplaced(int, int, int)), SLOT(replaceMessageFlags(int, int, int)));
-    connect(this, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-            this, SLOT(onDataChanged(QModelIndex,QModelIndex)));
-
+    connect(longPoll, SIGNAL(messageFlagsReseted(int,int,int)), SLOT(resetMessageFlags(int,int)));
     emit clientChanged(m_client.data());
 }
 
@@ -87,12 +83,11 @@ static vk::Contact *getContact(const vk::Message &message)
 
 void DialogsModel::onAddMessage(const vk::Message &message)
 {
-    qDebug() << "--" << Q_FUNC_INFO << message.id();
     //FIXME use declarative style
     for (int i = 0; i != count(); i++) {
         auto old = at(i);
         if (getContact(message) == getContact(old)) {
-            if (old.isUnread() && old.id() != message.id())
+            if (old.id() != message.id())
                 removeMessage(at(i));
             break;
         }
@@ -100,20 +95,41 @@ void DialogsModel::onAddMessage(const vk::Message &message)
     addMessage(message);
 }
 
-void DialogsModel::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
-{
-    qDebug("&s", Q_FUNC_INFO);
-    for (int i = topLeft.row(); i != bottomRight.row() + 1; i++) {
-        auto message = at(i);
-        if (message.isIncoming()) {
-            message.isUnread() ? m_unreadCount++ : m_unreadCount--;
-            emit unreadCountChanged(m_unreadCount);
-        }
-    }
-}
-
-
 int DialogsModel::unreadCount() const
 {
     return m_unreadCount;
+}
+
+
+void DialogsModel::doReplaceMessage(int index, const vk::Message &message)
+{
+    if (message.isIncoming()) {
+        if (at(index).isUnread() && !message.isUnread()) {
+            m_unreadCount--;
+            emit unreadCountChanged(m_unreadCount);
+        } else if (!at(index).isUnread() && message.isUnread()) {
+            m_unreadCount++;
+            emit unreadCountChanged(m_unreadCount);
+        }
+    }
+    MessageListModel::doReplaceMessage(index, message);
+}
+
+void DialogsModel::doInsertMessage(int index, const vk::Message &message)
+{
+    if (message.isIncoming() && message.isUnread()) {
+        m_unreadCount++;
+        emit unreadCountChanged(m_unreadCount);
+    }
+    MessageListModel::doInsertMessage(index, message);
+}
+
+void DialogsModel::doRemoveMessage(int index)
+{
+    auto message = at(index);
+    if (message.isIncoming() && message.isUnread()) {
+        m_unreadCount--;
+        emit unreadCountChanged(m_unreadCount);
+    }
+    MessageListModel::doRemoveMessage(index);
 }

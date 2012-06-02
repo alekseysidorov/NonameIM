@@ -40,13 +40,13 @@ PageStackWindow {
         return page
     }
 
-    function addTask(str, finish) {        
+    function addTask(str, finish) {
         balloon.deep = 1
         finish.connect(balloon.finished)
     }
 
-    function sendNotify(text, iconSource, callback) {
-        infoBanner.push(text, iconSource, callback)
+    function sendNotify(info) {
+        infoBanner.push(info)
     }
 
     function connectToHost() {
@@ -142,6 +142,9 @@ PageStackWindow {
 
         topMargin: 120
         leftMargin: 7
+
+        timerEnabled : true
+        timerShowTime : 5000
     }
 
     Client {
@@ -151,13 +154,33 @@ PageStackWindow {
             if (online) {
                 pageStack.pop(loginPage)
                 var page = pageStack.currentPage
-                if (page.status === PageStatus.Active && page.update())
+                if (page.status === PageStatus.Active && page.update()) {
                     pageStack.currentPage.update()
+                }
+                if (page != dialogsPage)
+                    dialogsPage.update()
             } else {
                 pageStack.push(loginPage)
                 balloon.deep = 0
-                sendNotify(qsTr("Disconnected from host"))
+                var item = {
+                    "text" : qsTr("Disconnected from host")
+                }
+                sendNotify(item)
             }
+        }
+
+        onMessageReceived: {
+            messagesIcon.alert()
+            var contact = from
+            var item = {
+                "text": qsTr("New message recieved"),
+                "iconSource": "../images/tile-messages-up.png",
+                "callback" : function() {
+                    chatPage.contact = contact
+                    pageStack.push(chatPage)
+                }
+            }
+            sendNotify(item)
         }
     }
 
@@ -197,7 +220,7 @@ PageStackWindow {
                 text: qsTr("Messages")
                 iconSource: checked ? "images/tile-messages-down.png" :
                                       "images/tile-messages-up.png"
-                badge: internal.hasUnread ? "*" : ""
+                badge: dialogsPage.unreadCount ? dialogsPage.unreadCount : ""
             }
             Ios.TileIcon {
                 id: audioIcon
@@ -215,19 +238,6 @@ PageStackWindow {
                 text: qsTr("Friends")
                 iconSource: checked ? "images/tile-friends-down.png" :
                                       "images/tile-friends-up.png"
-            }
-
-        }
-    }
-
-    QtObject {
-        id: internal
-        property bool hasUnread: dialogsPage.unreadCount > 0
-
-        onHasUnreadChanged: {
-            if (hasUnread) {
-                messagesIcon.alert()
-                sendNotify(qsTr("New message recieved"), "")
             }
         }
     }

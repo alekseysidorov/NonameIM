@@ -84,9 +84,9 @@ ItemDelegate {
             model: attachments[Attachment.Photo]
         }
 
-        //Links {
-        //    model: attachments[Attachment.Link]
-        //}
+        Links {
+            model: attachments[Attachment.Link]
+        }
 
 
         //Row {
@@ -127,8 +127,8 @@ ItemDelegate {
         //}
 
         PostInfo {
-            likes: typeof(model.likes !== "undefined") ? model.likes.count : 0
-            comments: typeof(model.comments !== "undefined") ? model.comments.count : 0
+            likes: model.likes ? model.likes.count : 0
+            comments: model.comments ? model.comments.count : 0
             date: model.date
         }
     }

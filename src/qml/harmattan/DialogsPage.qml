@@ -9,22 +9,20 @@ Page {
     property Client __client: client //workaround
     property alias unreadCount: dialogsModel.unreadCount
 
-    function __update() {
+    function update() {
         if (client.online) {
             dialogsModel.getLastDialogs()
             appWindow.addTask(qsTr("Getting dialogs..."), dialogsModel.requestFinished)
         }
     }
-    function __clear() {
+    function clear() {
         if (client.online)
             dialogsModel.clear()
     }
 
     onStatusChanged: {
         if (status === PageStatus.Active)
-            __update()
-        else if (status === PageStatus.Inactive)
-            __clear()
+            update()
     }
 
     tools: commonTools
@@ -54,17 +52,17 @@ Page {
                 pageStack.push(chatPage)
             }
         }
-        currentIndex: -1;
+        currentIndex: -1
     }
 
     ScrollDecorator {
-        flickableItem: rosterView;
+        flickableItem: rosterView
     }
 
     UpdateIcon {
         flickableItem: rosterView
         onTriggered: {
-            __update()
+            update()
         }
     }
 }

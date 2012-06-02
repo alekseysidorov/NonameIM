@@ -5,7 +5,7 @@ import "delegates"
 import "components"
 
 Page {
-    id: chatPage;
+    id: chatPage
     property QtObject contact
 
     function __update() {

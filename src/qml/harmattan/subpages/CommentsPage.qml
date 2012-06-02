@@ -63,8 +63,8 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width:  parent.width - 24
-                text: postBody
-                //text: Utils.format(postBody.concat("<br />"))
+                //text: postBody
+                text: Utils.format(postBody.concat("<br />"))
                 font.pixelSize: appWindow.smallFontSize
                 onLinkActivated: Qt.openUrlExternally(link)
             }

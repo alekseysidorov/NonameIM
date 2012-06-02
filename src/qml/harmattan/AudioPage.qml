@@ -104,8 +104,6 @@ Page {
     AudioModel {
         id: audioModel
         client: __client
-
-        onRequestFinished: appWindow.busy = false
     }
 
     Audio {
