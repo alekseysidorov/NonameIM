@@ -32,7 +32,7 @@ InfoBanner {
     function __setInfo(item)
     {
         banner.text = item.text
-        banner.iconSource = item.iconSource
+        banner.iconSource = item.iconSource ? item.iconSource : ""
     }
 
     timerEnabled: false

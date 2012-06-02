@@ -197,7 +197,7 @@ PageStackWindow {
                 text: qsTr("Messages")
                 iconSource: checked ? "images/tile-messages-down.png" :
                                       "images/tile-messages-up.png"
-                badge: dialogsPage.unreadCount > 0 ? dialogsPage.unreadCount : ""
+                badge: internal.hasUnread ? "*" : ""
             }
             Ios.TileIcon {
                 id: audioIcon
@@ -220,11 +220,15 @@ PageStackWindow {
         }
     }
 
-    Connections {
-        target: client.longPoll ? client.longPoll : parent
-        onMessageAdded: {
-            messagesIcon.alert()
-            sendNotify(qsTr("New message recieved"), "")
+    QtObject {
+        id: internal
+        property bool hasUnread: dialogsPage.unreadCount > 0
+
+        onHasUnreadChanged: {
+            if (hasUnread) {
+                messagesIcon.alert()
+                sendNotify(qsTr("New message recieved"), "")
+            }
         }
     }
 }

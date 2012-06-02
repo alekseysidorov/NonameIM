@@ -9,6 +9,8 @@ DialogsModel::DialogsModel(QObject *parent) :
     m_unreadCount(0)
 {
     setSortOrder(Qt::DescendingOrder);
+    connect(this, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            SLOT(onDataChanged(QModelIndex,QModelIndex)));
 }
 
 void DialogsModel::setClient(QObject *client)
@@ -100,6 +102,7 @@ void DialogsModel::onAddMessage(const vk::Message &message)
 
 void DialogsModel::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
+    qDebug("&s", Q_FUNC_INFO);
     for (int i = topLeft.row(); i != bottomRight.row() + 1; i++) {
         auto message = at(i);
         if (message.isIncoming()) {
