@@ -1,13 +1,17 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import "../components"
 
 ToolBarLayout {
-
     id: root
 
     property bool isLiked: false
     property bool isRetweet: false
     property bool canPost: true
+
+    signal retweet(bool set)
+    signal like(bool set)
+    signal post
 
     Row {
         anchors.centerIn: parent
@@ -18,8 +22,7 @@ ToolBarLayout {
             source: isLiked ? "../images/ic_post_like_down.png" : "../images/ic_post_like_up.png"
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                }
+                onClicked: like(!isLiked)
             }
         }
 
@@ -28,8 +31,7 @@ ToolBarLayout {
             source: isRetweet && isLiked ? "../images/ic_post_retweet_done.png" : "../images/ic_post_retweet_up.png"
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                }
+                onClicked: retweet(!isRetweet)
             }
         }
 
@@ -39,8 +41,7 @@ ToolBarLayout {
             enabled: canPost
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                }
+                onClicked: if(canPost) post()
             }
         }
     }

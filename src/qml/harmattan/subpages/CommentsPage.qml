@@ -26,9 +26,7 @@ Page {
 
     orientationLock: PageOrientation.LockPortrait
 
-    tools: Comments {
-        id: commentsTools
-    }
+    tools: commentsTools
 
     PageHeader {
         id: header
@@ -100,5 +98,33 @@ Page {
     UpdateIcon {
         flickableItem: commentsView
         onTriggered: update()
+    }
+
+    Comments {
+        id: commentsTools
+        canPost: page.canPost
+
+        onPost: {
+            postSheet.open()
+        }
+    }
+
+    PostSheet {
+        id: postSheet
+
+        onAccepted: {
+            //TODO move to C++ code
+            var args = {
+                "owner_id"  : from.id,
+                "post_id"    : postId,
+                "text": text
+            }
+            var reply = client.request("wall.addComment", args)
+            reply.resultReady.connect(function(response) {
+                console.log(response.cid)
+                update()
+                postSheet.text = ""
+            })
+        }
     }
 }
