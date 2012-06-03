@@ -15,7 +15,7 @@ ToolBarLayout {
 
         Image {
             id: likeImg
-            source: isLiked ? "images/ic_post_like_down.png" : "images/ic_post_like_up.png"
+            source: isLiked ? "../images/ic_post_like_down.png" : "../images/ic_post_like_up.png"
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -25,7 +25,7 @@ ToolBarLayout {
 
         Image {
             id: retweetImg
-            source: isRetweet && isLiked ? "images/ic_post_retweet_done.png" : "images/ic_post_retweet_up.png"
+            source: isRetweet && isLiked ? "../images/ic_post_retweet_done.png" : "../images/ic_post_retweet_up.png"
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -35,7 +35,7 @@ ToolBarLayout {
 
         Image {
             id: commentImg
-            source: canPost ? "images/ic_post_comment_up.png" : "images/ic_post_comment_disabled.png"
+            source: canPost ? "../images/ic_post_comment_up.png" : "../images/ic_post_comment_disabled.png"
             enabled: canPost
             MouseArea {
                 anchors.fill: parent
