@@ -14,7 +14,7 @@ Page {
     property string postBody : qsTr("Unknown post!")
     property date postDate
     property int commentsCount
-    property bool canPost : false
+    property bool canPost : true
     property variant attachments
 
     function update() {
@@ -102,11 +102,49 @@ Page {
 
     Comments {
         id: commentsTools
-        canPost: page.canPost
+
+        function _like(repost)
+        {
+            var isRepost = repost
+            //TODO move to C++ code
+            var args = {
+                "owner_id"  : from.id,
+                "post_id"    : postId,
+                "repost": repost
+            }
+            var reply = client.request("wall.addLike", args)
+            reply.resultReady.connect(function(response) {
+                console.log(response.cid)
+                isLiked = true
+                isRetweet = isRepost
+            })
+        }
+
+        function _unlike()
+        {
+            var isRepost = repost
+            //TODO move to C++ code
+            var args = {
+                "owner_id"  : from.id,
+                "post_id"    : postId
+            }
+            var reply = client.request("wall.deleteLike", args)
+            reply.resultReady.connect(function(response) {
+                console.log(response.cid)
+                isLiked = false
+                isRetweet = false
+            })
+        }
 
         onPost: {
             postSheet.open()
         }
+
+        onLike: _like(false)
+        onRetweet: -like(true)
+
+
+        canPost: page.canPost
     }
 
     PostSheet {
