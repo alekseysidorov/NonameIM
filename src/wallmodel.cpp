@@ -37,6 +37,8 @@ void WallModel::setContact(vk::Contact *contact)
         return;
     auto session = new vk::WallSession(contact);
     connect(session, SIGNAL(postAdded(vk::WallPost)), SLOT(addPost(vk::WallPost)));
+    connect(session, SIGNAL(postLikeAdded(int,int,int,bool)), SLOT(onPostLikeAdded(int,int,int,bool)));
+    connect(session, SIGNAL(postLikeDeleted(int,int)), SLOT(onPostLikeDeleted(int,int)));
 
     m_contact = contact;
     m_session = session;
@@ -84,12 +86,30 @@ int WallModel::count() const
 
 void WallModel::getLastPosts(int count, vk::WallSession::Filter filter)
 {
-    if (m_session.isNull()) {
+    if (m_session.isNull())
         qWarning("WallModel: contact is null! Please set a contact!");
-        return;
-    }
+    else {
     auto reply = m_session.data()->getPosts(filter, count, 0, false);
     connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
+    }
+}
+
+void WallModel::addLike(int postId, bool retweet, const QString &message)
+{
+    if (m_session.isNull())
+        qWarning("WallModel: contact is null! Please set a contact!");
+    else {
+        m_session.data()->addLike(postId, retweet, message);
+    }
+}
+
+void WallModel::deleteLike(int postId)
+{
+    if (m_session.isNull())
+        qWarning("WallModel: contact is null! Please set a contact!");
+    else {
+        m_session.data()->deleteLike(postId);
+    }
 }
 
 void WallModel::clear()
@@ -127,6 +147,26 @@ void WallModel::addPost(const vk::WallPost &post)
     m_posts.insert(it, post);
     endInsertRows();
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+}
+
+void WallModel::replacePost(int index, const vk::WallPost &post)
+{
+}
+
+void WallModel::onPostLikeAdded(int postId, int likesCount, int repostsCount, bool isRetweeted)
+{
+    int id = findPost(postId);
+    if (id != -1) {
+        vk::WallPost post = m_posts.at(id);
+        auto likes = post.likes();
+        likes.insert("count", likesCount);
+        post.setLikes(likes);
+        replacePost(id, post);
+    }
+}
+
+void WallModel::onPostLikeDeleted(int id, int likesCount)
+{
 }
 
 vk::Roster *WallModel::roster() const

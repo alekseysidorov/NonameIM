@@ -103,7 +103,7 @@ Page {
     Comments {
         id: commentsTools
 
-        function _like(repost)
+        function addLike(repost)
         {
             var isRepost = repost
             //TODO move to C++ code
@@ -112,15 +112,16 @@ Page {
                 "post_id"    : postId,
                 "repost": repost
             }
-            var reply = client.request("wall.addLike", args)
-            reply.resultReady.connect(function(response) {
-                console.log(response.cid)
-                isLiked = true
-                isRetweet = isRepost
-            })
+            wallModel.addLike(postId, repost)
+            //var reply = client.request("wall.addLike", args)
+            //reply.resultReady.connect(function(response) {
+            //    console.log(response.cid)
+            //    isLiked = true
+            //    isRetweet = isRepost
+            //})
         }
 
-        function _unlike()
+        function deleteLike()
         {
             var isRepost = repost
             //TODO move to C++ code
@@ -128,19 +129,20 @@ Page {
                 "owner_id"  : from.id,
                 "post_id"    : postId
             }
-            var reply = client.request("wall.deleteLike", args)
-            reply.resultReady.connect(function(response) {
-                console.log(response.cid)
-                isLiked = false
-                isRetweet = false
-            })
+            wallModel.deleteLike(postId, repost)
+            //var reply = client.request("wall.deleteLike", args)
+            //reply.resultReady.connect(function(response) {
+            //    console.log(response.cid)
+            //    isLiked = false
+            //    isRetweet = false
+            //})
         }
 
         onPost: {
             postSheet.open()
         }
 
-        onLike: _like(false)
+        onLike: addLike(false)
         onRetweet: -like(true)
 
 

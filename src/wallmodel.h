@@ -31,6 +31,8 @@ public:
     int count() const;
 public slots:
     void getLastPosts(int count = 16, vk::WallSession::Filter filter = vk::WallSession::All);
+    void addLike(int postId, bool retweet = false, const QString &message = QString());
+    void deleteLike(int postId);
     void clear();
     int findPost(int id);
 signals:
@@ -38,6 +40,9 @@ signals:
     void requestFinished();
 private slots:
     void addPost(const vk::WallPost &post);
+    void replacePost(int index, const vk::WallPost &post);
+    void onPostLikeAdded(int id, int likesCount, int repostsCount, bool isRetweeted);
+    void onPostLikeDeleted(int id, int likesCount);
 private:
     vk::Roster *roster() const;
     QWeakPointer<vk::Contact> m_contact;
