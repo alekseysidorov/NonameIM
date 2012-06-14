@@ -4,7 +4,7 @@
 #include <client.h>
 #include <utils.h>
 #include <QDateTime>
-#include <QDebug>
+#include <QNetworkReply>
 
 NewsFeedModel::NewsFeedModel(QObject *parent) :
     QAbstractListModel(parent),
@@ -117,10 +117,34 @@ void NewsFeedModel::getNews(int filters, quint8 count, int offset)
     connect(reply, SIGNAL(resultReady(QVariant)), SIGNAL(requestFinished()));
 }
 
+void NewsFeedModel::addLike(int postId, bool retweet, const QString &message)
+{
+    int index = findNews(postId);
+    if (index != -1) {
+        auto news = m_newsList.at(index);
+        auto reply = m_client.data()->addLike(news.sourceId(),
+                                              postId,
+                                              retweet,
+                                              message);
+        connect(reply, SIGNAL(resultReady(QVariant)), SLOT(onAddLike(QVariant)));
+    }
+}
+
+void NewsFeedModel::deleteLike(int postId)
+{
+    int index = findNews(postId);
+    if (index != -1) {
+        auto news = m_newsList.at(index);
+        auto reply = m_client.data()->deleteLike(news.sourceId(),
+                                                 postId);
+        connect(reply, SIGNAL(resultReady(QVariant)), SLOT(onDeleteLike(QVariant)));
+    }
+}
+
 int NewsFeedModel::findNews(int id)
 {
     for (int i = 0 ; i != count(); i++) {
-        if (id == this->data(createIndex(i, 0), PostIdRole).toInt())
+        if (id == m_newsList.at(i).postId())
             return i;
     }
     return -1;
@@ -157,6 +181,59 @@ void NewsFeedModel::onNewsAdded(const vk::NewsItem &item)
     insertNews(index, item);
 }
 
+void NewsFeedModel::onAddLike(const QVariant &response)
+{
+    auto reply = vk::sender_cast<vk::Reply*>(sender());
+    auto url = reply->networkReply()->url();
+
+    int postId = url.queryItemValue("post_id").toInt();
+    int retweet = url.queryItemValue("repost").toInt();
+    auto map = response.toMap();
+    int likes = map.value("likes").toInt();
+    int reposts = map.value("reposts").toInt();
+
+    int index = findNews(postId);
+    if (index != -1) {
+        auto news = m_newsList.at(index);
+
+        map = news.likes();
+        map.insert("count", likes);
+        map.insert("user_likes", true);
+        news.setLikes(map);
+
+        map = news.reposts();
+        map.insert("count", reposts);
+        map.insert("user_reposted", retweet);
+        news.setReposts(map);
+
+        replaceNews(index, news);
+    }
+}
+
+void NewsFeedModel::onDeleteLike(const QVariant &response)
+{
+    auto reply = vk::sender_cast<vk::Reply*>(sender());
+    auto url = reply->networkReply()->url();
+
+    int postId = url.queryItemValue("post_id").toInt();
+    int likes = response.toMap().value("likes").toInt();
+    int index = findNews(postId);
+    if (index != -1) {
+        auto news = m_newsList.at(index);
+
+        auto map = news.likes();
+        map.insert("count", likes);
+        map.insert("user_likes", false);
+        news.setLikes(map);
+
+        map = news.reposts();
+        map.insert("user_reposted", false);
+        news.setReposts(map);
+
+        replaceNews(index, news);
+    }
+}
+
 
 void NewsFeedModel::insertNews(int index, const vk::NewsItem &item)
 {
@@ -166,7 +243,14 @@ void NewsFeedModel::insertNews(int index, const vk::NewsItem &item)
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }
 
-vk::Contact *NewsFeedModel::findContact(int id) const
+void NewsFeedModel::replaceNews(int i, const vk::NewsItem &news)
 {
-    return m_client.data()->roster()->contact(id);
+    auto index = createIndex(i, 0);
+    m_newsList[i] = news;
+    emit dataChanged(index, index);
+}
+
+vk::Contact *NewsFeedModel::findContact(int postId) const
+{
+    return m_client.data()->roster()->contact(postId);
 }

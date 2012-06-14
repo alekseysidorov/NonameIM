@@ -22,7 +22,10 @@ ItemDelegate {
                 "postDate" : date,
                 "commentsCount" : comments.count,
                 "canPost" : comments.can_post,
-                "attachments" : attachments
+                "attachments" : attachments,
+                "likes" : function() { return likes },
+                "reposts" : function() { return reposts },
+                "wall" : newsFeedModel
             }
             pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
         }
@@ -87,44 +90,6 @@ ItemDelegate {
         Links {
             model: attachments[Attachment.Link]
         }
-
-
-        //Row {
-        //    id: infoRole
-
-        //    width: parent ? parent.width : 300
-        //    height: 24
-        //    spacing: 9
-
-        //    Label {
-        //        id: dateLabel
-        //        text: Utils.formatDate(model.date)
-        //        font.pixelSize: appWindow.tinyFontSize
-        //        color: "#777"
-        //    }
-
-        //    Image {
-        //        id: likeImg
-        //        source: "../images/ic_like_up.png"
-        //    }
-        //    Label {
-        //        id: likeLabel
-        //        font.pixelSize: appWindow.tinyFontSize
-        //        color: "#777"
-        //        text: typeof(model.likes.count !== "undefined") ? model.likes.count : 0
-        //    }
-
-        //    Image {
-        //        id: commentsImg
-        //        source: "../images/ic_comment_up.png"
-        //    }
-        //    Label {
-        //        id: commentsLabel
-        //        font.pixelSize: appWindow.tinyFontSize
-        //        color: "#777"
-        //        text: typeof(model.comments.count !== "undefined") ? model.comments.count : 0
-        //    }
-        //}
 
         PostInfo {
             likes: model.likes ? model.likes.count : 0

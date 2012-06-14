@@ -36,10 +36,12 @@ public:
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     virtual int rowCount(const QModelIndex &) const;
     int count() const;
+    int findNews(int id);
 public slots:
     void getNews(int filters = vk::NewsFeed::FilterPost | vk::NewsFeed::FilterPhoto,
                        quint8 count = 10, int offset = 0);
-    int findNews(int id);
+    void addLike(int postId, bool retweet = false, const QString &message = QString());
+    void deleteLike(int postId);
     void clear();
     void truncate(int count);
 signals:
@@ -47,9 +49,12 @@ signals:
     void requestFinished();
 protected:
     void insertNews(int index, const vk::NewsItem &data);
+    void replaceNews(int index, const vk::NewsItem &data);
     vk::Contact *findContact(int id) const;
 private slots:
     void onNewsAdded(const vk::NewsItem &data);
+    void onAddLike(const QVariant &response);
+    void onDeleteLike(const QVariant &response);
 private:
     QWeakPointer<vk::Client> m_client;
     QWeakPointer<vk::NewsFeed> m_newsFeed;
