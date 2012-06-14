@@ -112,8 +112,12 @@ Page {
             else
                 deleteLike()
         }
-        onRetweet: addLike(!retweeted)
-
+        onRetweet: {
+            if (!liked)
+                addLike(true)
+            else
+                deleteLike()
+        }
 
         canPost: page.canPost
     }
