@@ -90,9 +90,9 @@ PageStackWindow {
         id: dialogsPage
     }
 
-    AudioPage {
-        id: audioPage
-    }
+//    AudioPage {
+//        id: audioPage
+//    }
 
     RosterPage {
         id: rosterPage
@@ -140,11 +140,11 @@ PageStackWindow {
     StackedInfoBanner {
         id: infoBanner
 
-        topMargin: 120
-        leftMargin: 7
+//        topMargin: 120
+//        leftMargin: 7
 
-        timerEnabled : true
-        timerShowTime : 5000
+//        timerEnabled : true
+//        timerShowTime : 5000
     }
 
     Client {

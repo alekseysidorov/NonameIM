@@ -4,17 +4,19 @@ import com.vk.api 0.1
 import "../utils.js" as Utils
 import "../delegates"
 import "../components"
-import "../tools"
 
 Page {
     id: page
 
+    property QtObject wall
     property QtObject from
     property alias postId : commentsModel.postId
     property string postBody : qsTr("Unknown post!")
     property date postDate
     property int commentsCount
     property bool canPost : true
+    property variant likes
+    property variant reposts
     property variant attachments
 
     function update() {
@@ -25,8 +27,6 @@ Page {
     }
 
     orientationLock: PageOrientation.LockPortrait
-
-    tools: commentsTools
 
     PageHeader {
         id: header
@@ -47,7 +47,7 @@ Page {
 
         width: parent.width;
         anchors.top: header.bottom
-        anchors.bottom: parent.bottom
+        anchors.bottom: comments.top
         model: commentsModel
         header: Column {
             width: parent.width
@@ -61,7 +61,6 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width:  parent.width - 24
-                //text: postBody
                 text: Utils.format(postBody.concat("<br />"))
                 font.pixelSize: appWindow.smallFontSize
                 onLinkActivated: Qt.openUrlExternally(link)
@@ -86,6 +85,39 @@ Page {
         currentIndex: -1
     }
 
+    Comments {
+        id: comments
+
+        anchors.bottom: parent.bottom
+        retweeted: reposts.user_reposted
+        liked: likes.user_likes
+
+        function addLike(repost)
+        {
+            wall.addLike(postId, repost)
+        }
+
+        function deleteLike()
+        {
+            wall.deleteLike(postId)
+        }
+
+        onPost: {
+            postSheet.open()
+        }
+
+        onLike: {
+            if (!liked)
+                addLike(false)
+            else
+                deleteLike()
+        }
+        onRetweet: addLike(!retweeted)
+
+
+        canPost: page.canPost
+    }
+
     CommentsModel {
         id: commentsModel
         contact: from
@@ -98,55 +130,6 @@ Page {
     UpdateIcon {
         flickableItem: commentsView
         onTriggered: update()
-    }
-
-    Comments {
-        id: commentsTools
-
-        function addLike(repost)
-        {
-            var isRepost = repost
-            //TODO move to C++ code
-            var args = {
-                "owner_id"  : from.id,
-                "post_id"    : postId,
-                "repost": repost
-            }
-            wallModel.addLike(postId, repost)
-            //var reply = client.request("wall.addLike", args)
-            //reply.resultReady.connect(function(response) {
-            //    console.log(response.cid)
-            //    isLiked = true
-            //    isRetweet = isRepost
-            //})
-        }
-
-        function deleteLike()
-        {
-            var isRepost = repost
-            //TODO move to C++ code
-            var args = {
-                "owner_id"  : from.id,
-                "post_id"    : postId
-            }
-            wallModel.deleteLike(postId, repost)
-            //var reply = client.request("wall.deleteLike", args)
-            //reply.resultReady.connect(function(response) {
-            //    console.log(response.cid)
-            //    isLiked = false
-            //    isRetweet = false
-            //})
-        }
-
-        onPost: {
-            postSheet.open()
-        }
-
-        onLike: addLike(false)
-        onRetweet: -like(true)
-
-
-        canPost: page.canPost
     }
 
     PostSheet {

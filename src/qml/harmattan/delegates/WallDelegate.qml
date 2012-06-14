@@ -15,7 +15,10 @@ ItemDelegate {
             "postId" : postId,
             "postBody" : body,
             "postDate" : date,
-            "attachments" : attachments
+            "attachments" : attachments,
+            "likes" : function() { return likes },
+            "reposts" : function() { return reposts },
+            "wall" : wallModel
         }
         pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
     }

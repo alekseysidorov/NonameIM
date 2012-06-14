@@ -63,9 +63,9 @@ QVariant WallModel::data(const QModelIndex &index, int role) const
     case AttachmentsRole:
         return vk::Attachment::toVariantMap(post.attachments());
     case LikesRole:
-        return post.property("likes");
+        return post.likes();
     case RepostsRole:
-        return post.property("reposts");
+        return post.reposts();
     case CommentsRole:
         return post.property("comments");
     default:
@@ -149,24 +149,51 @@ void WallModel::addPost(const vk::WallPost &post)
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }
 
-void WallModel::replacePost(int index, const vk::WallPost &post)
+void WallModel::replacePost(int i, const vk::WallPost &post)
 {
+    auto index = createIndex(i, 0);
+    m_posts[i] = post;
+    emit dataChanged(index, index);
 }
 
-void WallModel::onPostLikeAdded(int postId, int likesCount, int repostsCount, bool isRetweeted)
+void WallModel::onPostLikeAdded(int postId, int likes, int reposts, bool isRetweeted)
 {
     int id = findPost(postId);
     if (id != -1) {
         vk::WallPost post = m_posts.at(id);
-        auto likes = post.likes();
-        likes.insert("count", likesCount);
-        post.setLikes(likes);
+
+        auto map = post.likes();
+        map.insert("count", likes);
+        map.insert("user_likes", true);
+        post.setLikes(map);
+
+        map = post.reposts();
+        map.insert("count", reposts);
+        map.insert("user_reposted", isRetweeted);
+        post.setReposts(map);
+
         replacePost(id, post);
     }
 }
 
-void WallModel::onPostLikeDeleted(int id, int likesCount)
+void WallModel::onPostLikeDeleted(int postId, int count)
 {
+    int id = findPost(postId);
+    if (id != -1) {
+        vk::WallPost post = m_posts.at(id);
+
+        auto map = post.likes();
+        map.insert("count", count);
+        map.insert("user_likes", false);
+        post.setLikes(map);
+
+        map = post.reposts();
+        map.insert("user_reposted", false);
+        post.setReposts(map);
+
+        replacePost(id, post);
+
+    }
 }
 
 vk::Roster *WallModel::roster() const

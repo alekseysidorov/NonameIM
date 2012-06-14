@@ -68,9 +68,9 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
     case AttachmentsRole:
         return vk::Attachment::toVariantMap(news.attachments());
     case LikesRole:
-        return news.property("likes");
+        return news.likes();
     case RepostsRole:
-        return news.property("reposts");
+        return news.reposts();
     case CommentsRole:
         return news.property("comments");
     case OwnerNameRole: {
