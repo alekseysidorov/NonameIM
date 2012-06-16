@@ -63,11 +63,10 @@ Item {
         height: 80
     }
 
-    Image {
+    Arrow {
         id: arrow
         visible: clickable
         opacity: 0.5
-        source: "image://theme/icon-m-common-drilldown-arrow" + (theme.inverted ? "-inverse" : "")
         anchors.right: parent.right
         anchors.rightMargin: visible ? 12 : 0
         anchors.verticalCenter: parent.verticalCenter

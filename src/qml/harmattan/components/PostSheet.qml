@@ -9,6 +9,11 @@ Sheet {
     property variant attachments
     property bool canAttach: false
 
+    onStatusChanged: {
+        if (status === DialogStatus.Open)
+            inputArea.focus = true
+    }
+
     acceptButtonText: qsTr("Post")
     rejectButtonText: qsTr("Cancel")
     content: Flickable {
@@ -29,7 +34,7 @@ Sheet {
 
                 width: parent.width
                 placeholderText: qsTr("Enter Text Here")
-                focus: true
+                focus: root.visible
             }
 
             Label {

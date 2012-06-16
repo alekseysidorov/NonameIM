@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile  name="nonameim" type="service">
+   <key name="destinationtype" value="device"/>
+   <profile name="nonameim" type="client" >
+   </profile>
+</profile>

@@ -30,7 +30,7 @@ public:
     virtual int rowCount(const QModelIndex &) const;
     int count() const;
 public slots:
-    void getLastPosts(int count = 16, vk::WallSession::Filter filter = vk::WallSession::All);
+    void getLastPosts(int count = 25, vk::WallSession::Filter filter = vk::WallSession::All);
     void addLike(int postId, bool retweet = false, const QString &message = QString());
     void deleteLike(int postId);
     void clear();

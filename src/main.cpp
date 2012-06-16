@@ -15,8 +15,26 @@
 #include <longpoll.h>
 #include <attachment.h>
 #include <newsfeed.h>
+#include <QNetworkDiskCache>
 
 #define VK_API_NAMESPACE "com.vk.api"
+
+class DiskNetworkAccessManagerFactory : public QDeclarativeNetworkAccessManagerFactory
+{
+public:
+    virtual QNetworkAccessManager *create(QObject *parent);
+};
+QNetworkAccessManager *DiskNetworkAccessManagerFactory::create(QObject *parent)
+{
+    QNetworkAccessManager *manager = new QNetworkAccessManager(parent);
+    QNetworkDiskCache *cache = new QNetworkDiskCache(manager);
+    cache->setCacheDirectory("nonameIM");
+    cache->setMaximumCacheSize(1024 * 1024 * 100);
+
+    qDebug() << "--NetworkCache directory " << cache->cacheDirectory();
+    qDebug() << "--NetworkCache size " <<  cache->cacheSize();
+    return manager;
+}
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -43,6 +61,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterUncreatableType<vk::NewsFeed>(VK_API_NAMESPACE, 0, 1, "NewsFeed", QObject::tr("NewsFeed enums"));
 
     QmlApplicationViewer viewer;
+    viewer.engine()->setNetworkAccessManagerFactory(new DiskNetworkAccessManagerFactory);
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.setMainQmlFile(QLatin1String("qml/harmattan/main.qml"));
     viewer.showExpanded();

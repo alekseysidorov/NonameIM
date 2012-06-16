@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.nonameim
+Exec=/usr/bin/invoker --splash=/opt/nonameIM/share/splash/portrait.png --splash-landscape=/opt/nonameIM/share/splash/landscape.png --single-instance --type=e /opt/nonameIM/bin/nonameIM

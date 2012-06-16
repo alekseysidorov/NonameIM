@@ -35,7 +35,7 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # MOBILITY +=
 
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
-CONFIG += qdeclarative-boostable
+CONFIG += qdeclarative-boostable meegotouchevents meegotouch
 
 # Add dependency to Symbian components
 # CONFIG += qt-components
@@ -89,5 +89,10 @@ unix {
 }
 
 !isEmpty(MEEGO_VERSION_MAJOR) {
+    QMAKE_CXXFLAGS += -Wall \
+        -g \
+        -Wno-cast-align \
+        -O2 -finline-functions
+
     QMAKE_LFLAGS += -Wl,--rpath=/opt/nonameIM/lib
 }

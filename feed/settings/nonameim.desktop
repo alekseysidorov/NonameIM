@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=ControlPanelApplet
+Name=NonameIM
+Exec=
+X-logical-id=qtn_noname_events_feed
+X-translation-catalog=nonameim
+
+[DUI]
+X-DUIApplet-Applet=libdeclarative.so
+
+[DCP]
+Category=Events Feed
+Order=100
+Part=nonameim.xml

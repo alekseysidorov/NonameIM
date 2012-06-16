@@ -10,7 +10,28 @@ ItemDelegate {
     id: itemDelegate
 
     imageSource: sourcePhoto
-    item: Column {
+    __minHeight: 120
+    item: data
+
+    onClicked: {
+        if (postId) {
+            var properties = {
+                "from" : source,
+                "postId" : postId,
+                "postBody" : body,
+                "postDate" : date,
+                "commentsCount" : comments.count,
+                "canPost" : comments.can_post,
+                "attachments" : attachments,
+                "likes" : function() { return likes },
+                "reposts" : function() { return reposts },
+                "wall" : newsFeedModel
+            }
+            pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
+        }
+    }
+
+    Column {
         id: data
         spacing: 6
 
@@ -62,7 +83,7 @@ ItemDelegate {
         Label {
             id: activityLabel
 
-            text: Utils.format(body, 160)
+            text: Utils.format(body, 320)
             anchors {
                 left: parent.left
                 right: parent.right
@@ -95,25 +116,6 @@ ItemDelegate {
             likes: likesCount
             comments: commentsCount
             date: model.date
-        }
-    }
-    __minHeight: 120
-
-    onClicked: {
-        if (postId) {
-            var properties = {
-                "from" : source,
-                "postId" : postId,
-                "postBody" : body,
-                "postDate" : date,
-                "commentsCount" : comments.count,
-                "canPost" : comments.can_post,
-                "attachments" : attachments,
-                "likes" : function() { return likes },
-                "reposts" : function() { return reposts },
-                "wall" : newsFeedModel
-            }
-            pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
         }
     }
 }

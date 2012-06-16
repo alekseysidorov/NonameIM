@@ -17,7 +17,8 @@ Item {
     signal clicked
 
     width: parent ? parent.width : 600
-    height: column.height + column.y + __verticalSpacing
+    height: 80
+    //height: column.height + column.y + __verticalSpacing
 
     Image {
         id: playButton
@@ -50,7 +51,7 @@ Item {
             }
             text: Utils.convertSpecialChars(title)
             font.pixelSize: appWindow.normalFontSize
-            //elide: Text.ElideRight
+            elide: Text.ElideRight
             font.bold: true
         }
 
@@ -64,7 +65,7 @@ Item {
             text: Utils.convertSpecialChars(artist)
             font.pixelSize: appWindow.smallFontSize
             color: "#505050"
-            //elide: Text.ElideRight
+            elide: Text.ElideRight
         }
 
         Loader {

@@ -82,6 +82,7 @@ Page {
         width: parent.width
         delegate: NewsDelegate {}
         model: newsFeedModel
+        cacheBuffer: 100500
         footer: UpdateIndicator {
             visible: newsList.count
             running: __isNextLoading

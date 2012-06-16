@@ -1,0 +1,6 @@
+#!/bin/sh
+
+/usr/bin/aegis-exec -s -u user dbus-send --dest=com.meego.msyncd --print-reply /synchronizer com.meego.msyncd.installPlugin string:'nonameim'
+
+# Make sure the installation is always considered successful
+exit 0

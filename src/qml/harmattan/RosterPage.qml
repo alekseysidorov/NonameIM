@@ -40,7 +40,7 @@ Page {
         model: contactsModel
         highlight: HighlightDelegate {}
         delegate: ContactDelegate {}
-        currentIndex: -1;
+        currentIndex: -1
         header: SearchBar {
             id: searchBar
 

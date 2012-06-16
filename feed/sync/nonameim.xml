@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile name="nonameim" type="sync" >
+    <key name="displayname" value="NonameIM"/>
+    <key name="enabled" value="true" />
+    <key name="use_accounts" value="false" />
+    <key name="hidden" value="true" />
+    <profile type="service" name="nonameim" >
+    </profile>
+   <schedule enabled="true" interval="30" days="1,2,3,4,5,6,7" syncconfiguredtime="" time="">
+   </schedule>
+</profile>

@@ -112,7 +112,6 @@ Page {
                     text: qsTr("Wall")
                 }
             }
-
         }
     }
 
@@ -143,7 +142,7 @@ Page {
         highlight: HighlightDelegate {}
         delegate: WallDelegate {}
         currentIndex: -1
-        cacheBuffer: 24
+        cacheBuffer: 100500
     }
 
     ScrollDecorator {

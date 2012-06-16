@@ -53,6 +53,7 @@ Page {
             }
         }
         currentIndex: -1
+        cacheBuffer: 100500
     }
 
     ScrollDecorator {
