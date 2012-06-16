@@ -10,34 +10,13 @@ ItemDelegate {
     id: itemDelegate
 
     imageSource: sourcePhoto
-    item: data
-    __minHeight: 120
-
-    onClicked: {
-        if (postId) {
-            var properties = {
-                "from" : source,
-                "postId" : postId,
-                "postBody" : body,
-                "postDate" : date,
-                "commentsCount" : comments.count,
-                "canPost" : comments.can_post,
-                "attachments" : attachments,
-                "likes" : function() { return likes },
-                "reposts" : function() { return reposts },
-                "wall" : newsFeedModel
-            }
-            pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
-        }
-    }
-
-    Column {
+    item: Column {
         id: data
         spacing: 6
 
         Label {
             id: titleLabel
-            text: sourceName            
+            text: sourceName
             anchors {
                 left: parent.left
                 right: parent.right
@@ -116,6 +95,25 @@ ItemDelegate {
             likes: likesCount
             comments: commentsCount
             date: model.date
+        }
+    }
+    __minHeight: 120
+
+    onClicked: {
+        if (postId) {
+            var properties = {
+                "from" : source,
+                "postId" : postId,
+                "postBody" : body,
+                "postDate" : date,
+                "commentsCount" : comments.count,
+                "canPost" : comments.can_post,
+                "attachments" : attachments,
+                "likes" : function() { return likes },
+                "reposts" : function() { return reposts },
+                "wall" : newsFeedModel
+            }
+            pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
         }
     }
 }

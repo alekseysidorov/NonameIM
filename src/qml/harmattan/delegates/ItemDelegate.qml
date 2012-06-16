@@ -17,6 +17,16 @@ Item {
         var itemHeight = item ? item.y + item.height + __spacing : 0
         return Math.max(itemHeight, __minHeight)
     }
+    function __checkItem() {
+        if (item) {
+            item.parent = root
+            item.anchors.top = root.top
+            item.anchors.topMargin = 12
+            item.anchors.left = avatar.right
+            item.anchors.leftMargin = 12
+            item.anchors.right = arrow.left
+        }
+    }
 
     signal clicked
 
@@ -30,6 +40,9 @@ Item {
     //    NumberAnimation { target: root; property: "opacity"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
     //    NumberAnimation { target: root; property: "scale"; from: 0; to: 1; duration: 1000; easing.type: Easing.InOutQuad }
     //}
+
+    Component.onCompleted: __checkItem()
+    onItemChanged: __checkItem()
 
     width: parent ? parent.width : 600
     height: getMinHeight()
@@ -46,10 +59,12 @@ Item {
         anchors.leftMargin: 12
         anchors.top: item ? item.top : parent.top
         anchors.topMargin: item ? __spacing/2 : 0
+        width: 80
+        height: 80
     }
 
     Image {
-        id: arrow;
+        id: arrow
         visible: clickable
         opacity: 0.5
         source: "image://theme/icon-m-common-drilldown-arrow" + (theme.inverted ? "-inverse" : "")
@@ -77,13 +92,5 @@ Item {
 
         height: 1
         color: "#c0c0c0"
-    }
-
-    onItemChanged: {
-        item.anchors.top = root.top
-        item.anchors.topMargin = 12
-        item.anchors.left = avatar.right
-        item.anchors.leftMargin = 12
-        item.anchors.right = arrow.left
     }
 }
