@@ -16,5 +16,9 @@ Column {
 
     Links {
         id: linksViewer
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
     }
 }

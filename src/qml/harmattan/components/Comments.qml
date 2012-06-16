@@ -7,7 +7,10 @@ Rectangle {
 
     property bool liked: false
     property bool retweeted: false
-    property bool canPost: true
+    property alias canPost: commentImg.enabled
+    property alias canRetweet: retweetImg.enabled
+    property alias canLike: likeImg.enabled
+
 
     signal retweet(bool set)
     signal like(bool set)

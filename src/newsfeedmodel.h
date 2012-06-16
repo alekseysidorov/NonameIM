@@ -27,7 +27,9 @@ public:
         CommentsRole,
         OwnerNameRole,
         SourcePhotoRole,
-        SourceNameRole
+        SourceNameRole,
+        LikesCount,
+        CommentsCount
     };
 
     explicit NewsFeedModel(QObject *parent = 0);

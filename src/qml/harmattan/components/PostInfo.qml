@@ -9,7 +9,7 @@ Row {
     property alias comments: commentsLabel.text
     property date date
 
-    width: parent ? parent.width : 300
+    //width: parent ? parent.width : 300
     height: 24
     spacing: 9
 

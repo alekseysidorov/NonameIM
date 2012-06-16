@@ -45,41 +45,15 @@ Page {
         onCountChanged: __firstItemPos()
         onHeightChanged: __firstItemPos()
 
-        width: parent.width;
-        anchors.top: header.bottom
-        anchors.bottom: comments.top
-        model: commentsModel
-        header: Column {
-            width: parent.width
-            spacing: 6
-
-            ContactHeader {
-                contact: from
-                comment: Utils.formatDate(postDate)
-            }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width:  parent.width - 24
-                text: Utils.format(postBody.concat("<br />"))
-                font.pixelSize: appWindow.smallFontSize
-                onLinkActivated: Qt.openUrlExternally(link)
-            }
-
-            AttachmentsView {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width:  parent.width - 24
-
-                photos: attachments[Attachment.Photo]
-                links: attachments[Attachment.Link]
-            }
-
-            Rectangle {
-                width: parent.width
-                height: 1
-                color: "#c0c0c0"
-            }
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: header.bottom
+            bottom: comments.top
         }
+
+        model: commentsModel
+        header: heading
         highlight: HighlightDelegate {}
         delegate: CommentsDelegate {}
         currentIndex: -1
@@ -91,6 +65,9 @@ Page {
         anchors.bottom: parent.bottom
         retweeted: reposts.user_reposted
         liked: likes.user_likes
+        canPost: page.canPost
+        canLike: liked || likes.can_like
+        canRetweet: likes.can_publish
 
         function addLike(repost)
         {
@@ -118,8 +95,6 @@ Page {
             else
                 deleteLike()
         }
-
-        canPost: page.canPost
     }
 
     CommentsModel {
@@ -152,6 +127,52 @@ Page {
                 update()
                 postSheet.text = ""
             })
+        }
+    }
+
+    Component {
+        id: heading
+
+        Column {
+            id: column
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+            spacing: 6
+
+            ContactHeader {
+                contact: from
+                comment: Utils.formatDate(postDate)
+            }
+
+            Label {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: appWindow.defaultMargin
+                    rightMargin: appWindow.defaultMargin
+                }
+                //text: Utils.format(postBody.concat("<br />"))
+                text: postBody
+                font.pixelSize: appWindow.smallFontSize
+                onLinkActivated: Qt.openUrlExternally(link)
+            }
+
+            AttachmentsView {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:  parent.width - 24
+
+                photos: attachments[Attachment.Photo]
+                links: attachments[Attachment.Link]
+            }
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                color: "#c0c0c0"
+            }
         }
     }
 }

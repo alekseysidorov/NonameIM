@@ -33,7 +33,10 @@ ItemDelegate {
         Label {
             id: titleLabel
             text: from.name
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             color: "#2b497a"
             font.pixelSize: appWindow.normalFontSize
         }
@@ -44,20 +47,35 @@ ItemDelegate {
             onLinkActivated: Qt.openUrlExternally(link)
 
             text: Utils.format(body, 160)
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             font.pixelSize: appWindow.smallFontSize
 
         }
 
         PhotoViewer {
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             model: attachments[Attachment.Photo]
         }
 
         Links {
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             model: attachments[Attachment.Link]
         }
 
         PostInfo {
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             date: model.date
             comments: model.comments ? model.comments.count : 0
             likes: model.likes ? model.likes.count : 0

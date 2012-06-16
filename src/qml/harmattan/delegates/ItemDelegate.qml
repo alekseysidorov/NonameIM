@@ -68,8 +68,13 @@ Item {
         id: hr
 
         visible: horizontalLine
-        anchors.bottom: root.bottom
-        width:  parent.width
+
+        anchors {
+            bottom: root.bottom
+            left: parent.left
+            right: parent.right
+        }
+
         height: 1
         color: "#c0c0c0"
     }

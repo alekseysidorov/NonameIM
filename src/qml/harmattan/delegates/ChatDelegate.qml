@@ -2,6 +2,8 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.vk.api 0.1
 import "../utils.js" as Utils
+import "../components"
+import com.vk.api 0.1
 
 ItemDelegate {
     id: itemDelegate
@@ -35,6 +37,10 @@ ItemDelegate {
             width: parent.width
 
             font.pixelSize: appWindow.smallFontSize
+        }
+        AttachmentsView {
+            photos: attachments[Attachment.Photo]
+            links: attachments[Attachment.Link]
         }
         Label {
             id: dateLabel

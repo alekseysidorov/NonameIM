@@ -5,7 +5,7 @@ Column {
     id: root
 
     property alias model: repeater.model
-    width: parent ? parent.width : 600
+    //width: parent ? parent.width : 600
 
     Repeater {
         id: repeater

@@ -23,6 +23,8 @@ NewsFeedModel::NewsFeedModel(QObject *parent) :
     roles[OwnerNameRole] = "ownerName";
     roles[SourcePhotoRole] = "sourcePhoto";
     roles[SourceNameRole] = "sourceName";
+    roles[LikesCount] = "likesCount";
+    roles[CommentsCount] = "commentsCount";
     setRoleNames(roles);
 }
 
@@ -91,6 +93,11 @@ QVariant NewsFeedModel::data(const QModelIndex &index, int role) const
             return contact->name();
         break;
     }
+    case LikesCount: {
+        return news.likes().value("count").toInt();
+    }
+    case CommentsCount:
+        return news.property("comments").toMap().value("count").toInt();
     default:
         break;
     }

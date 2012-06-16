@@ -37,8 +37,11 @@ ItemDelegate {
 
         Label {
             id: titleLabel
-            text: sourceName
-            width: parent.width
+            text: sourceName            
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             color: "#2b497a"
 
             font.pixelSize: appWindow.normalFontSize
@@ -48,7 +51,10 @@ ItemDelegate {
             id: retweet
 
             visible: typeof(ownerName) !== "undefined"
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             height: retweetImg.height
 
             Image {
@@ -78,22 +84,37 @@ ItemDelegate {
             id: activityLabel
 
             text: Utils.format(body, 160)
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             font.pixelSize: appWindow.smallFontSize
 
         }
 
         PhotoViewer {
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             model: attachments[Attachment.Photo]
         }
 
         Links {
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             model: attachments[Attachment.Link]
         }
 
         PostInfo {
-            likes: model.likes ? model.likes.count : 0
-            comments: model.comments ? model.comments.count : 0
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+            likes: likesCount
+            comments: commentsCount
             date: model.date
         }
     }

@@ -2,7 +2,7 @@
 import QtQuick 1.1
 
 Rectangle {
-    id: highlightListView;
-    opacity: 0.3;
+    id: highlightListView
+    opacity: 0.3
     color: "#83a6d3"
 }

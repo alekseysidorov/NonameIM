@@ -17,21 +17,27 @@ ItemDelegate {
         Label {
             id: titleLabel
             text: from.name
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             color: "#2b497a"
 
             font.pixelSize: appWindow.normalFontSize
         }
+
         Label {
             id: activityLabel
 
             onLinkActivated: Qt.openUrlExternally(link)
 
             text: Utils.format(body)
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             font.pixelSize: appWindow.smallFontSize
         }
-
         PostInfo {
             date: model.date
             likes: model.likes ? model.likes.count : 0

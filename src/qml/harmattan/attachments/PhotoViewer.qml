@@ -23,7 +23,7 @@ Grid {
     property alias model: repeater.model
     property int imageWidth: 75
 
-    width: parent ? parent.width : 600
+    //width: parent ? parent.width : 600
     clip: true
     spacing: 3
     columns: 3

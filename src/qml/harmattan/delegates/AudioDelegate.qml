@@ -44,7 +44,10 @@ Item {
         Label {
             id: titleLabel
 
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             text: Utils.convertSpecialChars(title)
             font.pixelSize: appWindow.normalFontSize
             //elide: Text.ElideRight
@@ -54,7 +57,10 @@ Item {
         Label {
             id: artistLabel
 
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             text: Utils.convertSpecialChars(artist)
             font.pixelSize: appWindow.smallFontSize
             color: "#505050"
@@ -65,7 +71,10 @@ Item {
             id: progressLoader
 
             sourceComponent: playing ? progress : null
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
         }
     }
 
@@ -82,7 +91,10 @@ Item {
     }
 
     Rectangle {
-        width:  parent.width
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
         height: 1
         anchors.bottom: parent.bottom
         color: "#c0c0c0"
