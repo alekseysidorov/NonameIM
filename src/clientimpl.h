@@ -10,6 +10,7 @@ class Client : public vk::Client
 public:
     Client(QObject *parent = 0);
     Q_INVOKABLE QObject *request(const QString &method, const QVariantMap &args = QVariantMap());
+    Q_INVOKABLE vk::Contact *contact(int id);
 signals:
     void messageReceived(vk::Contact *from);
 private slots:

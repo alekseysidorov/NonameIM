@@ -74,6 +74,19 @@ PageStackWindow {
             connectToHost()
         else
             pageStack.push(loginPage)
+
+        client.longPoll.contactTyping.connect(function(clientId) {
+            var contact = client.contact(clientId)
+            var item = {
+                "text": qsTr("%1 is typing").arg(contact.name),
+                "iconSource": "../images/tile-messages-up.png",
+                "callback" : function() {
+                    chatPage.contact = contact
+                    pageStack.push(chatPage)
+                }
+            }
+            sendNotify(item)
+        })
     }
 
     initialPage: newsPage

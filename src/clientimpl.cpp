@@ -30,6 +30,11 @@ QObject *Client::request(const QString &method, const QVariantMap &args)
     return vk::Client::request(method, args);
 }
 
+vk::Contact *Client::contact(int id)
+{
+    return roster()->contact(id);
+}
+
 void Client::onOnlineStateChanged(bool isOnline)
 {
     if (isOnline) {
