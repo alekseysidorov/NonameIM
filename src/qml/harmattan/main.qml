@@ -163,6 +163,8 @@ PageStackWindow {
     Client {
         id: client
 
+        invisible: true
+
         onOnlineStateChanged: {
             if (online) {
                 pageStack.pop(loginPage)

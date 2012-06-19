@@ -18,11 +18,11 @@ void ContactsModel::setRoster(vk::Roster *roster)
         m_roster.data()->disconnect(this);
     m_roster = roster;
 
-    foreach (auto contact, roster->contacts())
-        addFriend(contact);
+    foreach (auto buddy, m_roster.data()->findChildren<vk::Buddy*>())
+        addFriend(buddy);
 
 
-    connect(roster, SIGNAL(friendAdded(vk::Contact*)), SLOT(addFriend(vk::Contact*)));
+    connect(roster, SIGNAL(friendAdded(vk::Buddy*)), SLOT(addFriend(vk::Buddy*)));
     connect(roster, SIGNAL(contactRemoved(int)), SLOT(removeFriend(int)));
 
     emit rosterChanged(roster);
@@ -70,8 +70,8 @@ void ContactsModel::setFilterByName(const QString &filter)
 
     //TODO write more fast algorythm
     clear();
-    foreach (auto contact, m_roster.data()->contacts())
-        addFriend(contact);
+    foreach (auto buddy, m_roster.data()->findChildren<vk::Buddy*>())
+        addFriend(buddy);
 }
 
 QString ContactsModel::filterByName()
@@ -93,7 +93,7 @@ int ContactsModel::findContact(int id) const
     return -1;
 }
 
-void ContactsModel::addFriend(vk::Contact *contact)
+void ContactsModel::addFriend(vk::Buddy *contact)
 {
     if (!checkContact(contact))
         return;

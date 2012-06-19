@@ -34,7 +34,7 @@ signals:
     void filterByNameChanged(const QString &filter);
     void requestFinished();
 private slots:
-    void addFriend(vk::Contact*);
+    void addFriend(vk::Buddy *);
     void removeFriend(int id);
 protected:
     bool checkContact(vk::Contact*);
