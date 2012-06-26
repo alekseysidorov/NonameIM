@@ -17,6 +17,9 @@ private slots:
     void onOnlineStateChanged(bool state);
     void setOnline(bool set);
     void onMessageAdded(const vk::Message &msg);
+    void onReplyCreated(vk::Reply *reply);
+    void onReplyFinished(const QVariant &);
+    void onReplyError(vk::Reply *reply);
 };
 
 #endif // CLIENT_H

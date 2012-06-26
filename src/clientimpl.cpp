@@ -6,6 +6,7 @@
 #include <message.h>
 #include <roster.h>
 #include <longpoll.h>
+#include <utils.h>
 
 Client::Client(QObject *parent) :
     vk::Client(parent)
@@ -23,6 +24,8 @@ Client::Client(QObject *parent) :
     connect(manager, SIGNAL(onlineStateChanged(bool)), this, SLOT(setOnline(bool)));
 
     connect(longPoll(), SIGNAL(messageAdded(vk::Message)), SLOT(onMessageAdded(vk::Message)));
+    connect(this, SIGNAL(replyCreated(vk::Reply*)), SLOT(onReplyCreated(vk::Reply*)));
+    connect(this, SIGNAL(error(vk::Reply*)), SLOT(onReplyError(vk::Reply*)));
 }
 
 QObject *Client::request(const QString &method, const QVariantMap &args)
@@ -57,4 +60,22 @@ void Client::onMessageAdded(const vk::Message &msg)
 {
     if (msg.isIncoming() && msg.isUnread())
         emit messageReceived(msg.from());
+}
+
+void Client::onReplyCreated(vk::Reply *reply)
+{
+    qDebug() << "--SendReply:" << reply->networkReply()->url();
+    connect(reply, SIGNAL(resultReady(QVariant)),SLOT(onReplyFinished(QVariant)));
+}
+
+void Client::onReplyFinished(const QVariant &)
+{
+    vk::Reply *reply = vk::sender_cast<vk::Reply*>(sender());
+    qDebug() << "--Reply finished" << reply->networkReply()->url().encodedPath();
+    //qDebug() << "--data" << reply->response();
+}
+
+void Client::onReplyError(vk::Reply *reply)
+{
+    qDebug() << "--Error" << reply->response();
 }
