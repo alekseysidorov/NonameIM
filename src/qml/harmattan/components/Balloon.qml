@@ -17,7 +17,7 @@ Rectangle {
         anchors.fill: parent
         color: "black"
         radius: border.radius
-        opacity: 0.65
+        opacity: 0.45
     }
 
     Behavior on opacity {

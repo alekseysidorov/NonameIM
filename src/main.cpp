@@ -5,7 +5,7 @@
 #include "clientimpl.h"
 #include <roster.h>
 #include <contact.h>
-#include "contactsmodel.h"
+#include "buddymodel.h"
 #include "dialogsmodel.h"
 #include "chatmodel.h"
 #include "wallmodel.h"
@@ -44,7 +44,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setApplicationVersion("0.1");
 
     qmlRegisterType<Client>(VK_API_NAMESPACE, 0, 1, "Client");
-    qmlRegisterType<ContactsModel>(VK_API_NAMESPACE, 0, 1, "ContactsModel");
+    qmlRegisterType<BuddyModel>(VK_API_NAMESPACE, 0, 1, "BuddyModel");
     qmlRegisterType<DialogsModel>(VK_API_NAMESPACE, 0, 1, "DialogsModel");
     qmlRegisterType<ChatModel>(VK_API_NAMESPACE, 0, 1, "ChatModel");
     qmlRegisterType<WallModel>(VK_API_NAMESPACE, 0, 1, "WallModel");
@@ -54,6 +54,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     qmlRegisterUncreatableType<vk::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
     qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
+    qmlRegisterUncreatableType<vk::Buddy>(VK_API_NAMESPACE, 0, 1, "Buddy", QObject::tr("User Roster"));
     qmlRegisterUncreatableType<vk::Message>(VK_API_NAMESPACE, 0, 1, "Message", QObject::tr("Only flags"));
     qmlRegisterUncreatableType<vk::LongPoll>(VK_API_NAMESPACE, 0, 1, "LongPoll", QObject::tr("Use client.longPoll instead"));
     qmlRegisterUncreatableType<vk::Attachment>(VK_API_NAMESPACE, 0, 1, "Attachment", QObject::tr("Attachment enums"));

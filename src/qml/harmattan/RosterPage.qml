@@ -27,20 +27,28 @@ Page {
         text: qsTr("Friends")
     }
 
-    ContactsModel {
+    BuddyModel {
         id: contactsModel
         roster: client.roster
     }
 
     ListView {
-        id: rosterView;
-        width: parent.width;
-        anchors.top: header.bottom;
-        anchors.bottom: parent.bottom;
+        id: rosterView
+        width: parent.width
+        anchors.top: header.bottom
+        anchors.bottom: parent.bottom
         model: contactsModel
         highlight: HighlightDelegate {}
         delegate: ContactDelegate {}
         currentIndex: -1
+
+        //section.property: "statusString"
+        //section.delegate: Label {
+        //    anchors.horizontalCenter: parent.horizontalCenter
+        //    text: section
+        //    color: "#777"
+        //}
+
         header: SearchBar {
             id: searchBar
 

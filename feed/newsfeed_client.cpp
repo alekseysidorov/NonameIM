@@ -96,7 +96,7 @@ void NewsFeedClient::connectivityStateChanged(Sync::ConnectivityType aType, bool
 void NewsFeedClient::newsRecieved(const vk::NewsItemList &news)
 {
     foreach (vk::NewsItem item, news) {
-        vk::Contact *from = m_client.data()->roster()->contact(item.sourceId());
+        vk::Contact *from = m_client.data()->roster()->buddy(item.sourceId());
         vk::Attachment::List attachments = item.attachments(vk::Attachment::Photo);
         QStringList list;
         foreach (vk::Attachment attach, attachments)

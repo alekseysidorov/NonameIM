@@ -5,6 +5,10 @@ CONFIG += release
 
 QT += network
 
+VKIT_QML_DIR = ../vkit/src/qml
+VKIT_QML_SRC_DIR = $$VKIT_QML_DIR/src
+VKIT_QML_QMLDIR = $$VKIT_QML_DIR/qmldir
+
 # Add more folders to ship with the application, here
 folder_01.source = qml/harmattan
 folder_01.target = qml
@@ -13,6 +17,10 @@ DEPLOYMENTFOLDERS += folder_01
 folder_02.source = splash
 folder_02.target = share
 DEPLOYMENTFOLDERS += folder_02
+
+folder_03.source = $$VKIT_QML_QMLDIR/PhotoModel.qml
+folder_03.target = qml/harmattan/draft
+DEPLOYMENTFOLDERS += folder_03
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -42,14 +50,14 @@ CONFIG += qdeclarative-boostable meegotouchevents meegotouch
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    clientimpl.cpp \
-    contactsmodel.cpp \
-    newsfeedmodel.cpp \
-    dialogsmodel.cpp \
-    chatmodel.cpp \
-    wallmodel.cpp \
-    commentsmodel.cpp \
-    audiomodel.cpp
+    $$VKIT_QML_SRC_DIR/clientimpl.cpp \
+    $$VKIT_QML_SRC_DIR/buddymodel.cpp \
+    $$VKIT_QML_SRC_DIR/newsfeedmodel.cpp \
+    $$VKIT_QML_SRC_DIR/dialogsmodel.cpp \
+    $$VKIT_QML_SRC_DIR/chatmodel.cpp \
+    $$VKIT_QML_SRC_DIR/wallmodel.cpp \
+    $$VKIT_QML_SRC_DIR/commentsmodel.cpp \
+    $$VKIT_QML_SRC_DIR/audiomodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -62,27 +70,26 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/copyright \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog \
-    qml/harmattan/components/NotifyStack.js \
-    qml/harmattan/components/PostSheet.qml
+    qtc_packaging/debian_harmattan/changelog
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../vk/src/api/release/ -lvk
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../vk/src/api/debug/ -lvk
-else:symbian: LIBS += -lvk
-else:unix: LIBS += -L$$OUT_PWD/../vk/src/api/ -lvk
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../vkit/src/api/release/ -lvkit
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../vkit/src/api/debug/ -lvkit
+else:symbian: LIBS += -lvkit
+else:unix: LIBS += -L$$OUT_PWD/../vkit/src/api/ -lvkit
 
-INCLUDEPATH += $$PWD/../vk/src/api
-DEPENDPATH += $$PWD/../vk/src/api
+INCLUDEPATH += $$PWD/../vkit/src/api \
+    $$VKIT_QML_SRC_DIR
+DEPENDPATH += $$PWD/../vkit/src/api
 
 HEADERS += \
-    clientimpl.h \
-    contactsmodel.h \
-    newsfeedmodel.h \
-    dialogsmodel.h \
-    chatmodel.h \
-    wallmodel.h \
-    commentsmodel.h \
-    audiomodel.h
+    $$VKIT_QML_SRC_DIR/clientimpl.h \
+    $$VKIT_QML_SRC_DIR/buddymodel.h \
+    $$VKIT_QML_SRC_DIR/newsfeedmodel.h \
+    $$VKIT_QML_SRC_DIR/dialogsmodel.h \
+    $$VKIT_QML_SRC_DIR/chatmodel.h \
+    $$VKIT_QML_SRC_DIR/wallmodel.h \
+    $$VKIT_QML_SRC_DIR/commentsmodel.h \
+    $$VKIT_QML_SRC_DIR/audiomodel.h
 
 unix {
     QMAKE_CXXFLAGS += -std=c++0x -fvisibility=hidden -Wall -Wextra
