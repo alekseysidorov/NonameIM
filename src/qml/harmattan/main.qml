@@ -197,6 +197,18 @@ PageStackWindow {
             }
             sendNotify(item)
         }
+
+        onError: {
+            switch(error) {
+            case Client.ErrorAuthorizationFailed: {
+                var item = {
+                    "text" : qsTr("Wrong login or password")
+                }
+                sendNotify(item)
+                break;
+            }
+            }
+        }
     }
 
     ToolBarLayout {
