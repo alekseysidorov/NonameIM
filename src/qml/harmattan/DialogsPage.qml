@@ -11,7 +11,7 @@ Page {
 
     function update() {
         if (client.online) {
-            dialogsModel.getLastDialogs()
+            dialogsModel.getDialogs()
             appWindow.addTask(qsTr("Getting dialogs..."), dialogsModel.requestFinished)
         }
     }
