@@ -23,6 +23,11 @@ ItemDelegate {
         pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
     }
 
+    onVisibleChanged: {
+        if (visible)
+            from.update()
+    }
+
     imageSource: Utils.getContactPhotoSource(from)
     imageUrl: from.photoSourceBig
     item: data

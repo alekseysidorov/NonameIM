@@ -12,6 +12,11 @@ ItemDelegate {
                         : to
     }
 
+    onVisibleChanged: {
+        if (visible && contact)
+            contact.update()
+    }
+
     imageSource: Utils.getContactPhotoSource(contact)
     item: data
 

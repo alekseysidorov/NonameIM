@@ -7,6 +7,11 @@ import "../components"
 ItemDelegate {
     id: itemDelegate
 
+    onVisibleChanged: {
+        if (visible)
+            from.update()
+    }
+
     clickable: true
     imageSource: Utils.getContactPhotoSource(from)
     item: data
