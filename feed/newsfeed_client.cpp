@@ -29,10 +29,10 @@ NewsFeedClient::~NewsFeedClient()
 
 bool NewsFeedClient::init()
 {
-    m_client = new vk::Client(this);
-    m_feed = new vk::NewsFeed(m_client.data());
+    m_client = new Vreen::Client(this);
+    m_feed = new Vreen::NewsFeed(m_client.data());
 
-    connect(m_feed.data(), SIGNAL(newsRecieved(vk::NewsItemList)), SLOT(newsRecieved(vk::NewsItemList)));
+    connect(m_feed.data(), SIGNAL(newsRecieved(Vreen::NewsItemList)), SLOT(newsRecieved(Vreen::NewsItemList)));
     connect(m_client.data(), SIGNAL(onlineStateChanged(bool)), SLOT(connectedToHost(bool)));
     return true;
 }
@@ -93,13 +93,13 @@ void NewsFeedClient::connectivityStateChanged(Sync::ConnectivityType aType, bool
         m_client.data()->connectToHost();
 }
 
-void NewsFeedClient::newsRecieved(const vk::NewsItemList &news)
+void NewsFeedClient::newsRecieved(const Vreen::NewsItemList &news)
 {
-    foreach (vk::NewsItem item, news) {
-        vk::Contact *from = m_client.data()->roster()->buddy(item.sourceId());
-        vk::Attachment::List attachments = item.attachments(vk::Attachment::Photo);
+    foreach (Vreen::NewsItem item, news) {
+        Vreen::Contact *from = m_client.data()->roster()->buddy(item.sourceId());
+        Vreen::Attachment::List attachments = item.attachments(Vreen::Attachment::Photo);
         QStringList list;
-        foreach (vk::Attachment attach, attachments)
+        foreach (Vreen::Attachment attach, attachments)
             list.append(attach.property("src").toString());
 
         MEventFeed::instance()->addItem(from->photoSource(),
@@ -120,7 +120,7 @@ void NewsFeedClient::newsRecieved(const vk::NewsItemList &news)
 void NewsFeedClient::connectedToHost(bool success)
 {
     if (success) {
-        m_feed.data()->getNews(vk::NewsFeed::FilterPost | vk::NewsFeed::FilterPhoto); //TODO add offset check and others
+        m_feed.data()->getNews(Vreen::NewsFeed::FilterPost | Vreen::NewsFeed::FilterPhoto); //TODO add offset check and others
     }
 }
 

@@ -5,6 +5,7 @@ CONFIG += release
 
 QT += network
 
+VKIT_SRC_ROOT_DIR = ../vkit/src
 VKIT_QML_DIR = ../vkit/src/qml
 VKIT_QML_SRC_DIR = $$VKIT_QML_DIR/src
 VKIT_QML_QMLDIR = $$VKIT_QML_DIR/qmldir
@@ -57,7 +58,8 @@ SOURCES += main.cpp \
     $$VKIT_QML_SRC_DIR/chatmodel.cpp \
     $$VKIT_QML_SRC_DIR/wallmodel.cpp \
     $$VKIT_QML_SRC_DIR/commentsmodel.cpp \
-    $$VKIT_QML_SRC_DIR/audiomodel.cpp
+    $$VKIT_QML_SRC_DIR/audiomodel.cpp \
+    $$VKIT_SRC_ROOT_DIR/directauth/directconnection.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -78,7 +80,8 @@ else:symbian: LIBS += -lvkit
 else:unix: LIBS += -L$$OUT_PWD/../vkit/src/api/ -lvkit
 
 INCLUDEPATH += $$PWD/../vkit/src/api \
-    $$VKIT_QML_SRC_DIR
+    $$VKIT_QML_SRC_DIR \
+    $$VKIT_SRC_ROOT_DIR
 DEPENDPATH += $$PWD/../vkit/src/api
 
 HEADERS += \
@@ -89,7 +92,8 @@ HEADERS += \
     $$VKIT_QML_SRC_DIR/chatmodel.h \
     $$VKIT_QML_SRC_DIR/wallmodel.h \
     $$VKIT_QML_SRC_DIR/commentsmodel.h \
-    $$VKIT_QML_SRC_DIR/audiomodel.h
+    $$VKIT_QML_SRC_DIR/audiomodel.h \
+    $$VKIT_SRC_ROOT_DIR/directauth/directconnection_p.h
 
 unix {
     QMAKE_CXXFLAGS += -std=c++0x -fvisibility=hidden -Wall -Wextra

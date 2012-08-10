@@ -27,7 +27,7 @@ public slots:
                                           bool aState);
 
 protected slots:
-    void newsRecieved(const vk::NewsItemList &news);
+    void newsRecieved(const Vreen::NewsItemList &news);
     void connectedToHost(bool success);
     void syncSuccess();
     void syncFailed();
@@ -35,8 +35,8 @@ private:
     void updateResults(const Buteo::SyncResults &aResults);
 private:
     Buteo::SyncResults          m_results;
-    QWeakPointer<vk::Client> m_client;
-    QWeakPointer<vk::NewsFeed> m_feed;
+    QWeakPointer<Vreen::Client> m_client;
+    QWeakPointer<Vreen::NewsFeed> m_feed;
 };
 
 extern "C" NewsFeedClient* createPlugin(const QString& aPluginName,

@@ -52,14 +52,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<CommentsModel>(VK_API_NAMESPACE, 0, 1, "CommentsModel");
     qmlRegisterType<AudioModel>(VK_API_NAMESPACE, 0, 1, "AudioModel");
 
-    qmlRegisterUncreatableType<vk::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
-    qmlRegisterUncreatableType<vk::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
-    qmlRegisterUncreatableType<vk::Buddy>(VK_API_NAMESPACE, 0, 1, "Buddy", QObject::tr("User Roster"));
-    qmlRegisterUncreatableType<vk::Message>(VK_API_NAMESPACE, 0, 1, "Message", QObject::tr("Only flags"));
-    qmlRegisterUncreatableType<vk::LongPoll>(VK_API_NAMESPACE, 0, 1, "LongPoll", QObject::tr("Use client.longPoll instead"));
-    qmlRegisterUncreatableType<vk::Attachment>(VK_API_NAMESPACE, 0, 1, "Attachment", QObject::tr("Attachment enums"));
-    qmlRegisterUncreatableType<vk::NewsItem>(VK_API_NAMESPACE, 0, 1, "NewsItem", QObject::tr("NewsItem enums"));
-    qmlRegisterUncreatableType<vk::NewsFeed>(VK_API_NAMESPACE, 0, 1, "NewsFeed", QObject::tr("NewsFeed enums"));
+    qmlRegisterUncreatableType<Vreen::Roster>(VK_API_NAMESPACE, 0, 1, "Roster", QObject::tr("Use client.roster instead"));
+    qmlRegisterUncreatableType<Vreen::Contact>(VK_API_NAMESPACE, 0, 1, "Contact", QObject::tr("User Roster"));
+    qmlRegisterUncreatableType<Vreen::Buddy>(VK_API_NAMESPACE, 0, 1, "Buddy", QObject::tr("User Roster"));
+    qmlRegisterUncreatableType<Vreen::Message>(VK_API_NAMESPACE, 0, 1, "Message", QObject::tr("Only flags"));
+    qmlRegisterUncreatableType<Vreen::LongPoll>(VK_API_NAMESPACE, 0, 1, "LongPoll", QObject::tr("Use client.longPoll instead"));
+    qmlRegisterUncreatableType<Vreen::Attachment>(VK_API_NAMESPACE, 0, 1, "Attachment", QObject::tr("Attachment enums"));
+    qmlRegisterUncreatableType<Vreen::NewsItem>(VK_API_NAMESPACE, 0, 1, "NewsItem", QObject::tr("NewsItem enums"));
+    qmlRegisterUncreatableType<Vreen::NewsFeed>(VK_API_NAMESPACE, 0, 1, "NewsFeed", QObject::tr("NewsFeed enums"));
 
     QmlApplicationViewer viewer;
     viewer.engine()->setNetworkAccessManagerFactory(new DiskNetworkAccessManagerFactory);
