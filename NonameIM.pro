@@ -2,8 +2,8 @@ TEMPLATE= subdirs
 
 CONFIG += ordered
 
-SUBDIRS += vkit \
-        src \
+SUBDIRS += vreen \
+	src \
         feed
 
 OTHER_FILES += \

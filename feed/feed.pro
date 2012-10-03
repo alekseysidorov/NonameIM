@@ -5,9 +5,9 @@ INCLUDEPATH += . \
                 /usr/include/libsynccommon \
                 /usr/include/libsyncprofile \
                 /usr/include/gq \
-                $$PWD/../vkit/src/api
-DEPENDPATH += $$PWD/../vkit/src/api
-LIBS += -lsyncpluginmgr -lsyncprofile -lgq-gconf -L$$OUT_PWD/../vkit/src/api/ -lvkit
+		$$PWD/../vreen/src/api
+DEPENDPATH += $$PWD/../vreen/src/api
+LIBS += -lsyncpluginmgr -lsyncprofile -lgq-gconf -L$$OUT_PWD/../vreen/src/api/ -lvreen
 
 CONFIG += debug plugin meegotouchevents
 

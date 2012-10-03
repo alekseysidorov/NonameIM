@@ -5,8 +5,8 @@ CONFIG += release
 
 QT += network
 
-VKIT_SRC_ROOT_DIR = ../vkit/src
-VKIT_QML_DIR = ../vkit/src/qml
+VKIT_SRC_ROOT_DIR = ../vreen/src
+VKIT_QML_DIR = ../vreen/src/qml
 VKIT_QML_SRC_DIR = $$VKIT_QML_DIR/src
 VKIT_QML_QMLDIR = $$VKIT_QML_DIR/qmldir
 
@@ -74,15 +74,15 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../vkit/src/api/release/ -lvkit
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../vkit/src/api/debug/ -lvkit
-else:symbian: LIBS += -lvkit
-else:unix: LIBS += -L$$OUT_PWD/../vkit/src/api/ -lvkit
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../vreen/src/api/release/ -lvreen
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../vreen/src/api/debug/ -lvreen
+else:symbian: LIBS += -lvreen
+else:unix: LIBS += -L$$OUT_PWD/../vreen/src/api/ -lvreen
 
-INCLUDEPATH += $$PWD/../vkit/src/api \
+INCLUDEPATH += $$PWD/../vreen/src/api \
     $$VKIT_QML_SRC_DIR \
     $$VKIT_SRC_ROOT_DIR
-DEPENDPATH += $$PWD/../vkit/src/api
+DEPENDPATH += $$PWD/../vreen/src/api
 
 HEADERS += \
     $$VKIT_QML_SRC_DIR/clientimpl.h \
@@ -101,9 +101,8 @@ unix {
 
 !isEmpty(MEEGO_VERSION_MAJOR) {
     QMAKE_CXXFLAGS += -Wall \
-        -g \
         -Wno-cast-align \
-        -O2 -finline-functions
+	-O3
 
-    QMAKE_LFLAGS += -Wl,--rpath=/opt/nonameIM/lib
+    #QMAKE_LFLAGS += -Wl,--rpath=/opt/nonameIM/lib
 }
