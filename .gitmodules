@@ -1,6 +1,6 @@
 [submodule "src/qml/harmattan/ios"]
 	path = src/qml/harmattan/ios
-	url = git@github.com:gorthauer/qml-components.git
+	url = git://github.com/gorthauer/qml-components.git
 [submodule "vreen"]
 	path = vreen
 	url = git://github.com/gorthauer/vreen.git
