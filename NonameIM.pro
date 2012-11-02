@@ -3,8 +3,8 @@ TEMPLATE= subdirs
 CONFIG += ordered
 
 SUBDIRS += vreen \
-	src \
-        feed
+	src
+	#feed
 
 OTHER_FILES += \
     qtc_packaging/debian_harmattan/rules \

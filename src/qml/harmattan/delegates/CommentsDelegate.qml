@@ -11,6 +11,7 @@ ItemDelegate {
         if (visible)
             from.update()
     }
+    Component.onCompleted: from.update()
 
     clickable: true
     imageSource: Utils.getContactPhotoSource(from)

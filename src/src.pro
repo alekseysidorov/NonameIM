@@ -49,6 +49,9 @@ CONFIG += qdeclarative-boostable meegotouchevents meegotouch
 # Add dependency to Symbian components
 # CONFIG += qt-components
 
+INCLUDEPATH += $$VKIT_SRC_ROOT_DIR/directauth \
+    $$VKIT_QML_SRC_DIR/qml/src
+
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     $$VKIT_QML_SRC_DIR/clientimpl.cpp \
@@ -104,5 +107,8 @@ unix {
         -Wno-cast-align \
 	-O3
 
-    #QMAKE_LFLAGS += -Wl,--rpath=/opt/nonameIM/lib
+    QMAKE_LFLAGS += -Wl,--rpath=/opt/nonameIM/lib
 }
+
+HEADERS += \
+    ../vreen/src/qml/src/vkitqmlplugin.h

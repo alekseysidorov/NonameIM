@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import com.vk.api 0.1
+import com.vk.api 1.0
 import "ios" as Ios
 import "components"
 
@@ -160,7 +160,7 @@ PageStackWindow {
         timerShowTime : 5000
     }
 
-    Client {
+    DirectClient {
         id: client
 
         invisible: true

@@ -1,7 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import com.vk.api 0.1
+import com.vk.api 1.0
 import "../utils.js" as Utils
 import "../components"
 import "../attachments"
@@ -22,6 +22,8 @@ ItemDelegate {
         }
         pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
     }
+
+    Component.onCompleted: from.update();
 
     onVisibleChanged: {
         if (visible)
