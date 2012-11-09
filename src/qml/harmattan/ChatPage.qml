@@ -8,16 +8,17 @@ Page {
     id: chatPage
     property QtObject contact
 
-    function __update() {
+    function update() {
         if (client.online) {
-            chatModel.getHistory()
-            appWindow.addTask(qsTr("Getting chat history..."), chatModel.requestFinished)
+            chatModel.setContact(chatPage.contact);
+            chatModel.getHistory();
+            appWindow.addTask(qsTr("Getting chat history..."), chatModel.requestFinished);
         }
     }
 
     onStatusChanged: {
         if (status === PageStatus.Active)
-            __update()
+            update()
     }
 
     PageHeader {
@@ -51,7 +52,6 @@ Page {
 
     ChatModel {
         id: chatModel
-        contact: chatPage.contact
     }
 
     ScrollDecorator {
@@ -60,7 +60,7 @@ Page {
 
     UpdateIcon {
         flickableItem: chatView
-        onTriggered: __update()
+        onTriggered: update()
     }
 
     Rectangle {

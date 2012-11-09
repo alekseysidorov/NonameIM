@@ -6,7 +6,6 @@ import "components"
 
 Page {
     id: messagesPage
-    property Client __client: client //workaround
     property alias unreadCount: dialogsModel.unreadCount
 
     function update() {
@@ -18,6 +17,10 @@ Page {
     function clear() {
         if (client.online)
             dialogsModel.clear()
+    }
+
+    Component.onCompleted: {
+        dialogsModel.client = client
     }
 
     onStatusChanged: {
@@ -35,7 +38,6 @@ Page {
 
     DialogsModel {
         id: dialogsModel
-        client: __client
     }
 
     ListView {

@@ -5,6 +5,8 @@ CONFIG += release
 
 QT += network
 
+include(../vreen/vreen.pri)
+
 VKIT_SRC_ROOT_DIR = ../vreen/src
 VKIT_QML_DIR = ../vreen/src/qml
 VKIT_QML_SRC_DIR = $$VKIT_QML_DIR/src
@@ -13,15 +15,20 @@ VKIT_QML_QMLDIR = $$VKIT_QML_DIR/qmldir
 # Add more folders to ship with the application, here
 folder_01.source = qml/harmattan
 folder_01.target = qml
-DEPLOYMENTFOLDERS += folder_01
 
 folder_02.source = splash
 folder_02.target = share
-DEPLOYMENTFOLDERS += folder_02
 
 folder_03.source = $$VKIT_QML_QMLDIR/PhotoModel.qml
 folder_03.target = qml/harmattan/draft
-DEPLOYMENTFOLDERS += folder_03
+
+headers_folder.source = $$VKIT_QML_SRC_DIR
+headers_folder.target = include/vreen
+
+DEPLOYMENTFOLDERS += folder_01 \
+    folder_02 \
+    folder_03 \
+    headers_folder
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -50,7 +57,12 @@ CONFIG += qdeclarative-boostable meegotouchevents meegotouch
 # CONFIG += qt-components
 
 INCLUDEPATH += $$VKIT_SRC_ROOT_DIR/directauth \
-    $$VKIT_QML_SRC_DIR/qml/src
+    $$VKIT_QML_SRC_DIR/qml/src \
+    $$OUT_PWD/../vreen/include
+
+DEFINES += VREEN_DIRECTAUTH_CLIENT_ID=\\\"1950109\\\" \
+    VREEN_DIRECTAUTH_CLIENT_SECRET=\\\"bJKfYSu0LS6N52M0HnBo\\\" \
+    VREEN_DIRECTAUTH_CLIENT_NAME=\\\"TitanIM\\\"
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
