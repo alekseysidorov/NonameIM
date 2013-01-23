@@ -13,6 +13,7 @@ PageStackWindow {
     property int tinyFontSize: 19
     property int defaultMargin: 12
     property int defaultSpacing: 6
+    property real mm: screen.dpi / 25.4
 
     function createPage(pageName, update) {
         var component = Qt.createComponent(pageName);
@@ -127,6 +128,10 @@ PageStackWindow {
         }
     }
 
+    SystemPalette {
+        id: systemPalette
+    }
+
     Balloon {
         id: balloon
 
@@ -160,10 +165,12 @@ PageStackWindow {
         timerShowTime : 5000
     }
 
-    DirectClient {
+    Client {
         id: client
 
         invisible: true
+        connection: DirectConnection {}
+
 
         onOnlineStateChanged: {
             if (online) {

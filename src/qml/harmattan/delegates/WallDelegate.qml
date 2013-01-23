@@ -6,7 +6,7 @@ import "../utils.js" as Utils
 import "../components"
 import "../attachments"
 
-ItemDelegate {
+SimpleImageItemDelegate {
     id: itemDelegate
 
     onClicked: {
@@ -32,60 +32,55 @@ ItemDelegate {
 
     imageSource: Utils.getContactPhotoSource(from)
     imageUrl: from.photoSourceBig
-    item: data
 
-    Column {
-        id: data
-
-        Label {
-            id: titleLabel
-            text: from.name
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            color: "#2b497a"
-            font.pixelSize: appWindow.normalFontSize
+    Label {
+        id: titleLabel
+        text: from.name
+        anchors {
+            left: parent.left
+            right: parent.right
         }
+        color: "#2b497a"
+        font.pixelSize: appWindow.normalFontSize
+    }
 
-        Label {
-            id: activityLabel
+    Label {
+        id: activityLabel
 
-            onLinkActivated: Qt.openUrlExternally(link)
+        onLinkActivated: Qt.openUrlExternally(link)
 
-            text: Utils.format(body, 160)
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            font.pixelSize: appWindow.smallFontSize
-
+        text: Utils.format(body, 160)
+        anchors {
+            left: parent.left
+            right: parent.right
         }
+        font.pixelSize: appWindow.smallFontSize
 
-        PhotoViewer {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            model: attachments[Attachment.Photo]
-        }
+    }
 
-        Links {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            model: attachments[Attachment.Link]
+    PhotoViewer {
+        anchors {
+            left: parent.left
+            right: parent.right
         }
+        model: attachments[Attachment.Photo]
+    }
 
-        PostInfo {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            date: model.date
-            comments: model.comments ? model.comments.count : 0
-            likes: model.likes ? model.likes.count : 0
+    Links {
+        anchors {
+            left: parent.left
+            right: parent.right
         }
+        model: attachments[Attachment.Link]
+    }
+
+    PostInfo {
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        date: model.date
+        comments: model.comments ? model.comments.count : 0
+        likes: model.likes ? model.likes.count : 0
     }
 }

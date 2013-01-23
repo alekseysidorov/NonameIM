@@ -6,12 +6,10 @@ import "../utils.js" as Utils
 import "../attachments"
 import "../components"
 
-ItemDelegate {
+SimpleImageItemDelegate {
     id: itemDelegate
 
-    imageSource: sourcePhoto
-    __minHeight: 120
-    item: data
+    imageSource: source.photoSource
 
     onClicked: {
         if (postId) {
@@ -31,91 +29,86 @@ ItemDelegate {
         }
     }
 
-    Column {
-        id: data
-        spacing: 6
-
-        Label {
-            id: titleLabel
-            text: sourceName
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            color: "#2b497a"
-
-            font.pixelSize: appWindow.normalFontSize
+    Label {
+        id: titleLabel
+        text: source.name
+        anchors {
+            left: parent.left
+            right: parent.right
         }
+        color: "#2b497a"
 
-        Item {
-            id: retweet
+        font.pixelSize: appWindow.normalFontSize
+    }
 
-            visible: typeof(ownerName) !== "undefined"
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: retweetImg.height
+    Item {
+        id: retweet
 
-            Image {
-                id : retweetImg
-                anchors.left: parent.left
-                anchors.leftMargin: 6
-                source: "../images/ic_retweet_up.png"
-            }
+        visible: typeof(owner) !== "undefined"
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        height: retweetImg.height
 
-            Label {
-                id: retweetLabel
-
-                anchors.left: retweetImg.right
-                anchors.leftMargin: 6
-                anchors.right: parent.right
-                anchors.rightMargin: 6
-                anchors.verticalCenter: retweetImg.verticalCenter
-
-                text: ownerName ? ownerName : ""
-                font.pixelSize: appWindow.smallFontSize
-                elide: Text.ElideRight
-                color: "#2b497a"
-            }
+        Image {
+            id : retweetImg
+            anchors.left: parent.left
+            anchors.leftMargin: 6
+            source: "../images/ic_retweet_up.png"
         }
 
         Label {
-            id: activityLabel
+            id: retweetLabel
 
-            text: Utils.format(body, 320)
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            anchors.left: retweetImg.right
+            anchors.leftMargin: 6
+            anchors.right: parent.right
+            anchors.rightMargin: 6
+            anchors.verticalCenter: retweetImg.verticalCenter
+
+            text: owner ? owner.name : ""
             font.pixelSize: appWindow.smallFontSize
-
+            elide: Text.ElideRight
+            color: "#2b497a"
         }
+    }
 
-        PhotoViewer {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            model: attachments[Attachment.Photo]
-        }
+    Label {
+        id: activityLabel
 
-        Links {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            model: attachments[Attachment.Link]
+        text: Utils.format(body, 320)
+        anchors {
+            left: parent.left
+            right: parent.right
         }
+        font.pixelSize: appWindow.smallFontSize
 
-        PostInfo {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            likes: likesCount
-            comments: commentsCount
-            date: model.date
+    }
+
+    PhotoViewer {
+        anchors {
+            left: parent.left
+            right: parent.right
         }
+        model: attachments[Attachment.Photo]
+    }
+
+    Links {
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        model: attachments[Attachment.Link]
+    }
+
+    PostInfo {
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        likes: likesCount
+        comments: commentsCount
+        date: model.date
     }
 }

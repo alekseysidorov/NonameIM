@@ -43,7 +43,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setOrganizationName("Noname");
     app->setApplicationVersion("0.1");
 
-    qmlRegisterType<ClientImpl<Vreen::DirectConnection> >("com.vk.api", 0, 1, "DirectClient");
+    qmlRegisterType<Vreen::DirectConnection>("com.vk.api", 1, 0, "DirectConnection");
     registerVreenTypes("com.vk.api");
 
     QmlApplicationViewer viewer;

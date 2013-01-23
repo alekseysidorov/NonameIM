@@ -57,8 +57,10 @@ CONFIG += qdeclarative-boostable meegotouchevents meegotouch
 # CONFIG += qt-components
 
 INCLUDEPATH += $$VKIT_SRC_ROOT_DIR/directauth \
-    $$VKIT_QML_SRC_DIR/qml/src \
-    $$OUT_PWD/../vreen/include
+    $$VKIT_QML_SRC_DIR \
+    $$VREEN_BUILD_TREE/../vreen/include \
+    $$VKIT_SRC_ROOT_DIR/api
+DEPENDPATH += $$VREEN_BUILD_TREE/../vreen/include
 
 DEFINES += VREEN_DIRECTAUTH_CLIENT_ID=\\\"1950109\\\" \
     VREEN_DIRECTAUTH_CLIENT_SECRET=\\\"bJKfYSu0LS6N52M0HnBo\\\" \
@@ -92,12 +94,7 @@ OTHER_FILES += \
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../vreen/src/api/release/ -lvreen
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../vreen/src/api/debug/ -lvreen
 else:symbian: LIBS += -lvreen
-else:unix: LIBS += -L$$OUT_PWD/../vreen/src/api/ -lvreen
-
-INCLUDEPATH += $$PWD/../vreen/src/api \
-    $$VKIT_QML_SRC_DIR \
-    $$VKIT_SRC_ROOT_DIR
-DEPENDPATH += $$PWD/../vreen/src/api
+else:unix: LIBS += $$VREEN_BUILD_TREE/../vreen/src/api/libvreen.so
 
 HEADERS += \
     $$VKIT_QML_SRC_DIR/clientimpl.h \

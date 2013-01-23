@@ -4,7 +4,7 @@ import com.nokia.meego 1.0
 import "../utils.js" as Utils
 import "../components"
 
-ItemDelegate {
+SimpleImageItemDelegate {
     id: itemDelegate
 
     onVisibleChanged: {
@@ -15,7 +15,6 @@ ItemDelegate {
 
     clickable: true
     imageSource: Utils.getContactPhotoSource(from)
-    item: data
 
     Column {
         id: data

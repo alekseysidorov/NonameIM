@@ -22,7 +22,6 @@ Page {
                 audioModel.getContactAudio(client.me)
             else
                 audioModel.searchAudio(query)
-            appWindow.addTask(qsTr("Getting audio..."), audioModel.requestFinished)
         }
     }
 

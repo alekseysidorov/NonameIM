@@ -11,7 +11,6 @@ Page {
     function update() {
         if (client.online) {
             dialogsModel.getDialogs()
-            appWindow.addTask(qsTr("Getting dialogs..."), dialogsModel.requestFinished)
         }
     }
     function clear() {
@@ -41,7 +40,7 @@ Page {
     }
 
     ListView {
-        id: rosterView;
+        id: dialogsView;
         width: parent.width;
         anchors.top: header.bottom;
         anchors.bottom: parent.bottom;
@@ -58,12 +57,22 @@ Page {
         cacheBuffer: 100500
     }
 
+    Updater {
+        id: updater
+
+        function update(count, offset) {
+            return dialogsModel.getDialogs(offset, count, 160);
+        }
+
+        flickableItem: dialogsView
+    }
+
     ScrollDecorator {
-        flickableItem: rosterView
+        flickableItem: dialogsView
     }
 
     UpdateIcon {
-        flickableItem: rosterView
+        flickableItem: dialogsView
         onTriggered: {
             update()
         }

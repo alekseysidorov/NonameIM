@@ -50,17 +50,23 @@ Page {
         cacheBuffer: 100500
     }
 
+    Updater {
+        id: updater
+        flickableItem: chatView
+
+        count: 50
+
+        function update(count, offset) {
+            return chatModel.getHistory(count, offset);
+        }
+    }
+
     ChatModel {
         id: chatModel
     }
 
     ScrollDecorator {
         flickableItem: chatView;
-    }
-
-    UpdateIcon {
-        flickableItem: chatView
-        onTriggered: update()
     }
 
     Rectangle {

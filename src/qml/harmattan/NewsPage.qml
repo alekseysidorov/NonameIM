@@ -8,32 +8,9 @@ import "ios" as Ios
 Page {
     id: newsPage
 
-    property int __offset: 0
-    property int __count: 30
-    property bool __isNextLoading: false
-    property int __truncateCount: 100
-
     function update() {
-        if (client.online) {
-            appWindow.addTask(qsTr("Getting news..."), newsFeedModel.requestFinished)
-            getNews(__count, 0)
-        }
-    }
-
-    function getNews(count, offset) {
-        __offset = offset
-        newsFeedModel.getNews(NewsFeed.FilterPost
-                              | NewsFeed.FilterPhoto,
-                              __count,
-                              __offset)
-    }
-
-    function getNextNews() {
-        if (client.online) {
-            __isNextLoading = true
-            __offset += __count
-            getNews(__count, __offset)
-        }
+        updater.update(updater.count, 0);
+        updater.truncate(updater.count * 2);
     }
 
     onStatusChanged: {
@@ -61,21 +38,10 @@ Page {
 
     NewsFeedModel {
         id: newsFeedModel
-
-        onRequestFinished: {
-            if (!__offset)
-                truncate(__truncateCount)
-            __isNextLoading = false
-        }
     }
 
     ListView {
         id: newsList
-
-        onAtYEndChanged: {
-            if (atYEnd && !__isNextLoading)
-                getNextNews()
-        }
 
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
@@ -83,13 +49,24 @@ Page {
         delegate: NewsDelegate {}
         model: newsFeedModel
         cacheBuffer: 100500
-        footer: UpdateIndicator {
-            visible: newsList.count
-            running: __isNextLoading
-        }
     }
 
     ScrollDecorator {
         flickableItem: newsList
+    }
+
+    Updater {
+        id: updater
+        flickableItem: newsList
+
+        count: 50
+
+        function update(count, offset) {
+            return newsFeedModel.getNews(NewsFeed.FilterNone, count, offset);
+        }
+
+        function truncate(count) {
+            newsFeedModel.truncate(count);
+        }
     }
 }
