@@ -7,47 +7,37 @@ import "../components"
 SimpleImageItemDelegate {
     id: itemDelegate
 
-    onVisibleChanged: {
-        if (visible)
-            from.update()
-    }
     Component.onCompleted: from.update()
+    onClicked: appWindow.showProfile(from)
 
     clickable: true
     imageSource: Utils.getContactPhotoSource(from)
 
-    Column {
-        id: data
+    Label {
+        id: titleLabel
+        text: from.name
 
-        Label {
-            id: titleLabel
-            text: from.name
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            color: "#2b497a"
+        color: "#2b497a"
+        width: parent.width
 
-            font.pixelSize: appWindow.normalFontSize
-        }
-
-        Label {
-            id: activityLabel
-
-            onLinkActivated: Qt.openUrlExternally(link)
-
-            text: Utils.format(body)
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            font.pixelSize: appWindow.smallFontSize
-        }
-        PostInfo {
-            date: model.date
-            likes: model.likes ? model.likes.count : 0
-        }
+        font.pixelSize: appWindow.normalFontSize
     }
 
-    onClicked: appWindow.showProfile(from)
+    Label {
+        id: activityLabel
+
+        onLinkActivated: Qt.openUrlExternally(link)
+
+        width: parent.width
+        text: Utils.format(body)
+
+        font.pixelSize: appWindow.smallFontSize
+    }
+
+    PostInfo {
+        width: parent.width
+
+        date: model.date
+        likes: model.likes ? model.likes.count : 0
+    }
 }

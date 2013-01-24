@@ -40,7 +40,7 @@ Rectangle {
             last = children[children.length - 1];
         }
 
-        spacing:  mm
+        spacing:  0.5 * mm
 
         anchors {
             top: parent.top
@@ -54,24 +54,20 @@ Rectangle {
         }
     }
 
-    Text {
+    Image {
         id: arrow
-
+        opacity: 0.5
         width: showArrow ? implicitWidth : 0
         visible: showArrow
-        text: qsTr("❭")
-        color: systemPalette.shadow
-        font.bold: true
-        font.pointSize: 11
 
         anchors {
-            top: parent.top
-            bottom: parent.bottom
+            verticalCenter: parent.verticalCenter
             right: parent.right
-            rightMargin:  6 * mm
+            rightMargin:  1 * mm
         }
 
-        verticalAlignment: Text.AlignVCenter
+        source: "image://theme/icon-m-common-drilldown-arrow" + (theme.inverted ? "-inverse" : "")
+
     }
 
     Rectangle {
@@ -84,6 +80,8 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
+
+        enabled: clickable
 
         onClicked: root.clicked()
     }

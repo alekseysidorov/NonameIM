@@ -30,43 +30,39 @@ SimpleImageItemDelegate {
             from.update()
     }
 
+    clickable: true
     imageSource: Utils.getContactPhotoSource(from)
     imageUrl: from.photoSourceBig
 
     Label {
         id: titleLabel
         text: from.name
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
+        width: parent.width
+
         color: "#2b497a"
         font.pixelSize: appWindow.normalFontSize
     }
 
     Label {
         id: activityLabel
+        width: parent.width
 
         onLinkActivated: Qt.openUrlExternally(link)
 
         text: Utils.format(body, 160)
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
         font.pixelSize: appWindow.smallFontSize
 
     }
 
     PhotoViewer {
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
+        width: parent.width
+
         model: attachments[Attachment.Photo]
     }
 
     Links {
+        width: parent.width
+
         anchors {
             left: parent.left
             right: parent.right
@@ -75,6 +71,8 @@ SimpleImageItemDelegate {
     }
 
     PostInfo {
+        width: ListView.view.width
+
         anchors {
             left: parent.left
             right: parent.right

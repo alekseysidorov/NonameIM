@@ -59,7 +59,7 @@ Page {
         id: updater
         flickableItem: newsList
 
-        count: 50
+        canUpdate: client.online && status === PageStatus.Active
 
         function update(count, offset) {
             return newsFeedModel.getNews(NewsFeed.FilterNone, count, offset);

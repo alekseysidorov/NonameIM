@@ -10,7 +10,6 @@ Page {
     function update() {
         if (client.online) {
             client.roster.sync()
-            appWindow.addTask(qsTr("Roster syncing..."), client.roster.syncFinished)
         }
     }
 

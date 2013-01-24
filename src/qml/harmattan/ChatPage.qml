@@ -8,17 +8,13 @@ Page {
     id: chatPage
     property QtObject contact
 
-    function update() {
-        if (client.online) {
-            chatModel.setContact(chatPage.contact);
-            chatModel.getHistory();
-            appWindow.addTask(qsTr("Getting chat history..."), chatModel.requestFinished);
-        }
+    onContactChanged: {
+        chatModel.setContact(contact);
     }
 
     onStatusChanged: {
         if (status === PageStatus.Active)
-            update()
+            updater.update(updater.count, 0);
     }
 
     PageHeader {
@@ -33,12 +29,12 @@ Page {
     ListView {
         id: chatView
 
-        function __lastItemPos() {
-            return positionViewAtIndex(count - 1, ListView.End)
-        }
-
-        onCountChanged: __lastItemPos()
-        onHeightChanged: __lastItemPos()
+        //onCountChanged: {
+        //    if (!atYBeginning)
+        //        positionViewAtEnd();
+        //    else
+        //        positionViewAtIndex(updater.count, ListView.Beginning);
+        //}
 
         width: parent.width
         anchors.top: header.bottom
@@ -54,7 +50,9 @@ Page {
         id: updater
         flickableItem: chatView
 
-        count: 50
+        canUpdate: client.online && status === PageStatus.Active
+        count: 15
+        reverse: true
 
         function update(count, offset) {
             return chatModel.getHistory(count, offset);
@@ -98,7 +96,7 @@ Page {
             anchors.rightMargin: 6
             text: qsTr("Send")
             onClicked: {
-                chatModel.contact.sendMessage(input.text)
+                chatPage.contact.sendMessage(input.text)
                 input.text = ""
             }
         }

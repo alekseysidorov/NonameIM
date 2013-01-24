@@ -15,6 +15,7 @@ SimpleImageItemDelegate {
     Component.onCompleted: contact.update();
 
     imageSource: Utils.getContactPhotoSource(contact)
+    clickable: true
 
     Label {
         id: titleLabel

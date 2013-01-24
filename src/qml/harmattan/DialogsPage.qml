@@ -60,6 +60,8 @@ Page {
     Updater {
         id: updater
 
+        canUpdate: client.online && status === PageStatus.Active
+
         function update(count, offset) {
             return dialogsModel.getDialogs(offset, count, 160);
         }

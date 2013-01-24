@@ -9,12 +9,9 @@ Page {
     id: wallPage
 
     function update() {
-        if (client.online) {
-            wallModel.getLastPosts()
-            appWindow.addTask(qsTr("Getting wall posts..."), wallModel.requestFinished)
-            photoModel.getAll(client.me.id)
-        }
+        updater.update(updater.count, 0);
     }
+
     onStatusChanged: {
         if (status === PageStatus.Active)
             update()
@@ -31,18 +28,31 @@ Page {
     ListView {
         id: wallView
 
-        function __firstItemPos() {
-            return positionViewAtIndex(0, ListView.End)
-        }
-
-        onCountChanged: __firstItemPos()
-        onHeightChanged: __firstItemPos()
-
         width: parent.width;
         anchors.top: header.bottom;
         anchors.bottom: parent.bottom;
         model: wallModel
 
+        delegate: WallDelegate {}
+        currentIndex: -1
+        cacheBuffer: 100500
+    }
+
+    WallModel {
+        id: wallModel
+        contact: client.me
+    }
+
+    Updater {
+        id: updater
+
+        canUpdate: client.online && status === PageStatus.Active
+
+        function update(count, offset) {
+            return wallModel.getPosts(count, offset);
+        }
+
+        flickableItem: wallView
         header: Column {
             width: parent ? parent.width : 600
 
@@ -78,16 +88,6 @@ Page {
             //    model: photoModel
             //}
         }
-
-        highlight: HighlightDelegate {}
-        delegate: WallDelegate {}
-        currentIndex: -1
-        cacheBuffer: 100500
-    }
-
-    WallModel {
-        id: wallModel
-        contact: client.me
     }
 
     PhotoModel {
@@ -114,7 +114,6 @@ Page {
             }
             var reply = client.request("wall.post", args)
             reply.resultReady.connect(function(response) {
-                console.log(response.cid)
                 update()
                 postSheet.text = ""
             })

@@ -5,27 +5,28 @@ Item {
 
     property bool canUpdate: client.online
     property bool busy: false
-    property int count: 25
+    property int count: 15
     property int offset: flickableItem.count
+    property bool reverse: false
 
     property ListView flickableItem
     property Component header: Item {
             width: parent.width
             height: visible ? childrenRect.height + 2 * mm : 0
+            visible: updater.busy
             Text {
                 anchors.centerIn: parent
                 text: qsTr("Loading...")
-                visible: updater.busy
                 color: systemPalette.dark
             }
         }
     property Component footer: Item {
         width: parent.width
         height: visible ? childrenRect.height + 2 * mm : 0
+        visible: updater.busy
         Text {
             anchors.centerIn: parent
             text: qsTr("Loading...")
-            visible: updater.busy
             color: systemPalette.dark
         }
     }
@@ -48,7 +49,7 @@ Item {
 
         onAtYEndChanged: {
             if (flickableItem.atYEnd && canUpdate) {
-                var reply = update(count, offset);
+                var reply = update(count, reverse ? 0 : offset);
                 if (reply) {
                     busy = true;
                     reply.resultReady.connect(function() {
@@ -60,7 +61,7 @@ Item {
 
         onAtYBeginningChanged: {
             if (flickableItem.atYBeginning && canUpdate) {
-                var reply = update(count, 0);
+                var reply = update(count, reverse ? offset : 0);
                 if (reply) {
                     busy = true;
                     reply.resultReady.connect(function() {

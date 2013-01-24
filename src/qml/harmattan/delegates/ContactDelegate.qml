@@ -7,6 +7,7 @@ SimpleImageItemDelegate {
 
     onClicked: appWindow.showProfile(model.contact)
 
+    clickable: true
     imageSource: photo
 
     Label {

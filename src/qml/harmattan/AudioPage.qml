@@ -8,40 +8,71 @@ import "components"
 Page {
     id: audioPage
     property QtObject owner: client.me
-    property int playingIndex: -1
-    property bool playing: player.playing && !player.paused
 
-    property QtObject __client: client //workaround
-    property Item __playingItem
-    property bool __intermidate: true
-    property string query
+    property int audioIndex: -1;
+    property bool audioIndeterminate: false;
+    property string audioUrl
+    property string searchQuery
+    property bool audioAutoPlay: false;
+    property alias musicPlaying: player.playing;
 
     function update() {
-        if (client.online) {
-            if (query === "")
-                audioModel.getContactAudio(client.me)
+        updater.update(updater.count, 0);
+    }
+
+    function playAudio(index){
+        if (!audioView.count)
+            return;
+        if (index >= audioView.count || index < 0)
+            index = 0;
+        audioIndex = index;
+        if (audioModel.get(audioIndex).url === audioUrl){
+            if (player.paused)
+                player.play();
             else
-                audioModel.searchAudio(query)
+                player.pause();
+        } else {
+            audioUrl = audioModel.get(audioIndex).url;
+            player.source = audioUrl;
+            player.play();
         }
     }
 
-    onPlayingIndexChanged: {
-        if (playingIndex === -1)
-            player.pause()
-        else {
-            player.stop()
-            player.source = audioModel.get(playingIndex, "url")
-            player.play()
+    function playUrlAudio(url){
+        if (url === audioUrl){
+            if (player.paused)
+                player.play();
+            else
+                player.pause();
+        } else {
+            audioUrl = url;
+            player.source = audioUrl;
+            player.play();
         }
     }
+
+    function playNext(){
+        var idx;
+        idx = audioIndex + 1;
+        if (idx >= audioView.count)
+            idx = 0;
+        audioView.currentIndex = idx;
+        playAudio(idx);
+    }
+
+    function playPrevious(){
+        var idx;
+        idx = audioIndex - 1;
+        if (idx < 0)
+            idx = audioView.count - 1;
+        audioView.currentIndex = idx;
+        playAudio(idx);
+    }
+
     onStatusChanged: {
+        audioModel.client = client;
         if (status === PageStatus.Active)
             update()
-    }
-
-    onQueryChanged: {
-        audioModel.clear()
-        update()
     }
 
     tools: commonTools
@@ -59,36 +90,10 @@ Page {
         anchors.bottom: parent.bottom
         highlight: HighlightDelegate{}
         highlightMoveSpeed: -1
-        header: SearchBar {
-            id: searchBar
-
-            onSearch: query = searchingText
-            onCancel: query = ""
-        }
         model: audioModel
-        delegate: AudioDelegate {
-            id: audioDelegate
-
-            onClicked: {
-                playingIndex = playing ? -1 : index
-            }
-
-            onPlayingChanged: {
-                if (playing) {
-                    position = function() { return player.position/1000 }
-                    bufferProgress = function() { return player.bufferProgress }
-                    indeterminate = function() { return __intermidate }
-                } else {
-                    position = 0
-                    bufferProgress = 0
-                    indeterminate = true
-                }
-            }
-
-            playing: playingIndex === index
-
-        }
+        delegate: AudioDelegate {}
         currentIndex: -1
+        cacheBuffer: 100500
     }
 
     ScrollDecorator {
@@ -100,29 +105,48 @@ Page {
         onTriggered: update()
     }
 
+    Updater {
+        id: updater
+
+        canUpdate: client.online && status === PageStatus.Active
+        count: 50
+
+        function update(count, offset) {
+            //TODO add support for audio searching
+            if (searchQuery)
+                return audioModel.searchAudio(searchQuery, count, offset);
+            return audioModel.getAudio(owner.id, count, offset);
+        }
+
+        flickableItem: audioView
+        header: SearchBar {
+            id: searchBar
+
+            onSearch: {
+                audioModel.clear();
+                searchQuery = searchingText;
+                update();
+            }
+            onCancel: { searchQuery = ''; update(); }
+        }
+    }
+
     AudioModel {
         id: audioModel
-        client: __client
     }
 
     Audio {
         id: player
 
-        autoLoad: true
-
-        onStatusChanged: {
-            switch (status) {
-            case Audio.Stalled:
-                __intermidate = true
-                break
-            case Audio.Buffered:
-                __intermidate = false
-                break
-            case Audio.EndOfMedia:
-                if (playingIndex === audioModel.count - 1)
-                    playingIndex = 0
-                else
-                    playingIndex = playingIndex + 1
+        onStatusChanged:{
+            if (player.status == Audio.Stalled){
+                audioIndeterminate = true;
+            }
+            if (player.status == Audio.Buffered){
+                audioIndeterminate = false;
+            }
+            if (player.status == Audio.EndOfMedia){
+                playNext();
             }
         }
     }

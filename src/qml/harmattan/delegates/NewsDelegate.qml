@@ -9,8 +9,6 @@ import "../components"
 SimpleImageItemDelegate {
     id: itemDelegate
 
-    imageSource: source.photoSource
-
     onClicked: {
         if (postId) {
             var properties = {
@@ -28,6 +26,9 @@ SimpleImageItemDelegate {
             pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
         }
     }
+
+    imageSource: source.photoSource
+    clickable: true
 
     Label {
         id: titleLabel

@@ -6,15 +6,11 @@ import "../utils.js" as Utils
 Item {
     id: root
 
-    property bool playing: false
-    property real bufferProgress
-    property real position
-    property bool indeterminate: false
+    property bool playing: isCurrent && (!player.paused)
+    property bool isCurrent: audioPage.audioUrl == model.url
 
     property int __verticalSpacing: 6
     property int __horizontalSpacing: 12
-
-    signal clicked
 
     width: parent ? parent.width : 600
     height: column.height + column.y + __verticalSpacing
@@ -100,10 +96,34 @@ Item {
         color: "#c0c0c0"
     }
 
+    Image {
+        id: iconAdd;
+        width: visible ? 38 : 0;
+
+        anchors.bottom: root.bottom
+        anchors.bottomMargin: mm
+        anchors.right: parent.right;
+        anchors.rightMargin: 7;
+
+        smooth: true;
+        visible: audioPage.searchQuery ? true : false;
+        source: "../images/ic_attach_add_down.png";
+
+        MouseArea {
+            anchors.fill: parent;
+            onClicked: {
+                iconAdd.visible = false;
+            }
+        }
+    }
+
     MouseArea {
         id: area
         anchors.fill: parent
-        onClicked: root.clicked()
+        onClicked: {
+            audioView.currentIndex = index;
+            audioPage.playAudio(index);
+        }
     }
 
     Component {
@@ -112,23 +132,10 @@ Item {
         ProgressBar {
             id: positionBar
 
-            visible: playing
-
             minimumValue: 0
             maximumValue: duration
-            indeterminate: indeterminate
-            value: position
-
-            ProgressBar {
-                id: bufferBar
-
-                z: positionBar.z + 1
-                anchors.fill: parent
-                opacity: 0.4
-                minimumValue: 0
-                maximumValue: 1
-                value: bufferProgress
-            }
+            value: player.position / 1000
+            indeterminate: audioPage.audioIndeterminate;
         }
     }
 }

@@ -51,7 +51,7 @@ PageStackWindow {
     }
 
     function connectToHost() {
-        addTask(qsTr("Connecting to vk..."), client.onlineStateChanged)
+        //addTask(qsTr("Connecting to vk..."), client.onlineStateChanged)
         client.connectToHost()
     }
 
@@ -263,7 +263,7 @@ PageStackWindow {
                 text: qsTr("Audio")
                 iconSource: checked ? "images/tile-audio-down.png" :
                                       "images/tile-audio-up.png"
-                badge: audioPage.playing ? "*" : ""
+                badge: audioPage.musicPlaying ? "*" : ""
             }
             Ios.TileIcon {
                 id: friendsIcon

@@ -10,13 +10,13 @@ Page {
     id: profilePage
     property QtObject contact
 
+    onContactChanged: wallModel.contact = contact //hack
+
     function update() {
         if (client.online) {
-            wallModel.contact = contact //hack
-            wallModel.getLastPosts()
-            contact.update()
-            appWindow.addTask(qsTr("Getting profile..."), wallModel.requestFinished)
-            photoModel.getAll(contact.id)
+            contact.update();
+            photoModel.getAll(contact.id);
+            updater.update(updater.count, 0);
         }
     }
 
@@ -27,9 +27,46 @@ Page {
         onBackButtonClicked: pageStack.pop()
     }
 
-    Component {
-        id: heading
-        Column {
+    WallModel {
+        id: wallModel
+    }
+
+    PhotoModel {
+        id: photoModel
+    }
+
+    ListView {
+        id: wallView;
+
+        width: parent.width;
+        anchors.top: header.bottom;
+        anchors.bottom: parent.bottom;
+        model: wallModel
+        highlight: HighlightDelegate {}
+        delegate: WallDelegate {}
+        currentIndex: -1
+        cacheBuffer: 100500
+    }
+
+    ScrollDecorator {
+        flickableItem: wallView;
+    }
+
+    UpdateIcon {
+        flickableItem: wallView
+    }
+
+    Updater {
+        id: updater
+
+        canUpdate: client.online && status === PageStatus.Active
+
+        function update(count, offset) {
+            return wallModel.getPosts(count, offset);
+        }
+
+        flickableItem: wallView
+        header: Column {
             width: parent ? parent.width : 600
             TitleBar {
                 id: infoBar
@@ -113,44 +150,5 @@ Page {
                 }
             }
         }
-    }
-
-    WallModel {
-        id: wallModel
-        contact: contact
-    }
-
-    PhotoModel {
-        id: photoModel
-    }
-
-    ListView {
-        id: wallView;
-
-        function __firstItemPos() {
-            return positionViewAtIndex(0, ListView.End)
-        }
-
-        onCountChanged: __firstItemPos()
-        onHeightChanged: __firstItemPos()
-
-        width: parent.width;
-        anchors.top: header.bottom;
-        anchors.bottom: parent.bottom;
-        model: wallModel
-        header: heading
-        highlight: HighlightDelegate {}
-        delegate: WallDelegate {}
-        currentIndex: -1
-        cacheBuffer: 100500
-    }
-
-    ScrollDecorator {
-        flickableItem: wallView;
-    }
-
-    UpdateIcon {
-        flickableItem: wallView
-        onTriggered: update()
     }
 }

@@ -4,6 +4,7 @@ import com.vk.api 1.0
 import "../utils.js" as Utils
 import "../delegates"
 import "../components"
+import ".."
 
 Page {
     id: page
@@ -20,10 +21,7 @@ Page {
     property variant attachments
 
     function update() {
-        if (client.online) {
-            commentsModel.getComments()
-            appWindow.addTask(qsTr("Getting comments..."), commentsModel.requestFinished)
-        }
+        updater.update(updater.count, 0);
     }
 
     orientationLock: PageOrientation.LockPortrait
@@ -38,13 +36,6 @@ Page {
     ListView {
         id: commentsView
 
-        function __firstItemPos() {
-            return positionViewAtIndex(0, ListView.End)
-        }
-
-        onCountChanged: __firstItemPos()
-        onHeightChanged: __firstItemPos()
-
         anchors {
             left: parent.left
             right: parent.right
@@ -53,10 +44,59 @@ Page {
         }
 
         model: commentsModel
-        header: heading
-        highlight: HighlightDelegate {}
         delegate: CommentsDelegate {}
         currentIndex: -1
+    }
+
+    Updater {
+        id: updater
+
+        flickableItem: commentsView
+        header: Column {
+            id: column
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+            spacing: 6
+
+            ContactHeader {
+                contact: from
+                comment: Utils.formatDate(postDate)
+            }
+
+            Label {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: appWindow.defaultMargin
+                    rightMargin: appWindow.defaultMargin
+                }
+
+                text: Utils.format(postBody.concat("<br />"))
+                font.pixelSize: appWindow.smallFontSize
+                onLinkActivated: Qt.openUrlExternally(link)
+            }
+
+            AttachmentsView {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:  parent.width - 24
+
+                photos: attachments[Attachment.Photo]
+                links: attachments[Attachment.Link]
+            }
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                color: "#c0c0c0"
+            }
+        }
+
+        function update(count, offset) {
+            return commentsModel.getComments(count, offset);
+        }
     }
 
     Comments {
@@ -108,7 +148,6 @@ Page {
 
     UpdateIcon {
         flickableItem: commentsView
-        onTriggered: update()
     }
 
     PostSheet {
@@ -123,56 +162,10 @@ Page {
             }
             var reply = client.request("wall.addComment", args)
             reply.resultReady.connect(function(response) {
-                console.log(response.cid)
-                update()
-                postSheet.text = ""
-            })
-        }
-    }
-
-    Component {
-        id: heading
-
-        Column {
-            id: column
-
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            spacing: 6
-
-            ContactHeader {
-                contact: from
-                comment: Utils.formatDate(postDate)
-            }
-
-            Label {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: appWindow.defaultMargin
-                    rightMargin: appWindow.defaultMargin
-                }
-                //text: Utils.format(postBody.concat("<br />"))
-                text: postBody
-                font.pixelSize: appWindow.smallFontSize
-                onLinkActivated: Qt.openUrlExternally(link)
-            }
-
-            AttachmentsView {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width:  parent.width - 24
-
-                photos: attachments[Attachment.Photo]
-                links: attachments[Attachment.Link]
-            }
-
-            Rectangle {
-                width: parent.width
-                height: 1
-                color: "#c0c0c0"
-            }
+                                          console.log(response.cid)
+                                          update()
+                                          postSheet.text = ""
+                                      })
         }
     }
 }
