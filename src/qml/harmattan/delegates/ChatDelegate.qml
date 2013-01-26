@@ -5,7 +5,7 @@ import "../utils.js" as Utils
 import "../components"
 import com.vk.api 1.0
 
-SimpleImageItemDelegate {
+ImageItemDelegate {
     id: itemDelegate
 
     Component.onCompleted: {

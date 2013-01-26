@@ -6,7 +6,7 @@ import "../utils.js" as Utils
 import "../attachments"
 import "../components"
 
-SimpleImageItemDelegate {
+ImageItemDelegate {
     id: itemDelegate
 
     onClicked: {

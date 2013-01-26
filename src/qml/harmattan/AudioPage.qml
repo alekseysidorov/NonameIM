@@ -17,7 +17,7 @@ Page {
     property alias musicPlaying: player.playing;
 
     function update() {
-        updater.update(updater.count, 0);
+        updater.getFirst();
     }
 
     function playAudio(index){
@@ -83,7 +83,7 @@ Page {
         text: qsTr("Audio")
     }
 
-    ListView {
+    ItemView {
         id: audioView
         width: parent.width
         anchors.top: header.bottom
@@ -93,7 +93,6 @@ Page {
         model: audioModel
         delegate: AudioDelegate {}
         currentIndex: -1
-        cacheBuffer: 100500
     }
 
     ScrollDecorator {

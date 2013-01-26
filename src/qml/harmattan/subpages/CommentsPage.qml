@@ -46,11 +46,13 @@ Page {
         model: commentsModel
         delegate: CommentsDelegate {}
         currentIndex: -1
+        cacheBuffer: 100500
     }
 
     Updater {
         id: updater
 
+        canUpdate: commentsCount && client.online && status === PageStatus.Active
         flickableItem: commentsView
         header: Column {
             id: column
@@ -143,10 +145,6 @@ Page {
     }
 
     ScrollDecorator {
-        flickableItem: commentsView
-    }
-
-    UpdateIcon {
         flickableItem: commentsView
     }
 

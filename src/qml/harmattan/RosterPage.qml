@@ -31,7 +31,7 @@ Page {
         roster: client.roster
     }
 
-    ListView {
+    ItemView {
         id: rosterView
         width: parent.width
         anchors.top: header.bottom
@@ -58,11 +58,6 @@ Page {
 
     ScrollDecorator {
         flickableItem: rosterView
-    }
-
-    UpdateIcon {
-        flickableItem: rosterView
-        onTriggered: update()
     }
 
     Connections {

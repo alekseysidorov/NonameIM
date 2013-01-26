@@ -18,6 +18,7 @@
 #include <vkitqmlplugin.h>
 #include <directconnection_p.h>
 #include <QNetworkDiskCache>
+#include <QtOpenGL>
 
 class DiskNetworkAccessManagerFactory : public QDeclarativeNetworkAccessManagerFactory
 {
@@ -46,10 +47,18 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<Vreen::DirectConnection>("com.vk.api", 1, 0, "DirectConnection");
     registerVreenTypes("com.vk.api");
 
+    QGLFormat format = QGLFormat::defaultFormat();
+    format.setSampleBuffers(false);
+    format.setSwapInterval(1);
+    QGLWidget* glWidget = new QGLWidget(format);
+    glWidget->setAutoFillBackground(false);
+
     QmlApplicationViewer viewer;
     viewer.engine()->setNetworkAccessManagerFactory(new DiskNetworkAccessManagerFactory);
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.setMainQmlFile(QLatin1String("qml/harmattan/main.qml"));
+    viewer.setViewport(glWidget);
+    viewer.setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     viewer.showExpanded();
 
     return app->exec();

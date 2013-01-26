@@ -3,7 +3,7 @@ TARGET = nonameIM
 CONFIG -= debug_and_release debug
 CONFIG += release
 
-QT += network
+QT += network opengl
 
 include(../vreen/vreen.pri)
 

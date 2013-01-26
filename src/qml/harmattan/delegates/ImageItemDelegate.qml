@@ -1,10 +1,11 @@
 import QtQuick 1.0
+import "../components"
 
 ItemDelegate {
     property alias imageSource: image.source
     property url imageUrl
 
-    leftSideData: Image {
+    leftSideData: Avatar {
         id: image
 
         width: leftSideWidth

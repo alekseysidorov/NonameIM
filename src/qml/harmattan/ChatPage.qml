@@ -26,7 +26,7 @@ Page {
         backButton: true
     }
 
-    ListView {
+    ItemView {
         id: chatView
 
         //onCountChanged: {
@@ -43,7 +43,6 @@ Page {
         highlight: HighlightDelegate {}
         delegate: ChatDelegate {}
         currentIndex: -1
-        cacheBuffer: 100500
     }
 
     Updater {

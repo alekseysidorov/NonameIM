@@ -15,8 +15,10 @@ Rectangle {
         anchors.centerIn: parent
         width: root.width - 2
         height: root.height -2
-        //smooth: true
-        //asynchronous: true
+        smooth: true
+        asynchronous: true
+        clip: true
+        fillMode: Image.PreserveAspectCrop
         cache: true
         opacity: avatar.status === Image.Ready
 

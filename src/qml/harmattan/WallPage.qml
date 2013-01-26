@@ -9,7 +9,7 @@ Page {
     id: wallPage
 
     function update() {
-        updater.update(updater.count, 0);
+        updater.getFirst();
     }
 
     onStatusChanged: {
@@ -25,7 +25,7 @@ Page {
         text: qsTr("Wall")
     }
 
-    ListView {
+    ItemView {
         id: wallView
 
         width: parent.width;
@@ -35,7 +35,6 @@ Page {
 
         delegate: WallDelegate {}
         currentIndex: -1
-        cacheBuffer: 100500
     }
 
     WallModel {
@@ -96,11 +95,6 @@ Page {
 
     ScrollDecorator {
         flickableItem: wallView;
-    }
-
-    UpdateIcon {
-        flickableItem: wallView
-        onTriggered: update()
     }
 
     PostSheet {

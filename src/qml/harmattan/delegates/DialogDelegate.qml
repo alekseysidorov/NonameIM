@@ -3,7 +3,7 @@ import com.nokia.meego 1.0
 import com.vk.api 1.0
 import "../utils.js" as Utils
 
-SimpleImageItemDelegate {
+ImageItemDelegate {
     id: itemDelegate
     property QtObject contact: getContact()
 
@@ -11,8 +11,6 @@ SimpleImageItemDelegate {
         return incoming ? from
                         : to
     }
-
-    Component.onCompleted: contact.update();
 
     imageSource: Utils.getContactPhotoSource(contact)
     clickable: true

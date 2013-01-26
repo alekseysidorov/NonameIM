@@ -4,7 +4,7 @@ import com.nokia.meego 1.0
 import "../utils.js" as Utils
 import "../components"
 
-SimpleImageItemDelegate {
+ImageItemDelegate {
     id: itemDelegate
 
     Component.onCompleted: from.update()

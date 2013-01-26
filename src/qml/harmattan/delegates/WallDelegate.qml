@@ -6,7 +6,7 @@ import "../utils.js" as Utils
 import "../components"
 import "../attachments"
 
-SimpleImageItemDelegate {
+ImageItemDelegate {
     id: itemDelegate
 
     onClicked: {
@@ -21,13 +21,6 @@ SimpleImageItemDelegate {
             "wall" : wallModel
         }
         pageStack.push(appWindow.createPage("subpages/CommentsPage.qml"), properties)
-    }
-
-    Component.onCompleted: from.update();
-
-    onVisibleChanged: {
-        if (visible)
-            from.update()
     }
 
     clickable: true
@@ -71,7 +64,6 @@ SimpleImageItemDelegate {
     }
 
     PostInfo {
-        width: ListView.view.width
 
         anchors {
             left: parent.left

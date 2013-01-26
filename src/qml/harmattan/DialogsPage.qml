@@ -39,7 +39,7 @@ Page {
         id: dialogsModel
     }
 
-    ListView {
+    ItemView {
         id: dialogsView;
         width: parent.width;
         anchors.top: header.bottom;
@@ -54,7 +54,6 @@ Page {
             }
         }
         currentIndex: -1
-        cacheBuffer: 100500
     }
 
     Updater {

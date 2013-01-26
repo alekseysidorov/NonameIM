@@ -9,8 +9,7 @@ Page {
     id: newsPage
 
     function update() {
-        updater.update(updater.count, 0);
-        updater.truncate(updater.count * 2);
+        updater.getFirst();
     }
 
     onStatusChanged: {
@@ -30,17 +29,11 @@ Page {
         text: qsTr("News")
     }
 
-    UpdateIcon {
-        id: updateIcon
-        flickableItem: newsList
-        onTriggered: update()
-    }
-
     NewsFeedModel {
         id: newsFeedModel
     }
 
-    ListView {
+    ItemView {
         id: newsList
 
         anchors.top: header.bottom
@@ -48,7 +41,6 @@ Page {
         width: parent.width
         delegate: NewsDelegate {}
         model: newsFeedModel
-        cacheBuffer: 100500
     }
 
     ScrollDecorator {

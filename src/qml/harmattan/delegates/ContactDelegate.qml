@@ -2,7 +2,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../utils.js" as Utils
 
-SimpleImageItemDelegate {
+ImageItemDelegate {
     id: itemDelegate
 
     onClicked: appWindow.showProfile(model.contact)

@@ -16,7 +16,7 @@ Page {
         if (client.online) {
             contact.update();
             photoModel.getAll(contact.id);
-            updater.update(updater.count, 0);
+            updater.getFirst();
         }
     }
 
@@ -35,7 +35,7 @@ Page {
         id: photoModel
     }
 
-    ListView {
+    ItemView {
         id: wallView;
 
         width: parent.width;
@@ -50,10 +50,6 @@ Page {
 
     ScrollDecorator {
         flickableItem: wallView;
-    }
-
-    UpdateIcon {
-        flickableItem: wallView
     }
 
     Updater {

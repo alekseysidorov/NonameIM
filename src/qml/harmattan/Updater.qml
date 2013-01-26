@@ -10,25 +10,23 @@ Item {
     property bool reverse: false
 
     property ListView flickableItem
-    property Component header: Item {
-            width: parent.width
-            height: visible ? childrenRect.height + 2 * mm : 0
-            visible: updater.busy
-            Text {
-                anchors.centerIn: parent
-                text: qsTr("Loading...")
-                color: systemPalette.dark
-            }
-        }
-    property Component footer: Item {
+    property Component header: Text {
         width: parent.width
-        height: visible ? childrenRect.height + 2 * mm : 0
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        text: qsTr("Loading...")
+        color: systemPalette.dark
         visible: updater.busy
-        Text {
-            anchors.centerIn: parent
-            text: qsTr("Loading...")
-            color: systemPalette.dark
-        }
+        font.pixelSize: normalFontSize
+    }
+    property Component footer: Text {
+        width: parent.width
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        text: qsTr("Loading...")
+        color: systemPalette.dark
+        visible: updater.busy
+        font.pixelSize: normalFontSize
     }
 
     function update(count, offset) {
@@ -37,6 +35,15 @@ Item {
 
     function truncate(count) {
         console.log("Updater: please implement function with signature truncate(count)")
+    }
+
+    function getLast() {
+        return update(count, reverse ? 0 : offset);
+    }
+
+    function getFirst() {
+        truncate(2 * count);
+        return update(count, reverse ? offset : 0);
     }
 
     onFlickableItemChanged: {
@@ -49,7 +56,7 @@ Item {
 
         onAtYEndChanged: {
             if (flickableItem.atYEnd && canUpdate) {
-                var reply = update(count, reverse ? 0 : offset);
+                var reply = getLast();
                 if (reply) {
                     busy = true;
                     reply.resultReady.connect(function() {
@@ -61,7 +68,7 @@ Item {
 
         onAtYBeginningChanged: {
             if (flickableItem.atYBeginning && canUpdate) {
-                var reply = update(count, reverse ? offset : 0);
+                var reply = getFirst();
                 if (reply) {
                     busy = true;
                     reply.resultReady.connect(function() {
