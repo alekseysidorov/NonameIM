@@ -9,6 +9,7 @@ ImageItemDelegate {
     id: itemDelegate
 
     Component.onCompleted: {
+        from.update();
         if (unread)
             chatModel.markAsRead(mid)
     }

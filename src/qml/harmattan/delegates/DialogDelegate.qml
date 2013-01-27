@@ -5,11 +5,17 @@ import "../utils.js" as Utils
 
 ImageItemDelegate {
     id: itemDelegate
-    property QtObject contact: getContact()
+
+    property QtObject contact
 
     function getContact() {
         return incoming ? from
                         : to
+    }
+
+    Component.onCompleted: {
+        contact = getContact();
+        contact.update();
     }
 
     imageSource: Utils.getContactPhotoSource(contact)

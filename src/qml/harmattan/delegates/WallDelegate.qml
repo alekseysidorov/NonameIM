@@ -9,6 +9,8 @@ import "../attachments"
 ImageItemDelegate {
     id: itemDelegate
 
+    Component.onCompleted: from.update()
+
     onClicked: {
         var properties = {
             "from" : from,
