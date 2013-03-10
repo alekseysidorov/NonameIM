@@ -81,6 +81,7 @@ Page {
     PageHeader {
         id: header
         text: qsTr("Audio")
+        onClicked: audioView.positionViewAtBeginning()
     }
 
     ItemView {

@@ -56,3 +56,10 @@ function clip(str, maxCharCount)
     str = str.concat("...")
     return str;
 }
+
+function checkProperty(value, def) {
+    if (def === undefined)
+        def = null;
+    return value === undefined ? def : value;
+}
+

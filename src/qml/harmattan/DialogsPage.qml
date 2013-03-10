@@ -33,6 +33,7 @@ Page {
     PageHeader {
         id: header
         text: qsTr("Messages")
+        onClicked: dialogsView.positionViewAtBeginning()
     }
 
     DialogsModel {

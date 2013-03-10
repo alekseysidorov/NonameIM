@@ -25,6 +25,7 @@ Page {
         text: contact ? contact.name  : qsTr("")
         backButton: true
         onBackButtonClicked: pageStack.pop()
+        onClicked: wallView.positionViewAtBeginning()
     }
 
     WallModel {

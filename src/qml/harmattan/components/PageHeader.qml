@@ -7,6 +7,8 @@ PageHeaderBar {
     property bool backButton: false
     signal backButtonClicked
 
+    signal clicked
+
     state: "common"
 
     Label {
@@ -41,8 +43,19 @@ PageHeaderBar {
 
     BackButton {
         id: back
+        z: area.z + 1
         onClicked: root.backButtonClicked()
         visible: false
+    }
+
+    MouseArea {
+        id: area
+        anchors.fill: parent
+
+        onClicked: {
+            console.log("clicked")
+            root.clicked();
+        }
     }
 
     states: [

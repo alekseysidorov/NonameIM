@@ -26,6 +26,9 @@ Page {
 
     PageHeader {
         id: header
+
+        onClicked: newsList.positionViewAtBeginning()
+
         text: qsTr("News")
     }
 
@@ -39,7 +42,7 @@ Page {
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
         width: parent.width
-        delegate: NewsDelegate {}
+        delegate: WallDelegate {}
         model: newsFeedModel
     }
 

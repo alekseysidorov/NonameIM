@@ -171,11 +171,10 @@ PageStackWindow {
         invisible: true
         connection: DirectConnection {}
 
-
         onOnlineStateChanged: {
             if (online) {
                 pageStack.pop(loginPage)
-                var page = pageStack.currentPage
+                var page = pageStack.currentPage;
                 if (page.status === PageStatus.Active && page.update()) {
                     pageStack.currentPage.update()
                 }

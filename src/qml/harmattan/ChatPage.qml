@@ -21,6 +21,7 @@ Page {
         id: header
 
         onBackButtonClicked: pageStack.pop()
+        onClicked: chatView.positionViewAtBeginning()
 
         text: chatModel.title
         backButton: true

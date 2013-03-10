@@ -24,6 +24,7 @@ Page {
     PageHeader {
         id: header
         text: qsTr("Friends")
+        onClicked: rosterView.positionViewAtBeginning()
     }
 
     BuddyModel {
